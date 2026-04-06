@@ -1,0 +1,61 @@
+CSE 517 Computer Architecture - Exam Module Topic List
+Based on: teacher syllabus + teacher resources + PYQ (2019-2023)
+
+Module 1: Foundations and Evolution of Computer Systems
+- Computer architecture vs computer organization (comparison and examples)
+- Functional and top-level view of computer; structure and functions
+- Von Neumann architecture and stored-program concept; brief Harvard contrast
+- Computing vs calculation
+- Evolution of computers (early devices to modern microprocessor age)
+- Moore's law, growth in CPU transistor count, and consequences
+- Law of diminishing returns in system design
+
+Module 2: Performance and Reliability Analysis
+- CPU performance equation: CPU time = Instruction count x CPI x clock cycle time
+- MIPS, throughput, and performance comparison among processors
+- Amdahl's law and overall speedup interpretation
+- Numerical speedup problems with partial function enhancement
+- CPI/clock rate/execution-time based numerical problems
+- Reliability terms: MTTF, FIT, MTBF
+- Bottleneck analysis and performance trade-offs
+
+Module 3: Instruction Cycle, ISA Basics, and CPU Organization
+- Basic instruction cycle (fetch, decode, execute) and register transfer flow
+- Register roles: PC, IR, MAR, MDR, AC, general-purpose registers
+- Program execution trace using memory and register contents (hex examples)
+- Three CPU organizations: accumulator, general register, stack
+- Addressing modes: direct, indirect, register, register-indirect, immediate, indexed
+- Effective address calculation problems
+- RISC vs CISC and RISC characteristics
+- Basic MIPS instruction translation and simple assembly conversion (PYQ-focused)
+
+Module 4: Memory System Fundamentals
+- Memory hierarchy and locality of reference
+- Memory characteristics: location, capacity, transfer unit, access method, performance
+- Access methods: sequential, direct, random, associative
+- Main memory technologies: SRAM, DRAM, SDRAM, RDRAM, DDR
+- ROM family: ROM, PROM, EPROM, EEPROM, Flash
+- Virtual memory basics and relation with cache (PYQ-focused)
+- Error detection and correction using Hamming code (encoding and correction)
+
+Module 5: Cache Memory Design and Problem Solving
+- Need for cache: processor-memory speed gap
+- Cache operation (read/write flow) and key terminology
+- Mapping methods: direct, fully associative, set associative
+- Address split problems: tag, line/set, word/offset bits
+- Performance terms: hit, miss, miss penalty, hit ratio, average access time
+- Core formulas: Ta = Tc + (1 - H)Tm and two-level cache relations
+- Numerical problems: tag bits, directory size, average access time
+- Replacement policies: LRU, FIFO, LFU, random
+- Write policies: write-through and write-back
+- Multi-level cache (L1/L2/L3), unified vs split cache, coherency basics
+
+Module 6: Pipelining, Parallelism, and Architecture Extensions
+- Pipeline concept, speedup, and timing comparison with non-pipelined execution
+- Pipeline hazards and stalls; hazard-avoidance methods
+- Pipeline configuration and register-content style numerical problems
+- Flynn classification: SISD, SIMD, MISD, MIMD
+- Parallel processors and SIMD/MIMD interpretation
+- High-performance bus idea and processor-memory interaction
+- RAID basics (0/1/2/3 and overview of other levels) (PYQ-focused)
+- 1-bit ALU construction and basic datapath/single-bus concepts (PYQ-focused)

@@ -1,0 +1,1794 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE 517 Module 2 Preparation Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Manrope:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f2937;
+        --ink-soft: #334155;
+        --bg-a: #fff7ed;
+        --bg-b: #ecfeff;
+        --bg-c: #eef2ff;
+        --card: rgba(255, 255, 255, 0.88);
+        --border: rgba(15, 23, 42, 0.14);
+        --accent-1: #0f766e;
+        --accent-2: #dc2626;
+        --accent-3: #1d4ed8;
+        --accent-4: #9333ea;
+        --good: #166534;
+        --warn: #b45309;
+        --danger: #991b1b;
+        --shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+        --radius: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        background: linear-gradient(
+          180deg,
+          var(--bg-a) 0%,
+          var(--bg-b) 50%,
+          var(--bg-c) 100%
+        );
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        z-index: -1;
+        border-radius: 999px;
+        filter: blur(30px);
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      body::before {
+        width: 44vw;
+        height: 44vw;
+        left: -10vw;
+        top: -12vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(220, 38, 38, 0.45) 0%,
+          rgba(220, 38, 38, 0) 70%
+        );
+      }
+
+      body::after {
+        width: 42vw;
+        height: 42vw;
+        right: -12vw;
+        bottom: -12vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(29, 78, 216, 0.42) 0%,
+          rgba(29, 78, 216, 0) 70%
+        );
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Merriweather", "Times New Roman", serif;
+        color: #0f172a;
+        margin-top: 0;
+      }
+
+      h1 {
+        font-size: clamp(1.95rem, 4vw, 3rem);
+        line-height: 1.25;
+        margin-bottom: 0.6rem;
+      }
+
+      h2 {
+        font-size: clamp(1.45rem, 2.3vw, 2rem);
+        color: #0f4b4b;
+        margin-bottom: 0.55rem;
+      }
+
+      h3 {
+        font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+        color: #1e3a8a;
+        margin-bottom: 0.4rem;
+      }
+
+      h4 {
+        font-size: 1.03rem;
+        color: #7f1d1d;
+        margin-bottom: 0.35rem;
+      }
+
+      .progress-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 999;
+        backdrop-filter: blur(5px);
+      }
+
+      #scrollProgress {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-1),
+          var(--accent-3)
+        );
+      }
+
+      .hero {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 5.6rem 1.1rem 2.5rem;
+      }
+
+      .hero-panel {
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 8px);
+        box-shadow: var(--shadow);
+        background: linear-gradient(
+          150deg,
+          rgba(255, 255, 255, 0.93),
+          rgba(239, 246, 255, 0.93)
+        );
+        padding: 1.8rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        top: -40px;
+        right: -36px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(147, 51, 234, 0.23) 0%,
+          rgba(147, 51, 234, 0) 70%
+        );
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 0.3rem 0.72rem;
+        border-radius: 999px;
+        margin-right: 0.45rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        border: 1px solid rgba(15, 118, 110, 0.35);
+        color: #0f766e;
+        background: rgba(45, 212, 191, 0.12);
+      }
+
+      .subtitle {
+        color: var(--ink-soft);
+        max-width: 85ch;
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(160px, 1fr));
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .meta-item {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        padding: 0.75rem;
+        font-size: 0.94rem;
+      }
+
+      .meta-item b {
+        color: #0f766e;
+      }
+
+      .layout {
+        max-width: 1220px;
+        margin: 0 auto 2.8rem;
+        padding: 0 1.1rem 1.8rem;
+        display: grid;
+        grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(8px);
+        padding: 0.9rem;
+        max-height: calc(100vh - 1.7rem);
+        overflow: auto;
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        color: #1e3a8a;
+        font-weight: 700;
+        border-left: 3px solid transparent;
+        margin-bottom: 0.2rem;
+        border-radius: 8px;
+        padding: 0.32rem 0.4rem;
+        transition: all 0.2s ease;
+        font-size: 0.92rem;
+      }
+
+      .toc a:hover {
+        border-left-color: var(--accent-2);
+        background: rgba(220, 38, 38, 0.08);
+        transform: translateX(2px);
+      }
+
+      .content {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: var(--card);
+        padding: 1.15rem;
+      }
+
+      .definition {
+        border-left: 5px solid var(--accent-3);
+        background: rgba(37, 99, 235, 0.11);
+        border-radius: 10px;
+        padding: 0.7rem 0.82rem;
+        margin: 0.68rem 0;
+      }
+
+      .exam-focus {
+        border-left: 5px solid var(--accent-2);
+        background: rgba(220, 38, 38, 0.1);
+        border-radius: 10px;
+        padding: 0.72rem 0.85rem;
+        margin-top: 0.8rem;
+      }
+
+      .formula {
+        border: 1px dashed rgba(15, 118, 110, 0.45);
+        background: rgba(15, 118, 110, 0.08);
+        border-radius: 10px;
+        padding: 0.62rem 0.78rem;
+        margin: 0.62rem 0;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+
+      .mini-card {
+        border: 1px solid rgba(148, 163, 184, 0.33);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 0.72rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.66rem 0;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(148, 163, 184, 0.42);
+        padding: 0.56rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: rgba(20, 184, 166, 0.15);
+        font-weight: 800;
+      }
+
+      ul,
+      ol {
+        margin-top: 0.4rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .diagram {
+        border: 1px solid rgba(148, 163, 184, 0.38);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 0.6rem;
+        overflow-x: auto;
+      }
+
+      .calc-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(140px, 1fr));
+        gap: 0.65rem;
+        align-items: end;
+      }
+
+      .calc-grid label {
+        display: block;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 0.18rem;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        border-radius: 9px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        padding: 0.42rem 0.5rem;
+        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.95);
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.55rem 0.95rem;
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+        box-shadow: 0 8px 16px rgba(29, 78, 216, 0.25);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .result {
+        margin-top: 0.62rem;
+        border-radius: 10px;
+        border: 1px solid rgba(29, 78, 216, 0.32);
+        background: rgba(219, 234, 254, 0.6);
+        padding: 0.54rem 0.68rem;
+        font-weight: 700;
+      }
+
+      .bottleneck-row {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .bottle {
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        background: rgba(255, 255, 255, 0.78);
+        padding: 0.52rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .bottle.tight {
+        background: rgba(254, 226, 226, 0.9);
+        border-color: rgba(220, 38, 38, 0.5);
+        transform: translateY(-3px) scale(1.03);
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 800;
+        margin-right: 0.33rem;
+        margin-bottom: 0.28rem;
+        border-radius: 999px;
+        border: 1px solid rgba(2, 132, 199, 0.35);
+        color: #0c4a6e;
+        background: rgba(186, 230, 253, 0.6);
+        padding: 0.18rem 0.52rem;
+      }
+
+      .qa {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.84);
+        margin-top: 0.85rem;
+      }
+
+      .qa-head {
+        background: rgba(59, 130, 246, 0.15);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 0.7rem 0.8rem;
+        font-weight: 800;
+      }
+
+      .qa-body {
+        padding: 0.78rem;
+      }
+
+      .answer-steps {
+        border-left: 5px solid rgba(37, 99, 235, 0.72);
+        background: rgba(37, 99, 235, 0.09);
+        border-radius: 10px;
+        padding: 0.6rem 0.74rem;
+        margin: 0.55rem 0;
+      }
+
+      .ok-box {
+        border-left: 5px solid var(--good);
+        background: rgba(34, 197, 94, 0.12);
+        border-radius: 10px;
+        padding: 0.64rem 0.75rem;
+      }
+
+      .warn-box {
+        border-left: 5px solid var(--warn);
+        background: rgba(251, 191, 36, 0.14);
+        border-radius: 10px;
+        padding: 0.64rem 0.75rem;
+      }
+
+      .danger-box {
+        border-left: 5px solid var(--danger);
+        background: rgba(254, 226, 226, 0.8);
+        border-radius: 10px;
+        padding: 0.64rem 0.75rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        max-width: 1220px;
+        margin: 0 auto 2.4rem;
+        padding: 0 1.1rem;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+
+        .meta,
+        .grid-2,
+        .grid-3,
+        .calc-grid,
+        .bottleneck-row {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-wrap"><div id="scrollProgress"></div></div>
+
+    <header class="hero reveal">
+      <div class="hero-panel">
+        <span class="chip">CSE 517</span>
+        <span class="chip">Module 2</span>
+        <span class="chip">Performance + Reliability</span>
+
+        <h1>Complete Preparation Book: Performance and Reliability Analysis</h1>
+        <p class="subtitle">
+          This exam-ready note is built from your syllabus, teacher resources,
+          and PYQ (2019-2023). It covers every Module 2 topic with simple
+          explanations, formulas, solved numericals, visual diagrams, and fully
+          worked previous exam questions in writing style suitable for
+          university finals.
+        </p>
+
+        <div class="meta">
+          <div class="meta-item">
+            <b>Coverage:</b> All Module 2 topics, no skip
+          </div>
+          <div class="meta-item">
+            <b>Question style:</b> PYQ mapped and solved in detail
+          </div>
+          <div class="meta-item">
+            <b>Focus:</b> Fast concept clarity + high scoring answers
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="toc reveal">
+        <h3>Quick Navigation</h3>
+        <a href="#study-plan">How to Study This Module</a>
+        <a href="#topic1">1. CPU Performance Equation</a>
+        <a href="#topic2">2. MIPS, Throughput, Comparison</a>
+        <a href="#topic3">3. Amdahl Law and Speedup</a>
+        <a href="#topic4">4. Partial Enhancement Numericals</a>
+        <a href="#topic5">5. CPI-Clock-Time Numericals</a>
+        <a href="#topic6">6. Reliability: MTTF, FIT, MTBF</a>
+        <a href="#topic7">7. Bottleneck and Trade-Off Analysis</a>
+        <a href="#pyq">Matching PYQ with Full Solutions</a>
+        <a href="#final-sheet">Final Revision Sheet</a>
+      </aside>
+
+      <article class="content">
+        <section id="study-plan" class="card reveal">
+          <h2>How to Study This Module Efficiently</h2>
+          <ol>
+            <li>Understand formula meaning first, do not memorize blindly.</li>
+            <li>
+              Practice unit checking (cycles, seconds, instructions, Hz) to
+              avoid mistakes.
+            </li>
+            <li>Use the solved PYQ section to learn exam answer structure.</li>
+            <li>
+              Practice all speedup and processor comparison numericals with your
+              own calculator once.
+            </li>
+          </ol>
+          <div class="ok-box">
+            If you can solve Amdahl, weighted CPI, MIPS comparison, and
+            reliability conversion without looking, then Module 2 is exam-ready.
+          </div>
+        </section>
+
+        <section id="topic1" class="card reveal">
+          <h2>Topic 1: CPU Performance Equation</h2>
+          <div class="definition">
+            <b>CPU Performance Equation:</b> CPU time = Instruction Count (IC) x
+            Cycles Per Instruction (CPI) x Clock Cycle Time
+          </div>
+
+          <div class="formula">
+            CPU time = IC x CPI x Clock cycle time CPU time = (IC x CPI) / Clock
+            rate CPU clock cycles = IC x CPI
+          </div>
+
+          <h3>Meaning of each term</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Term</th>
+                <th>Meaning</th>
+                <th>Typical unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IC</td>
+                <td>Total instructions executed by the program</td>
+                <td>instructions</td>
+              </tr>
+              <tr>
+                <td>CPI</td>
+                <td>Average cycles needed per instruction</td>
+                <td>cycles/instruction</td>
+              </tr>
+              <tr>
+                <td>Clock cycle time</td>
+                <td>Time duration of one clock cycle</td>
+                <td>seconds/cycle</td>
+              </tr>
+              <tr>
+                <td>Clock rate</td>
+                <td>Number of cycles per second</td>
+                <td>Hz (cycles/sec)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Unit proof: Why "seconds per program"</h3>
+          <div class="formula">
+            CPU time = (instructions) x (cycles/instruction) x (seconds/cycle) =
+            seconds
+          </div>
+
+          <h3>Visual formula map</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="270"
+              viewBox="0 0 860 270"
+              role="img"
+              aria-label="CPU performance equation map"
+            >
+              <defs>
+                <marker
+                  id="arr1"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,5 L0,10 z" fill="#1f2937" />
+                </marker>
+              </defs>
+
+              <rect
+                x="325"
+                y="24"
+                width="220"
+                height="62"
+                rx="10"
+                fill="#fee2e2"
+                stroke="#dc2626"
+                stroke-width="2"
+              />
+              <text
+                x="435"
+                y="62"
+                text-anchor="middle"
+                font-size="20"
+                font-weight="800"
+                fill="#7f1d1d"
+              >
+                CPU Time
+              </text>
+
+              <rect
+                x="80"
+                y="145"
+                width="200"
+                height="62"
+                rx="10"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+                stroke-width="2"
+              />
+              <text
+                x="180"
+                y="183"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                Instruction Count
+              </text>
+
+              <rect
+                x="330"
+                y="145"
+                width="200"
+                height="62"
+                rx="10"
+                fill="#ccfbf1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="430"
+                y="183"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                CPI
+              </text>
+
+              <rect
+                x="580"
+                y="145"
+                width="200"
+                height="62"
+                rx="10"
+                fill="#ede9fe"
+                stroke="#6d28d9"
+                stroke-width="2"
+              />
+              <text
+                x="680"
+                y="183"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                Cycle Time
+              </text>
+
+              <line
+                x1="390"
+                y1="86"
+                x2="220"
+                y2="145"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arr1)"
+              />
+              <line
+                x1="435"
+                y1="86"
+                x2="430"
+                y2="145"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arr1)"
+              />
+              <line
+                x1="480"
+                y1="86"
+                x2="640"
+                y2="145"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arr1)"
+              />
+
+              <text
+                x="436"
+                y="246"
+                text-anchor="middle"
+                font-size="14"
+                fill="#334155"
+              >
+                CPU Time increases if IC or CPI or Cycle Time increases.
+              </text>
+            </svg>
+          </div>
+
+          <h3>Numerical example</h3>
+          <p>
+            Suppose IC = 2,000,000 instructions, CPI = 2.5, and clock rate = 500
+            MHz.
+          </p>
+          <div class="formula">
+            CPU time = (IC x CPI) / Clock rate = (2,000,000 x 2.5) / (500 x
+            10^6) = 5,000,000 / 500,000,000 = 0.01 s = 10 ms
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Always write both forms: with cycle time and with clock rate.
+              </li>
+              <li>Use unit-cancellation line to justify seconds/program.</li>
+              <li>
+                Do not confuse CPI with clock rate; one is per instruction, one
+                is per second.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic2" class="card reveal">
+          <h2>
+            Topic 2: MIPS, Throughput, and Processor Performance Comparison
+          </h2>
+
+          <div class="definition">
+            <b>MIPS:</b> Million Instructions Per Second. It indicates
+            instruction execution rate, not absolute quality of processor for
+            all workloads.
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <h4>MIPS formulas</h4>
+              <div class="formula">
+                MIPS = Instruction count / (Execution time x 10^6) MIPS = Clock
+                rate / (CPI x 10^6)
+              </div>
+            </div>
+            <div class="mini-card">
+              <h4>Throughput</h4>
+              <div class="formula">
+                Throughput = Number of completed jobs / Total time
+              </div>
+              <p>
+                Higher throughput means system handles more tasks per unit time.
+              </p>
+            </div>
+          </div>
+
+          <h3>Performance comparison rule</h3>
+          <div class="formula">
+            Performance is inversely proportional to execution time. If
+            execution time decreases, performance increases.
+          </div>
+
+          <h3>When MIPS can mislead</h3>
+          <ul>
+            <li>Different ISAs use different instruction complexity.</li>
+            <li>Higher MIPS does not always mean lower program time.</li>
+            <li>
+              Always combine MIPS with CPI, clock rate, and real execution time.
+            </li>
+          </ul>
+
+          <h3>Mini comparison diagram</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="300"
+              viewBox="0 0 860 300"
+              role="img"
+              aria-label="Processor comparison bars"
+            >
+              <rect
+                x="80"
+                y="40"
+                width="700"
+                height="220"
+                fill="#fff"
+                stroke="#94a3b8"
+                stroke-width="1.4"
+              />
+              <line
+                x1="110"
+                y1="240"
+                x2="760"
+                y2="240"
+                stroke="#64748b"
+                stroke-width="1.5"
+              />
+
+              <rect
+                x="170"
+                y="118"
+                width="110"
+                height="122"
+                fill="#bfdbfe"
+                stroke="#1d4ed8"
+              />
+              <rect
+                x="360"
+                y="88"
+                width="110"
+                height="152"
+                fill="#a7f3d0"
+                stroke="#0f766e"
+              />
+              <rect
+                x="550"
+                y="130"
+                width="110"
+                height="110"
+                fill="#fecaca"
+                stroke="#dc2626"
+              />
+
+              <text
+                x="225"
+                y="112"
+                text-anchor="middle"
+                font-size="13"
+                fill="#1e3a8a"
+              >
+                2.0 GIPS
+              </text>
+              <text
+                x="415"
+                y="82"
+                text-anchor="middle"
+                font-size="13"
+                fill="#065f46"
+              >
+                2.5 GIPS
+              </text>
+              <text
+                x="605"
+                y="124"
+                text-anchor="middle"
+                font-size="13"
+                fill="#7f1d1d"
+              >
+                1.818 GIPS
+              </text>
+
+              <text x="225" y="260" text-anchor="middle" font-size="13">
+                P1
+              </text>
+              <text x="415" y="260" text-anchor="middle" font-size="13">
+                P2
+              </text>
+              <text x="605" y="260" text-anchor="middle" font-size="13">
+                P3
+              </text>
+
+              <text
+                x="430"
+                y="24"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#0f172a"
+              >
+                Instruction Rate Comparison Example (from PYQ style)
+              </text>
+            </svg>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For comparisons: compute instructions/sec first, then cycles and
+                instructions if needed.
+              </li>
+              <li>Always mention why MIPS alone can be incomplete.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic3" class="card reveal">
+          <h2>Topic 3: Amdahl Law and Overall Speedup Interpretation</h2>
+
+          <div class="definition">
+            <b>Amdahl Law:</b> Overall speedup depends on both improved part and
+            unimproved part. Improving only one portion of a program has limited
+            global impact.
+          </div>
+
+          <h3>Main formula (single enhanced fraction)</h3>
+          <div class="formula">
+            Speedup_overall = 1 / ((1 - f) + f/S) where f = fraction enhanced, S
+            = speedup of enhanced fraction
+          </div>
+
+          <h3>Alternative time-based method (for multiple fractions)</h3>
+          <div class="formula">
+            T_new = Sum(T_i / S_i for improved parts) + Sum(T_j for unchanged
+            parts) Overall speedup = T_old / T_new
+          </div>
+
+          <h3>Interpretation points</h3>
+          <ul>
+            <li>If f is small, even very large S gives small overall gain.</li>
+            <li>As S -> infinity, maximum overall speedup = 1/(1-f).</li>
+            <li>
+              So bottleneck (unimproved portion) sets upper performance limit.
+            </li>
+          </ul>
+
+          <h3>Interactive Amdahl calculator</h3>
+          <div class="calc-grid">
+            <div>
+              <label for="fractionF">Enhanced fraction f (0 to 1)</label>
+              <input
+                id="fractionF"
+                type="number"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.4"
+              />
+            </div>
+            <div>
+              <label for="speedupS">Speedup S of enhanced part</label>
+              <input
+                id="speedupS"
+                type="number"
+                min="1"
+                step="0.1"
+                value="10"
+              />
+            </div>
+            <div>
+              <button class="btn" type="button" id="runAmdahl">
+                Compute Speedup
+              </button>
+            </div>
+            <div></div>
+          </div>
+          <div class="result" id="amdahlResult">
+            Overall speedup result will appear here.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Write formula clearly and define f and S.</li>
+              <li>
+                Add interpretation line: "Unimproved part limits speedup".
+              </li>
+              <li>
+                For numericals, always compute new time first if data is given
+                in milliseconds.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic4" class="card reveal">
+          <h2>Topic 4: Numerical Speedup Problems with Partial Enhancements</h2>
+
+          <h3>Standard solving method</h3>
+          <ol>
+            <li>
+              Convert percentages into time portions using total execution time.
+            </li>
+            <li>
+              Convert each enhancement to speedup factor S (e.g., 30% faster ->
+              S = 1.3).
+            </li>
+            <li>Compute each improved part as old_time / S.</li>
+            <li>Add unchanged parts.</li>
+            <li>Overall speedup = old total / new total.</li>
+          </ol>
+
+          <h3>Worked example from teacher resource</h3>
+          <p>
+            Program time = 100 ms with A=10 ms, B=30 ms, C=60 ms. A and B are
+            each improved by factor 2.
+          </p>
+          <div class="formula">
+            T_new = 10/2 + 30/2 + 60 = 5 + 15 + 60 = 80 ms Speedup = 100/80 =
+            1.25
+          </div>
+
+          <h3>Common interpretation trap</h3>
+          <div class="warn-box">
+            If question says "enhanced 25%", default exam interpretation is
+            usually speedup factor 1.25, not time reduction directly by 25%.
+            Mention your assumption briefly in solution for safety.
+          </div>
+        </section>
+
+        <section id="topic5" class="card reveal">
+          <h2>Topic 5: CPI, Clock Rate, Execution-Time Based Numericals</h2>
+
+          <h3>Weighted CPI for instruction mix</h3>
+          <div class="formula">CPI_avg = Sum(CPI_i x Fraction_i)</div>
+
+          <h3>Cycle count expression used in PYQ</h3>
+          <div class="formula">Total clock cycles = Sum(IC_i x CPI_i)</div>
+
+          <h3>Useful rearrangements</h3>
+          <div class="grid-2">
+            <div class="mini-card">
+              <h4>Execution time target</h4>
+              <div class="formula">
+                Clock_new = (IC x CPI_new) / Time_target
+              </div>
+            </div>
+            <div class="mini-card">
+              <h4>Rate scaling form</h4>
+              <div class="formula">
+                Clock_new/Clock_old = (CPI_new/CPI_old) x (Time_old/Time_new)
+              </div>
+            </div>
+          </div>
+
+          <h3>Quick calculator: CPU time from IC, CPI, Clock rate</h3>
+          <div class="calc-grid">
+            <div>
+              <label for="icInput">Instruction count (IC)</label>
+              <input
+                id="icInput"
+                type="number"
+                min="1"
+                step="1"
+                value="2000000"
+              />
+            </div>
+            <div>
+              <label for="cpiInput">Average CPI</label>
+              <input
+                id="cpiInput"
+                type="number"
+                min="0.1"
+                step="0.01"
+                value="2.24"
+              />
+            </div>
+            <div>
+              <label for="clkInput">Clock rate (MHz)</label>
+              <input id="clkInput" type="number" min="1" step="1" value="400" />
+            </div>
+            <div>
+              <button class="btn" type="button" id="runCpuCalc">Compute</button>
+            </div>
+          </div>
+          <div class="result" id="cpuCalcResult">
+            CPU time and MIPS result will appear here.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Use weighted CPI whenever instruction mix is given.</li>
+              <li>
+                Show units each step; most errors happen in MHz to Hz
+                conversion.
+              </li>
+              <li>
+                If result is in seconds, also convert to ms to improve
+                readability.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic6" class="card reveal">
+          <h2>Topic 6: Reliability Terms - MTTF, FIT, MTBF</h2>
+
+          <div class="definition">
+            <b>Reliability analysis</b> estimates failure behavior and service
+            continuity of hardware/system over time.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Term</th>
+                <th>Full form</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MTTF</td>
+                <td>Mean Time To Failure</td>
+                <td>
+                  Average operating time before failure (non-repairable view)
+                </td>
+              </tr>
+              <tr>
+                <td>FIT</td>
+                <td>Failures In Time</td>
+                <td>Number of failures per 10^9 device-hours</td>
+              </tr>
+              <tr>
+                <td>MTBF</td>
+                <td>Mean Time Between Failures</td>
+                <td>Average interval between failures in repairable systems</td>
+              </tr>
+              <tr>
+                <td>MTTR</td>
+                <td>Mean Time To Repair</td>
+                <td>Average downtime for repair and restoration</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Core relationships</h3>
+          <div class="formula">
+            Failure rate lambda = 1 / MTTF FIT = 10^9 / MTTF(hours) MTBF = MTTF
+            + MTTR (repairable system model) Availability = MTTF / (MTTF + MTTR)
+          </div>
+
+          <h3>Reliability conversion example</h3>
+          <p>Given MTTF = 200,000 hours:</p>
+          <div class="formula">FIT = 10^9 / 200,000 = 5000 FIT</div>
+
+          <h3>Availability example</h3>
+          <p>If MTTF = 10,000 hours and MTTR = 10 hours:</p>
+          <div class="formula">
+            Availability = 10000 / (10000 + 10) = 0.999001 approx 99.90%
+          </div>
+
+          <h3>Interactive reliability converter</h3>
+          <div class="calc-grid">
+            <div>
+              <label for="mttfInput">MTTF (hours)</label>
+              <input
+                id="mttfInput"
+                type="number"
+                min="1"
+                step="1"
+                value="200000"
+              />
+            </div>
+            <div>
+              <label for="mttrInput">MTTR (hours)</label>
+              <input
+                id="mttrInput"
+                type="number"
+                min="0"
+                step="0.1"
+                value="10"
+              />
+            </div>
+            <div>
+              <button class="btn" type="button" id="runReliability">
+                Compute FIT + MTBF + Availability
+              </button>
+            </div>
+            <div></div>
+          </div>
+          <div class="result" id="reliabilityResult">
+            Reliability outputs will appear here.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                State units clearly: hours for MTTF/MTBF, failures per 10^9
+                hours for FIT.
+              </li>
+              <li>If MTTR is given, write MTBF and availability also.</li>
+              <li>
+                In short questions, define all terms first, then relation
+                formulas.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic7" class="card reveal">
+          <h2>Topic 7: Bottleneck Analysis and Performance Trade-Offs</h2>
+
+          <div class="definition">
+            <b>Bottleneck:</b> The slowest or most constrained component limits
+            total system performance.
+          </div>
+
+          <h3>Performance bottleneck examples</h3>
+          <ul>
+            <li>Fast CPU but slow memory access (memory wall).</li>
+            <li>High clock rate but large CPI due to stalls.</li>
+            <li>High compute speed but poor I/O throughput.</li>
+          </ul>
+
+          <h3>Animated bottleneck chain</h3>
+          <button class="btn" type="button" id="showBottleneck">
+            Highlight Bottleneck
+          </button>
+          <div class="bottleneck-row" style="margin-top: 0.6rem">
+            <div class="bottle" id="stage1">CPU Core<br />Very fast</div>
+            <div class="bottle" id="stage2">L1/L2 Cache<br />Fast</div>
+            <div class="bottle" id="stage3">Memory Bus<br />Medium</div>
+            <div class="bottle" id="stage4">Main Memory<br />Slowest</div>
+            <div class="bottle" id="stage5">Storage/I/O<br />Variable</div>
+          </div>
+
+          <h3>Trade-off table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Design decision</th>
+                <th>Benefit</th>
+                <th>Possible trade-off</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Increase clock rate</td>
+                <td>Can reduce cycle time</td>
+                <td>
+                  Higher power/heat, may increase CPI due to deeper pipelines
+                </td>
+              </tr>
+              <tr>
+                <td>Larger cache</td>
+                <td>Lower miss rate</td>
+                <td>Higher cost, larger access latency after some point</td>
+              </tr>
+              <tr>
+                <td>Add more cores</td>
+                <td>Higher throughput</td>
+                <td>Parallel software limit, memory contention</td>
+              </tr>
+              <tr>
+                <td>Very aggressive optimization of one part</td>
+                <td>Local speedup</td>
+                <td>Diminishing overall return (Amdahl limit)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Exam answer template for bottleneck questions</h3>
+          <ol>
+            <li>Identify the slowest component using timing numbers.</li>
+            <li>Apply Amdahl style limit to show global impact.</li>
+            <li>Suggest balanced improvement (CPU + memory + I/O together).</li>
+            <li>Mention trade-offs: cost, power, complexity, reliability.</li>
+          </ol>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Words like "balance" and "system-level optimization" are
+                important for marks.
+              </li>
+              <li>
+                Always connect bottleneck discussion to quantitative speedup
+                limit.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="pyq" class="card reveal">
+          <h2>
+            Matching Previous Year Questions with Complete Detailed Solutions
+          </h2>
+
+          <div>
+            <span class="tag">2019 Q2(a,b)</span>
+            <span class="tag">2020 Sec A(a), Sec B(d)</span>
+            <span class="tag">2022 Q2(a,b,c)</span>
+            <span class="tag">2023 Q1(b), Q2(b,c), Q3(a,c)</span>
+            <span class="tag">2022 Q1(a) Bottleneck style</span>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 Sec A(a) / 2023 Q1(b): State Amdahl law for system
+              performance enhancement.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                Amdahl law states that overall system speedup due to enhancement
+                of one component is limited by the fraction of total execution
+                time that component originally consumes. Even infinite
+                improvement of one part cannot remove time spent in unaffected
+                parts.
+              </p>
+              <div class="formula">Speedup_overall = 1 / ((1 - f) + f/S)</div>
+              <p>
+                Here, f is the fraction improved and S is speedup factor of that
+                fraction. This law is used to estimate realistic performance
+                gain before optimization.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q2(b) Part 1: 65 ms process, parts a/b/c = 60/30/10%, b
+              enhanced 25%, c enhanced 20%.
+            </div>
+            <div class="qa-body">
+              <div class="answer-steps">
+                <b>Step 1: Original time split</b><br />
+                a = 0.60 x 65 = 39 ms<br />
+                b = 0.30 x 65 = 19.5 ms<br />
+                c = 0.10 x 65 = 6.5 ms
+              </div>
+
+              <div class="answer-steps">
+                <b>Step 2: Apply enhancement factors</b><br />
+                Assume "enhanced 25%" => speedup factor 1.25, and "enhanced 20%"
+                => speedup factor 1.20.<br />
+                b_new = 19.5 / 1.25 = 15.6 ms<br />
+                c_new = 6.5 / 1.20 = 5.4167 ms
+              </div>
+
+              <div class="answer-steps">
+                <b>Step 3: New total time and speedup</b><br />
+                T_new = 39 + 15.6 + 5.4167 = 60.0167 ms<br />
+                Speedup = 65 / 60.0167 = 1.083
+              </div>
+
+              <p>
+                <b>Final answer:</b> Overall speedup approx 1.083, i.e., about
+                8.3% improvement.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q2(b) Part 2: Processor 10x faster on computation,
+              original time 40% compute and 60% I/O wait.
+            </div>
+            <div class="qa-body">
+              <div class="formula">
+                Speedup = 1 / ((1 - 0.4) + 0.4/10) = 1 / (0.6 + 0.04) = 1 / 0.64
+                = 1.5625
+              </div>
+              <p>
+                <b>Final answer:</b> Overall speedup = 1.5625 (approx 56.25%
+                faster than original).
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q2(b): 100 ms process, a/b/c = 70/20/10%, b enhanced 30%,
+              c enhanced 20%.
+            </div>
+            <div class="qa-body">
+              <div class="answer-steps">
+                Original times: a=70 ms, b=20 ms, c=10 ms.
+              </div>
+              <div class="answer-steps">
+                Enhancements interpreted as speedup factors: b=1.3, c=1.2.<br />
+                b_new = 20/1.3 = 15.3846 ms<br />
+                c_new = 10/1.2 = 8.3333 ms
+              </div>
+              <div class="answer-steps">
+                T_new = 70 + 15.3846 + 8.3333 = 93.7179 ms<br />
+                Speedup = 100/93.7179 = 1.067
+              </div>
+              <p>
+                <b>Final answer:</b> Overall speedup approx 1.067 (about 6.7%
+                improvement).
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q2(b): 50 ms process with f1/f2/f3/f4 = 50/30/15/5%, f1
+              2x faster, f2 3x faster.
+            </div>
+            <div class="qa-body">
+              <div class="answer-steps">
+                f1 = 25 ms, f2 = 15 ms, f3 = 7.5 ms, f4 = 2.5 ms.
+              </div>
+              <div class="answer-steps">
+                New times: f1_new = 25/2 = 12.5 ms, f2_new = 15/3 = 5 ms, f3 and
+                f4 unchanged.
+              </div>
+              <div class="answer-steps">
+                T_new = 12.5 + 5 + 7.5 + 2.5 = 27.5 ms<br />
+                Speedup = 50/27.5 = 1.818
+              </div>
+              <p>
+                <b>Final answer:</b> Overall speedup approx 1.818 (about 81.8%
+                faster).
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q2(c): Explain CPU clock cycles = Sum(IC_i x CPI_i).
+            </div>
+            <div class="qa-body">
+              <p><b>Model explanation:</b></p>
+              <p>
+                A program has multiple instruction classes (for example
+                arithmetic, branch, load/store). Each class has instruction
+                count IC_i and per-instruction cycle requirement CPI_i. Total
+                cycles needed by class i = IC_i x CPI_i. Summing all classes
+                gives total clock cycles of entire program:
+              </p>
+              <div class="formula">Total cycles = Sum(IC_i x CPI_i)</div>
+              <p>
+                Therefore the equation is fundamental for CPI-based performance
+                analysis and is directly used to compute execution time: CPU
+                time = Total cycles / Clock rate.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q2(c): Show CPU time = Seconds/program from CPU time
+              equation.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <div class="formula">
+                CPU time = Instruction count x Cycles per instruction x Seconds
+                per cycle
+              </div>
+              <div class="formula">
+                Units: (instructions) x (cycles/instruction) x (seconds/cycle) =
+                seconds
+              </div>
+              <p>
+                Since instruction and cycle units cancel out, the final unit is
+                seconds required to run one program, i.e., seconds/program.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 Sec B(d): Compare P1/P2/P3 and compute required clock for
+              30% time reduction with 20% CPI increase.
+            </div>
+            <div class="qa-body">
+              <div class="answer-steps">
+                Given:<br />
+                P1: 3.0 GHz, CPI 1.5 -> IPS = 3.0e9/1.5 = 2.0e9 instr/s<br />
+                P2: 2.5 GHz, CPI 1.0 -> IPS = 2.5e9 instr/s<br />
+                P3: 4.0 GHz, CPI 2.2 -> IPS = 1.818e9 instr/s
+              </div>
+              <p><b>(i) Highest performance:</b> P2.</p>
+
+              <div class="answer-steps">
+                <b>(ii) If each runs for 10 sec:</b><br />
+                P1 cycles = 3.0e9 x 10 = 30e9, instructions = 30e9/1.5 = 20e9<br />
+                P2 cycles = 2.5e9 x 10 = 25e9, instructions = 25e9/1.0 = 25e9<br />
+                P3 cycles = 4.0e9 x 10 = 40e9, instructions = 40e9/2.2 =
+                18.1818e9
+              </div>
+
+              <div class="answer-steps">
+                <b>(iii) New clock with 30% less time and 20% more CPI:</b
+                ><br />
+                Time_new = 0.7 Time_old, CPI_new = 1.2 CPI_old<br />
+                Clock_new/Clock_old = (1.2/0.7) = 1.7143
+              </div>
+              <p>
+                So required clock is 1.7143 times old clock. Example for P1: 3.0
+                x 1.7143 = 5.14 GHz.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q3(a): Find MIPS rate (2 million instructions, 400 MHz,
+              given CPI mix).
+            </div>
+            <div class="qa-body">
+              <div class="answer-steps">
+                Weighted CPI: CPI_avg = 0.60x1 + 0.18x2 + 0.12x4 + 0.10x8 = 0.6
+                + 0.36 + 0.48 + 0.8 = 2.24
+              </div>
+              <div class="answer-steps">
+                Instruction rate = Clock rate / CPI_avg = 400e6 / 2.24 =
+                178.571e6 instructions/s MIPS = 178.571
+              </div>
+              <p><b>Final answer:</b> MIPS rate approx 178.57.</p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q1(a): "Processing speed has increased more rapidly than
+              memory access time" - justify.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                CPU technology scaling increased core frequency and parallel
+                processing capability much faster than DRAM latency reduction.
+                So relative latency gap increased. Example: CPU cycle can reduce
+                from 10 ns to 1 ns while memory access may reduce from 100 ns to
+                60 ns. Ratio changes from 10:1 to 60:1. Hence CPU waits
+                proportionally more for memory despite absolute improvement.
+              </p>
+              <p>
+                This is the memory bottleneck (memory wall), motivating cache
+                hierarchy and locality-aware optimization.
+              </p>
+            </div>
+          </div>
+
+          <div class="danger-box" style="margin-top: 0.85rem">
+            Reliability terms (MTTF/FIT/MTBF) are explicitly listed in syllabus
+            but are not frequently seen as full PYQ numericals in 2019-2023
+            papers. Prepare these as high-probability short/theory questions.
+          </div>
+        </section>
+
+        <section id="final-sheet" class="card reveal">
+          <h2>Final Revision Sheet (One Fast Read Before Exam)</h2>
+
+          <h3>Must-remember formulas</h3>
+          <div class="formula">
+            CPU time = IC x CPI x cycle time = (IC x CPI)/clock rate Total
+            cycles = Sum(IC_i x CPI_i) CPI_avg = Sum(CPI_i x fraction_i) MIPS =
+            clock rate/(CPI x 10^6) Amdahl: Speedup = 1/((1-f) + f/S) FIT = 10^9
+            / MTTF(hours) MTBF = MTTF + MTTR Availability = MTTF/(MTTF + MTTR)
+          </div>
+
+          <h3>Most likely exam combinations</h3>
+          <ol>
+            <li>Amdahl law statement + multi-part speedup numerical.</li>
+            <li>CPU equation unit proof + CPI/clock-based numerical.</li>
+            <li>
+              Processor comparison (IPS/MIPS/cycles/instructions) + required
+              clock scaling.
+            </li>
+            <li>Bottleneck explanation with memory wall example.</li>
+            <li>Short-note reliability terms and relation formulas.</li>
+          </ol>
+
+          <div class="ok-box">
+            Final self-test: solve PYQ 2019 Q2(b), 2022 Q2(b), 2023 Q2(b), and
+            2020 processor comparison without notes. If all correct, Module 2
+            preparation is strong.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer reveal">
+      Prepared for CSE 517 semester final exam. Module 2 only: Performance and
+      Reliability Analysis.
+    </footer>
+
+    <script>
+      (function () {
+        var progress = document.getElementById("scrollProgress");
+
+        function updateProgress() {
+          var top =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          var h =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          var p = h > 0 ? (top / h) * 100 : 0;
+          progress.style.width = p + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("load", updateProgress);
+
+        var runAmdahl = document.getElementById("runAmdahl");
+        var amdahlResult = document.getElementById("amdahlResult");
+
+        if (runAmdahl) {
+          runAmdahl.addEventListener("click", function () {
+            var f = Number(document.getElementById("fractionF").value);
+            var s = Number(document.getElementById("speedupS").value);
+
+            if (!(f >= 0 && f <= 1)) {
+              amdahlResult.textContent = "Enter fraction f between 0 and 1.";
+              return;
+            }
+            if (!(s >= 1)) {
+              amdahlResult.textContent = "Enter speedup S >= 1.";
+              return;
+            }
+
+            var overall = 1 / (1 - f + f / s);
+            amdahlResult.textContent =
+              "Overall speedup = " + overall.toFixed(4) + "x";
+          });
+        }
+
+        var runCpuCalc = document.getElementById("runCpuCalc");
+        var cpuCalcResult = document.getElementById("cpuCalcResult");
+
+        if (runCpuCalc) {
+          runCpuCalc.addEventListener("click", function () {
+            var ic = Number(document.getElementById("icInput").value);
+            var cpi = Number(document.getElementById("cpiInput").value);
+            var clkMHz = Number(document.getElementById("clkInput").value);
+
+            if (!(ic > 0) || !(cpi > 0) || !(clkMHz > 0)) {
+              cpuCalcResult.textContent =
+                "Enter positive IC, CPI, and clock rate.";
+              return;
+            }
+
+            var clkHz = clkMHz * 1000000;
+            var timeSec = (ic * cpi) / clkHz;
+            var mips = clkHz / (cpi * 1000000);
+
+            cpuCalcResult.textContent =
+              "CPU time = " +
+              timeSec.toFixed(6) +
+              " s (" +
+              (timeSec * 1000).toFixed(3) +
+              " ms), MIPS = " +
+              mips.toFixed(3);
+          });
+        }
+
+        var runReliability = document.getElementById("runReliability");
+        var reliabilityResult = document.getElementById("reliabilityResult");
+
+        if (runReliability) {
+          runReliability.addEventListener("click", function () {
+            var mttf = Number(document.getElementById("mttfInput").value);
+            var mttr = Number(document.getElementById("mttrInput").value);
+
+            if (!(mttf > 0) || !(mttr >= 0)) {
+              reliabilityResult.textContent = "Enter MTTF > 0 and MTTR >= 0.";
+              return;
+            }
+
+            var fit = 1000000000 / mttf;
+            var mtbf = mttf + mttr;
+            var avail = mttf / (mttf + mttr);
+
+            reliabilityResult.textContent =
+              "FIT = " +
+              fit.toFixed(2) +
+              ", MTBF = " +
+              mtbf.toFixed(2) +
+              " hours, Availability = " +
+              (avail * 100).toFixed(4) +
+              "%";
+          });
+        }
+
+        var showBottleneck = document.getElementById("showBottleneck");
+        if (showBottleneck) {
+          showBottleneck.addEventListener("click", function () {
+            var ids = ["stage1", "stage2", "stage3", "stage4", "stage5"];
+            for (var i = 0; i < ids.length; i += 1) {
+              var node = document.getElementById(ids[i]);
+              if (node) {
+                node.classList.remove("tight");
+              }
+            }
+            var bottleneckNode = document.getElementById("stage4");
+            if (bottleneckNode) {
+              bottleneckNode.classList.add("tight");
+            }
+          });
+        }
+
+        var revealNodes = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries, obs) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("show");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
+          );
+
+          revealNodes.forEach(function (n) {
+            observer.observe(n);
+          });
+        } else {
+          revealNodes.forEach(function (n) {
+            n.classList.add("show");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

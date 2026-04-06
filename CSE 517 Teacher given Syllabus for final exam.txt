@@ -1,0 +1,7 @@
+﻿Text books
+William Stallings
+Computer Architecture vs Computer Organization (sheet provided), Evolution of Computer (ppt), Moore’s law, law of diminishing returns, top level view of computer, Vonn Neuman architecture, computing vs calculation, structure and functions, growth in CPU transistor count. Evolution of DRAM and processor characteristics, basic instruction cycle, example of program execution (contents of memory and registers in hexadecimal), cache memory, different mapping examples, memory replacement algorithms, SRAM, DRAM, types of ROM. Error detection and correction (Hamming code). 
+Patterson
+Amdahl’s law, MTTF, FIT, MTBF
+Morris Mano
+Three types of CPU organization, RISC vs CISC, addressing modes, numerical example, RISC characteristics, parallel processors, M.J Flynn’s classification of computers, numerical example of pipeline processing.

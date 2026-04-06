@@ -1,0 +1,2157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE 517 Module 4 Preparation Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Urbanist:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f2937;
+        --ink-soft: #334155;
+        --bg-a: #fef9c3;
+        --bg-b: #ecfdf5;
+        --bg-c: #eff6ff;
+        --card: rgba(255, 255, 255, 0.9);
+        --border: rgba(15, 23, 42, 0.16);
+        --accent-1: #0f766e;
+        --accent-2: #c2410c;
+        --accent-3: #1d4ed8;
+        --accent-4: #9333ea;
+        --good: #166534;
+        --warn: #b45309;
+        --danger: #991b1b;
+        --radius: 16px;
+        --shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Urbanist", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        line-height: 1.74;
+        overflow-x: hidden;
+        background: linear-gradient(
+          180deg,
+          var(--bg-a) 0%,
+          var(--bg-b) 50%,
+          var(--bg-c) 100%
+        );
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(34px);
+        opacity: 0.28;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      body::before {
+        width: 44vw;
+        height: 44vw;
+        left: -12vw;
+        top: -13vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(244, 63, 94, 0.36) 0%,
+          rgba(244, 63, 94, 0) 70%
+        );
+      }
+
+      body::after {
+        width: 42vw;
+        height: 42vw;
+        right: -13vw;
+        bottom: -13vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(14, 165, 233, 0.34) 0%,
+          rgba(14, 165, 233, 0) 70%
+        );
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Fraunces", "Times New Roman", serif;
+        margin-top: 0;
+        color: #0f172a;
+      }
+
+      h1 {
+        font-size: clamp(1.95rem, 4vw, 3.02rem);
+        line-height: 1.2;
+        margin-bottom: 0.68rem;
+      }
+
+      h2 {
+        font-size: clamp(1.42rem, 2.2vw, 2rem);
+        color: #0b4f4f;
+        margin-bottom: 0.55rem;
+      }
+
+      h3 {
+        font-size: clamp(1.12rem, 1.85vw, 1.42rem);
+        color: #1e40af;
+        margin-bottom: 0.44rem;
+      }
+
+      h4 {
+        font-size: 1.02rem;
+        color: #7c2d12;
+        margin-bottom: 0.34rem;
+      }
+
+      .progress-bar-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.76);
+        z-index: 999;
+      }
+
+      #progressBar {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-1),
+          var(--accent-3)
+        );
+      }
+
+      .hero {
+        max-width: 1230px;
+        margin: 0 auto;
+        padding: 5.7rem 1.1rem 2.5rem;
+      }
+
+      .hero-panel {
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 8px);
+        background: linear-gradient(
+          148deg,
+          rgba(255, 255, 255, 0.94),
+          rgba(239, 246, 255, 0.93)
+        );
+        box-shadow: var(--shadow);
+        padding: 1.86rem;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 190px;
+        height: 190px;
+        background: radial-gradient(
+          circle,
+          rgba(147, 51, 234, 0.24) 0%,
+          rgba(147, 51, 234, 0) 70%
+        );
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 0.31rem 0.72rem;
+        border-radius: 999px;
+        margin-right: 0.42rem;
+        margin-bottom: 0.48rem;
+        font-size: 0.79rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #0f766e;
+        background: rgba(45, 212, 191, 0.14);
+        border: 1px solid rgba(15, 118, 110, 0.4);
+      }
+
+      .subtitle {
+        color: var(--ink-soft);
+        max-width: 90ch;
+      }
+
+      .meta-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(160px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .meta {
+        border: 1px solid rgba(148, 163, 184, 0.34);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 0.72rem;
+        font-size: 0.94rem;
+      }
+
+      .meta b {
+        color: #0f766e;
+      }
+
+      .layout {
+        max-width: 1230px;
+        margin: 0 auto 2.8rem;
+        padding: 0 1.1rem 1.8rem;
+        display: grid;
+        grid-template-columns: minmax(220px, 310px) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(8px);
+        padding: 0.9rem;
+        max-height: calc(100vh - 1.7rem);
+        overflow: auto;
+      }
+
+      .toc h3 {
+        margin-bottom: 0.48rem;
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        color: #1d4ed8;
+        font-weight: 700;
+        font-size: 0.92rem;
+        padding: 0.33rem 0.4rem;
+        margin-bottom: 0.2rem;
+        border-left: 3px solid transparent;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .toc a:hover {
+        border-left-color: var(--accent-2);
+        background: rgba(194, 65, 12, 0.08);
+        transform: translateX(2px);
+      }
+
+      .content {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        padding: 1.16rem;
+      }
+
+      .definition {
+        border-left: 5px solid var(--accent-3);
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 10px;
+        padding: 0.67rem 0.8rem;
+        margin: 0.64rem 0;
+      }
+
+      .exam-focus {
+        border-left: 5px solid var(--accent-2);
+        background: rgba(194, 65, 12, 0.1);
+        border-radius: 10px;
+        padding: 0.68rem 0.82rem;
+        margin-top: 0.78rem;
+      }
+
+      .formula {
+        border: 1px dashed rgba(15, 118, 110, 0.45);
+        border-radius: 10px;
+        background: rgba(15, 118, 110, 0.08);
+        padding: 0.6rem 0.76rem;
+        margin: 0.62rem 0;
+        font-family: "IBM Plex Mono", "Courier New", monospace;
+        font-size: 0.88rem;
+        overflow-x: auto;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.84rem;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.82rem;
+      }
+
+      .mini {
+        border: 1px solid rgba(148, 163, 184, 0.34);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 0.72rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.68rem 0;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        padding: 0.56rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: rgba(20, 184, 166, 0.16);
+        font-weight: 800;
+      }
+
+      ul,
+      ol {
+        margin-top: 0.43rem;
+        margin-bottom: 0.44rem;
+      }
+
+      .diagram {
+        border: 1px solid rgba(148, 163, 184, 0.38);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.83);
+        padding: 0.62rem;
+        overflow-x: auto;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.54rem 0.96rem;
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+        box-shadow: 0 8px 16px rgba(29, 78, 216, 0.24);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(130px, 1fr));
+        gap: 0.62rem;
+        align-items: end;
+      }
+
+      .tool-grid label {
+        display: block;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 0.16rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        border-radius: 8px;
+        padding: 0.42rem 0.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        font-size: 0.94rem;
+      }
+
+      .result {
+        margin-top: 0.6rem;
+        border: 1px solid rgba(37, 99, 235, 0.32);
+        border-radius: 10px;
+        background: rgba(219, 234, 254, 0.62);
+        padding: 0.55rem 0.68rem;
+        font-weight: 700;
+      }
+
+      .hier-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(90px, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.62rem;
+      }
+
+      .hier-box {
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.76);
+        text-align: center;
+        padding: 0.52rem;
+        transition: all 0.24s ease;
+      }
+
+      .hier-box.active {
+        border-color: #0f766e;
+        background: rgba(45, 212, 191, 0.2);
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: 0.17rem 0.5rem;
+        margin-right: 0.34rem;
+        margin-bottom: 0.25rem;
+        border: 1px solid rgba(2, 132, 199, 0.38);
+        color: #0c4a6e;
+        background: rgba(186, 230, 253, 0.65);
+      }
+
+      .qa {
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.84);
+        margin-top: 0.85rem;
+      }
+
+      .qa-head {
+        background: rgba(59, 130, 246, 0.16);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 0.69rem 0.8rem;
+        font-weight: 800;
+      }
+
+      .qa-body {
+        padding: 0.78rem;
+      }
+
+      .answer-steps {
+        border-left: 5px solid rgba(37, 99, 235, 0.72);
+        background: rgba(37, 99, 235, 0.08);
+        border-radius: 10px;
+        padding: 0.6rem 0.74rem;
+        margin: 0.56rem 0;
+      }
+
+      .ok-box {
+        border-left: 5px solid var(--good);
+        background: rgba(34, 197, 94, 0.12);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .warn-box {
+        border-left: 5px solid var(--warn);
+        background: rgba(251, 191, 36, 0.15);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .danger-box {
+        border-left: 5px solid var(--danger);
+        background: rgba(254, 226, 226, 0.8);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        max-width: 1230px;
+        margin: 0 auto 2.4rem;
+        padding: 0 1.1rem;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+
+        .meta-grid,
+        .grid-2,
+        .grid-3,
+        .tool-grid,
+        .hier-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar-wrap"><div id="progressBar"></div></div>
+
+    <header class="hero reveal">
+      <div class="hero-panel">
+        <span class="chip">CSE 517</span>
+        <span class="chip">Module 4</span>
+        <span class="chip">Memory System Fundamentals</span>
+
+        <h1>Complete Exam-Ready Preparation Book: Module 4</h1>
+        <p class="subtitle">
+          Built from your teacher syllabus, memory resource slides, and PYQ from
+          2019 to 2023. This book covers all Module 4 topics in simple language
+          with definitions, formulas, diagrams, animations, and complete solved
+          exam questions.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta"><b>Coverage:</b> All Module 4 topics, no skip</div>
+          <div class="meta">
+            <b>Target:</b> University semester exam answer writing
+          </div>
+          <div class="meta">
+            <b>Mode:</b> Learn concepts + solve numericals + revise fast
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="toc reveal">
+        <h3>Quick Navigation</h3>
+        <a href="#study">How to Study This Module</a>
+        <a href="#t1">1. Memory Hierarchy and Locality</a>
+        <a href="#t2">2. Memory Characteristics</a>
+        <a href="#t3">3. Access Methods</a>
+        <a href="#t4">4. SRAM, DRAM, SDRAM, RDRAM, DDR</a>
+        <a href="#t5">5. ROM Family</a>
+        <a href="#t6">6. Virtual Memory and Relation with Cache</a>
+        <a href="#t7">7. Hamming Code (Error Detection and Correction)</a>
+        <a href="#pyq">Matching PYQ with Full Detailed Solutions</a>
+        <a href="#revision">Final Revision Sheet</a>
+      </aside>
+
+      <article class="content">
+        <section id="study" class="card reveal">
+          <h2>How to Study Module 4 for Maximum Marks</h2>
+          <ol>
+            <li>Memorize memory hierarchy order and trend directions first.</li>
+            <li>Master memory technology comparisons in table form.</li>
+            <li>Practice virtual memory concepts with TLB-page table logic.</li>
+            <li>
+              Practice Hamming code step-by-step with parity and syndrome.
+            </li>
+            <li>Use solved PYQs and rewrite answers in your own words once.</li>
+          </ol>
+          <div class="ok-box">
+            If you can solve one hierarchy trend question, one DRAM-SRAM
+            comparison, one virtual-memory short note, and one Hamming
+            correction problem, this module is exam-ready.
+          </div>
+        </section>
+
+        <section id="t1" class="card reveal">
+          <h2>Topic 1: Memory Hierarchy and Locality of Reference</h2>
+
+          <div class="definition">
+            <b>Memory hierarchy</b> is a layered arrangement of storage from
+            fastest/smallest/most expensive to slowest/largest/cheapest.
+          </div>
+
+          <h3>Typical hierarchy order (top to bottom)</h3>
+          <div class="formula">
+            Registers -> L1 Cache -> L2 Cache -> L3 Cache -> Main Memory (DRAM)
+            -> Secondary Storage (SSD/HDD) -> Optical/Tape
+          </div>
+
+          <div class="diagram">
+            <svg
+              width="860"
+              height="340"
+              viewBox="0 0 860 340"
+              role="img"
+              aria-label="Memory hierarchy pyramid"
+            >
+              <polygon
+                points="430,20 810,310 50,310"
+                fill="#f8fafc"
+                stroke="#94a3b8"
+                stroke-width="1.8"
+              />
+
+              <polygon
+                points="430,40 510,100 350,100"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text
+                x="430"
+                y="78"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                Registers
+              </text>
+
+              <polygon
+                points="350,100 560,150 300,150"
+                fill="#ccfbf1"
+                stroke="#0f766e"
+              />
+              <text
+                x="430"
+                y="132"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                L1/L2/L3 Cache
+              </text>
+
+              <polygon
+                points="300,150 620,205 240,205"
+                fill="#ede9fe"
+                stroke="#7c3aed"
+              />
+              <text
+                x="430"
+                y="186"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                Main Memory (DRAM)
+              </text>
+
+              <polygon
+                points="240,205 700,260 160,260"
+                fill="#fee2e2"
+                stroke="#c2410c"
+              />
+              <text
+                x="430"
+                y="238"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                SSD/HDD
+              </text>
+
+              <polygon
+                points="160,260 790,310 70,310"
+                fill="#fef3c7"
+                stroke="#ca8a04"
+              />
+              <text
+                x="430"
+                y="292"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                Optical/Tape Archive
+              </text>
+
+              <text x="88" y="36" font-size="13" fill="#334155">
+                Speed and cost/bit increase upward
+              </text>
+              <text x="590" y="330" font-size="13" fill="#334155">
+                Capacity increases downward
+              </text>
+            </svg>
+          </div>
+
+          <h3>Interactive hierarchy trend highlight</h3>
+          <button class="btn" id="runHierarchy" type="button">
+            Animate Hierarchy
+          </button>
+          <div class="hier-grid">
+            <div class="hier-box" id="h1">Registers</div>
+            <div class="hier-box" id="h2">L1</div>
+            <div class="hier-box" id="h3">L2</div>
+            <div class="hier-box" id="h4">L3</div>
+            <div class="hier-box" id="h5">DRAM</div>
+            <div class="hier-box" id="h6">SSD/HDD</div>
+            <div class="hier-box" id="h7">Tape</div>
+          </div>
+
+          <h3>Locality of reference</h3>
+          <div class="definition">
+            <b>Locality of reference</b> means programs tend to access a small
+            set of memory locations repeatedly over short intervals.
+          </div>
+
+          <div class="grid-2">
+            <div class="mini">
+              <h4>Temporal locality</h4>
+              <p>
+                Recently used data/instruction is likely to be used again soon.
+              </p>
+              <p>Example: loop counter variable used every iteration.</p>
+            </div>
+            <div class="mini">
+              <h4>Spatial locality</h4>
+              <p>
+                Locations near recently accessed location are likely to be used
+                soon.
+              </p>
+              <p>Example: reading array elements in sequence.</p>
+            </div>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                As we go down hierarchy: capacity increases, cost/bit decreases,
+                access time increases, access frequency decreases.
+              </li>
+              <li>Always connect locality to why cache works.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t2" class="card reveal">
+          <h2>Topic 2: Memory Characteristics</h2>
+
+          <div class="definition">
+            Standard memory characteristics (from Stallings style): location,
+            capacity, unit of transfer, access method, performance, physical
+            type, physical characteristics, and organization.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Characteristic</th>
+                <th>Meaning</th>
+                <th>Exam-style example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Location</td>
+                <td>Where memory exists relative to CPU</td>
+                <td>Registers, cache, main memory, external</td>
+              </tr>
+              <tr>
+                <td>Capacity</td>
+                <td>How much data can be stored</td>
+                <td>word size, number of words/bytes</td>
+              </tr>
+              <tr>
+                <td>Unit of transfer</td>
+                <td>Amount moved in one operation</td>
+                <td>word, block, cache line</td>
+              </tr>
+              <tr>
+                <td>Access method</td>
+                <td>How data is addressed/found</td>
+                <td>sequential, direct, random, associative</td>
+              </tr>
+              <tr>
+                <td>Performance</td>
+                <td>Time and bandwidth metrics</td>
+                <td>access time, cycle time, transfer rate</td>
+              </tr>
+              <tr>
+                <td>Physical type</td>
+                <td>Storage technology type</td>
+                <td>semiconductor, magnetic, optical</td>
+              </tr>
+              <tr>
+                <td>Physical characteristics</td>
+                <td>Behavioral properties</td>
+                <td>volatility, erasability, power consumption</td>
+              </tr>
+              <tr>
+                <td>Organization</td>
+                <td>Bit and word arrangement</td>
+                <td>interleaved memory layout</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Performance quantities</h3>
+          <div class="formula">
+            Access time: time from address request to valid data Cycle time:
+            access time + recovery time Transfer rate: data moved per second
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                If asked "key characteristics", list all categories then explain
+                each in one line.
+              </li>
+              <li>Differentiate access time and cycle time clearly.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t3" class="card reveal">
+          <h2>
+            Topic 3: Access Methods (Sequential, Direct, Random, Associative)
+          </h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>How access works</th>
+                <th>Access time dependency</th>
+                <th>Typical device</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sequential</td>
+                <td>Read in order from current position</td>
+                <td>Depends heavily on current position</td>
+                <td>Tape</td>
+              </tr>
+              <tr>
+                <td>Direct</td>
+                <td>Jump near block then sequential search</td>
+                <td>Depends on target and previous location</td>
+                <td>Disk</td>
+              </tr>
+              <tr>
+                <td>Random</td>
+                <td>Address maps directly to location</td>
+                <td>Almost independent of previous access</td>
+                <td>RAM</td>
+              </tr>
+              <tr>
+                <td>Associative</td>
+                <td>Search by content comparison/tag match</td>
+                <td>Independent of address order</td>
+                <td>Cache/TLB</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Comparison visualization</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="240"
+              viewBox="0 0 860 240"
+              role="img"
+              aria-label="Access method comparison"
+            >
+              <line
+                x1="90"
+                y1="200"
+                x2="790"
+                y2="200"
+                stroke="#64748b"
+                stroke-width="1.5"
+              />
+              <line
+                x1="90"
+                y1="40"
+                x2="90"
+                y2="200"
+                stroke="#64748b"
+                stroke-width="1.5"
+              />
+
+              <polyline
+                points="120,180 260,150 410,120 560,90 710,60"
+                fill="none"
+                stroke="#dc2626"
+                stroke-width="4"
+              />
+              <text x="715" y="56" font-size="12" fill="#7f1d1d">
+                Sequential: can be long
+              </text>
+
+              <polyline
+                points="120,145 260,130 410,125 560,122 710,120"
+                fill="none"
+                stroke="#1d4ed8"
+                stroke-width="4"
+              />
+              <text x="715" y="118" font-size="12" fill="#1e3a8a">
+                Direct: medium variation
+              </text>
+
+              <polyline
+                points="120,90 260,92 410,88 560,91 710,89"
+                fill="none"
+                stroke="#0f766e"
+                stroke-width="4"
+              />
+              <text x="715" y="90" font-size="12" fill="#065f46">
+                Random/Associative: near constant
+              </text>
+
+              <text
+                x="430"
+                y="226"
+                text-anchor="middle"
+                font-size="13"
+                fill="#334155"
+              >
+                Position/order effect on access time
+              </text>
+            </svg>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Sequential vs direct vs random is asked repeatedly; keep
+                one-line difference clear.
+              </li>
+              <li>
+                For direct access, mention "jump + short sequential scan".
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t4" class="card reveal">
+          <h2>
+            Topic 4: Main Memory Technologies (SRAM, DRAM, SDRAM, RDRAM, DDR)
+          </h2>
+
+          <div class="grid-2">
+            <div class="mini">
+              <h4>SRAM (Static RAM)</h4>
+              <ul>
+                <li>Stores bit using flip-flop latch.</li>
+                <li>No periodic refresh needed.</li>
+                <li>Very fast, low density, expensive.</li>
+                <li>Used mainly in cache memory.</li>
+              </ul>
+            </div>
+            <div class="mini">
+              <h4>DRAM (Dynamic RAM)</h4>
+              <ul>
+                <li>Stores bit as charge in capacitor.</li>
+                <li>Requires periodic refresh.</li>
+                <li>Slower than SRAM but high density and cheaper.</li>
+                <li>Used mainly in main memory.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Modern DRAM families</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Key idea</th>
+                <th>Use/impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SDRAM</td>
+                <td>Synchronous with system clock</td>
+                <td>Predictable timing, pipelined operations</td>
+              </tr>
+              <tr>
+                <td>RDRAM</td>
+                <td>High-speed channel architecture (Rambus)</td>
+                <td>Higher bandwidth in older systems, cost/heat concerns</td>
+              </tr>
+              <tr>
+                <td>DDR SDRAM</td>
+                <td>Transfers data on both rising and falling clock edges</td>
+                <td>Higher throughput; DDR2/3/4/5 generations</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>SRAM vs DRAM quick comparison table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>SRAM</th>
+                <th>DRAM</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cell structure</td>
+                <td>Flip-flop</td>
+                <td>Capacitor + transistor</td>
+              </tr>
+              <tr>
+                <td>Refresh</td>
+                <td>Not required</td>
+                <td>Required</td>
+              </tr>
+              <tr>
+                <td>Speed</td>
+                <td>Faster</td>
+                <td>Slower</td>
+              </tr>
+              <tr>
+                <td>Density</td>
+                <td>Lower</td>
+                <td>Higher</td>
+              </tr>
+              <tr>
+                <td>Cost per bit</td>
+                <td>Higher</td>
+                <td>Lower</td>
+              </tr>
+              <tr>
+                <td>Typical use</td>
+                <td>Cache</td>
+                <td>Main memory</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Always include at least 5 comparison points in SRAM vs DRAM
+                questions.
+              </li>
+              <li>For SDRAM/RDRAM/DDR, write one key function each.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t5" class="card reveal">
+          <h2>Topic 5: ROM Family (ROM, PROM, EPROM, EEPROM, Flash)</h2>
+
+          <div class="definition">
+            <b>ROM (Read Only Memory)</b> is non-volatile memory used to store
+            firmware or bootstrap code.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Programming method</th>
+                <th>Erase method</th>
+                <th>Rewrite flexibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mask ROM</td>
+                <td>Factory programmed</td>
+                <td>Not erasable</td>
+                <td>No rewrite</td>
+              </tr>
+              <tr>
+                <td>PROM</td>
+                <td>User programs once (fuse)</td>
+                <td>Not erasable</td>
+                <td>One-time programmable</td>
+              </tr>
+              <tr>
+                <td>EPROM</td>
+                <td>Electrically programmed</td>
+                <td>UV light erase</td>
+                <td>Rewritable after UV erase</td>
+              </tr>
+              <tr>
+                <td>EEPROM</td>
+                <td>Electrically programmed</td>
+                <td>Electrical erase (byte level)</td>
+                <td>Rewritable</td>
+              </tr>
+              <tr>
+                <td>Flash</td>
+                <td>Electrically programmed</td>
+                <td>Electrical erase (block level)</td>
+                <td>Rewritable, fast block operations</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warn-box">
+            Common exam confusion: Flash is a type of EEPROM, but erase
+            granularity is block-level instead of byte-level.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For EPROM vs EEPROM vs Flash, write erase mechanism and rewrite
+                granularity.
+              </li>
+              <li>Mention non-volatility of ROM family in first line.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t6" class="card reveal">
+          <h2>Topic 6: Virtual Memory Basics and Relation with Cache</h2>
+
+          <div class="definition">
+            <b>Virtual memory</b> gives each process a large logical address
+            space by mapping virtual pages to physical frames.
+          </div>
+
+          <h3>Core components</h3>
+          <ul>
+            <li>Virtual address split into page number and offset.</li>
+            <li>Page table maps virtual page to physical frame.</li>
+            <li>TLB stores recent page table entries for fast translation.</li>
+            <li>
+              If page missing from RAM, page fault occurs and OS brings page
+              from disk.
+            </li>
+          </ul>
+
+          <h3>Virtual memory translation diagram</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="320"
+              viewBox="0 0 860 320"
+              role="img"
+              aria-label="Virtual memory translation flow"
+            >
+              <defs>
+                <marker
+                  id="arrV"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,5 L0,10 z" fill="#1f2937" />
+                </marker>
+              </defs>
+
+              <rect
+                x="20"
+                y="120"
+                width="160"
+                height="70"
+                rx="10"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+                stroke-width="2"
+              />
+              <text
+                x="100"
+                y="160"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+              >
+                CPU (Virtual Addr)
+              </text>
+
+              <rect
+                x="220"
+                y="50"
+                width="140"
+                height="65"
+                rx="10"
+                fill="#ccfbf1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="290"
+                y="88"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+              >
+                TLB
+              </text>
+
+              <rect
+                x="220"
+                y="205"
+                width="170"
+                height="70"
+                rx="10"
+                fill="#fee2e2"
+                stroke="#c2410c"
+                stroke-width="2"
+              />
+              <text
+                x="305"
+                y="245"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+              >
+                Page Table
+              </text>
+
+              <rect
+                x="440"
+                y="120"
+                width="170"
+                height="70"
+                rx="10"
+                fill="#ede9fe"
+                stroke="#7c3aed"
+                stroke-width="2"
+              />
+              <text
+                x="525"
+                y="160"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+              >
+                Physical Memory
+              </text>
+
+              <rect
+                x="660"
+                y="120"
+                width="170"
+                height="70"
+                rx="10"
+                fill="#dcfce7"
+                stroke="#166534"
+                stroke-width="2"
+              />
+              <text
+                x="745"
+                y="160"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+              >
+                Cache
+              </text>
+
+              <line
+                x1="180"
+                y1="142"
+                x2="220"
+                y2="82"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrV)"
+              />
+              <line
+                x1="180"
+                y1="168"
+                x2="220"
+                y2="238"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrV)"
+              />
+              <line
+                x1="360"
+                y1="82"
+                x2="440"
+                y2="140"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrV)"
+              />
+              <line
+                x1="390"
+                y1="238"
+                x2="440"
+                y2="170"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrV)"
+              />
+              <line
+                x1="610"
+                y1="155"
+                x2="660"
+                y2="155"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrV)"
+              />
+            </svg>
+          </div>
+
+          <h3>Virtual memory vs cache (similarity and difference)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Point</th>
+                <th>Virtual memory</th>
+                <th>Cache</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Main goal</td>
+                <td>Increase logical memory space and isolation</td>
+                <td>Reduce average access latency</td>
+              </tr>
+              <tr>
+                <td>Transfer unit</td>
+                <td>Page</td>
+                <td>Block/line</td>
+              </tr>
+              <tr>
+                <td>Hardware support</td>
+                <td>TLB + page table + OS</td>
+                <td>Tag store + mapping/replacement logic</td>
+              </tr>
+              <tr>
+                <td>Miss handling</td>
+                <td>Page fault (OS involvement)</td>
+                <td>Cache fill (hardware managed)</td>
+              </tr>
+              <tr>
+                <td>Underlying principle</td>
+                <td colspan="2">Both exploit locality of reference</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Simple virtual-address breakdown tool</h3>
+          <div class="tool-grid">
+            <div>
+              <label for="vaInput">Virtual address (decimal)</label>
+              <input id="vaInput" type="number" value="8199" min="0" />
+            </div>
+            <div>
+              <label for="pageSizeInput">Page size (bytes)</label>
+              <input id="pageSizeInput" type="number" value="4096" min="1" />
+            </div>
+            <div>
+              <button class="btn" id="runVa" type="button">
+                Split Address
+              </button>
+            </div>
+            <div></div>
+          </div>
+          <div class="result" id="vaResult">
+            Enter values and click split address.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For "factors of virtual memory" write page size, replacement
+                policy, TLB design, page table organization, and disk I/O cost.
+              </li>
+              <li>
+                For relation with cache, mention locality and different transfer
+                granularity.
+              </li>
+              <li>
+                In TLB table questions, explicitly mark impossible stale
+                combinations.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t7" class="card reveal">
+          <h2>Topic 7: Error Detection and Correction (Hamming Code)</h2>
+
+          <div class="definition">
+            <b>Hamming code</b> adds parity bits at power-of-two positions to
+            detect and correct single-bit errors.
+          </div>
+
+          <h3>How many parity bits are needed?</h3>
+          <div class="formula">
+            Find smallest r such that: 2^r >= m + r + 1 where m = number of data
+            bits
+          </div>
+
+          <h3>Standard procedure (exam writing steps)</h3>
+          <ol>
+            <li>Compute r and total code length n = m + r.</li>
+            <li>
+              Place parity bits at positions 1, 2, 4, 8, ... (position counted
+              from rightmost bit as 1).
+            </li>
+            <li>Fill data bits in remaining positions.</li>
+            <li>
+              Compute each parity bit (even or odd parity according to
+              question).
+            </li>
+            <li>At receiver, compute syndrome bits S1, S2, S4, S8, ...</li>
+            <li>
+              Syndrome value gives error position; flip that bit to correct.
+            </li>
+          </ol>
+
+          <h3>Coverage sets for parity bits</h3>
+          <div class="formula">
+            P1 checks positions with LSB=1: 1,3,5,7,9,11,13,... P2 checks
+            positions with second bit=1: 2,3,6,7,10,11,14,... P4 checks
+            positions with third bit=1: 4,5,6,7,12,13,14,... P8 checks positions
+            with fourth bit=1: 8,9,10,11,12,13,14,...
+          </div>
+
+          <h3>Interactive Hamming tool</h3>
+          <div class="tool-grid">
+            <div>
+              <label for="dataBits">Data bits</label>
+              <input id="dataBits" type="text" value="11001111" />
+            </div>
+            <div>
+              <label for="parityMode">Parity mode</label>
+              <select id="parityMode">
+                <option value="even">Even</option>
+                <option value="odd">Odd</option>
+              </select>
+            </div>
+            <div>
+              <label for="flipPos"
+                >Flip bit position (rightmost=1, optional)</label
+              >
+              <input id="flipPos" type="number" value="7" min="1" />
+            </div>
+            <div>
+              <button class="btn" id="runHamming" type="button">
+                Encode and Correct
+              </button>
+            </div>
+          </div>
+          <div class="result" id="hammingResult">
+            Enter data bits and run tool.
+          </div>
+
+          <div class="warn-box">
+            Convention note used in this book: bit position is counted from
+            rightmost bit as 1, and parity bits are at positions 1,2,4,8,... .
+            If another convention is used by a teacher, codeword may appear
+            reversed but syndrome logic stays same.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Always show r calculation and parity-position table.</li>
+              <li>
+                For correction part, write syndrome in binary and decimal
+                position.
+              </li>
+              <li>
+                Mention single-bit error correction capability explicitly.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="pyq" class="card reveal">
+          <h2>
+            Matching Previous Year Questions with Complete Detailed Solutions
+          </h2>
+
+          <div>
+            <span class="tag">2019 Q4(a,b)</span>
+            <span class="tag">2019 Section B memory set</span>
+            <span class="tag">2020 virtual memory + TLB table</span>
+            <span class="tag">2021 Q2(a,b,c)</span>
+            <span class="tag">2022 Q4(a,d), Q6(a,b), Q7(a)</span>
+            <span class="tag">2023 Q4(b,d), Q7(a)</span>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q4(a): What are the key characteristics of computer
+              memory systems?
+            </div>
+            <div class="qa-body">
+              <p><b>Exam-ready answer:</b></p>
+              <p>
+                The key characteristics are location, capacity, unit of
+                transfer, access method, performance, physical type, physical
+                characteristics, and organization.
+              </p>
+              <p>
+                Location indicates where memory is placed (register, cache,
+                main, external). Capacity tells storage amount (word size and
+                number of words/bytes). Unit of transfer defines how much data
+                moves per operation. Access method can be
+                sequential/direct/random/associative. Performance includes
+                access time, cycle time, and transfer rate. Physical type
+                denotes semiconductor/magnetic/optical classes. Physical
+                characteristics include volatility and erasability. Organization
+                describes arrangement of bits and words.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q4(b) and 2023 Q4(b): Correct trends in memory hierarchy.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Given incorrect trend set in question:</b> decreasing
+                capacity, decreasing cost/bit, increasing frequency, increasing
+                access time.
+              </p>
+              <div class="answer-steps">
+                Correct statement as we move downward in hierarchy: 1) Capacity
+                increases (not decreases). 2) Cost per bit decreases. 3)
+                Frequency of CPU access decreases. 4) Access time increases.
+              </div>
+              <p>
+                <b>Fill-in answer (2023 style):</b> decreasing cost/bit,
+                increasing capacity, and increasing access time.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q4(a): Why not use one single fastest memory instead of
+              hierarchy?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                A single fastest memory (like all-SRAM system) would be
+                prohibitively expensive, high in power consumption, and
+                physically large for practical capacities. Hierarchy gives
+                balanced design: small fast memory near CPU for frequent
+                accesses and large cheap memory for bulk storage. Locality makes
+                this efficient.
+              </p>
+              <p>
+                Therefore hierarchy provides near-fast performance at affordable
+                cost and practical capacity.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q4(d): Differences among sequential, direct, and random
+              access.
+            </div>
+            <div class="qa-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Access type</th>
+                    <th>Mechanism</th>
+                    <th>Time behavior</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sequential</td>
+                    <td>Data read in sequence</td>
+                    <td>Depends on current head/tape position</td>
+                    <td>Tape</td>
+                  </tr>
+                  <tr>
+                    <td>Direct</td>
+                    <td>Jump to block vicinity then sequential scan</td>
+                    <td>Variable, less than sequential</td>
+                    <td>Disk</td>
+                  </tr>
+                  <tr>
+                    <td>Random</td>
+                    <td>Address directly selects location</td>
+                    <td>Nearly constant</td>
+                    <td>RAM</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 and 2022: Features of DRAM and SRAM; key functions of
+              SDRAM, RDRAM, DDR.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer structure:</b></p>
+              <ul>
+                <li>
+                  DRAM: capacitor-based, requires refresh, high density, low
+                  cost, used as main memory.
+                </li>
+                <li>
+                  SRAM: flip-flop based, no refresh, very fast, lower density,
+                  high cost, used in cache.
+                </li>
+                <li>
+                  SDRAM: synchronous with system clock; supports pipelined burst
+                  access.
+                </li>
+                <li>
+                  RDRAM: high-speed channel interface; designed for high
+                  bandwidth in older platforms.
+                </li>
+                <li>
+                  DDR: double data rate transfer on both clock edges, increasing
+                  effective throughput.
+                </li>
+              </ul>
+              <p>
+                Extra high-mark point: DDR generations improve bandwidth and
+                reduce per-bit energy over time.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q6(a): Differences among EPROM, EEPROM, and Flash.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Erase method</th>
+                    <th>Granularity</th>
+                    <th>Typical use</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>EPROM</td>
+                    <td>UV light</td>
+                    <td>Whole chip</td>
+                    <td>Legacy firmware development</td>
+                  </tr>
+                  <tr>
+                    <td>EEPROM</td>
+                    <td>Electrical erase</td>
+                    <td>Byte-level</td>
+                    <td>Configuration data</td>
+                  </tr>
+                  <tr>
+                    <td>Flash</td>
+                    <td>Electrical erase</td>
+                    <td>Block-level</td>
+                    <td>SSDs, USB storage, firmware images</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2021 Q2(c) and 2020(c): Key factors for virtual memory and
+              similarity with cache.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <ul>
+                <li>
+                  Important factors: page size, replacement policy, write
+                  policy, TLB size/associativity, page table structure, disk I/O
+                  latency, page fault rate.
+                </li>
+                <li>
+                  Virtual memory and cache both exploit locality and both keep a
+                  faster subset near CPU of a larger slower store.
+                </li>
+                <li>
+                  Difference: virtual memory transfers pages and may involve OS
+                  page fault; cache transfers blocks and usually hardware
+                  handles misses.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020(d): TLB/Page Table/Cache combinations (physically
+              addressed cache case).
+            </div>
+            <div class="qa-body">
+              <p><b>Model reasoning:</b></p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Case</th>
+                    <th>Possible?</th>
+                    <th>Condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>TLB hit, PT hit, Cache miss</td>
+                    <td>Yes</td>
+                    <td>
+                      Translation available; requested block absent in cache.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TLB miss, PT hit, Cache hit</td>
+                    <td>Yes</td>
+                    <td>
+                      After PT lookup, physical block may already exist in
+                      cache.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TLB miss, PT hit, Cache miss</td>
+                    <td>Yes</td>
+                    <td>Translation exists in PT but data not cached.</td>
+                  </tr>
+                  <tr>
+                    <td>TLB miss, PT miss, Cache miss</td>
+                    <td>Yes</td>
+                    <td>Page fault; neither translation nor block present.</td>
+                  </tr>
+                  <tr>
+                    <td>TLB hit, PT miss, Cache hit</td>
+                    <td>Normally No</td>
+                    <td>Would imply stale/incoherent TLB entry.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                Note: the original table in scan has duplicate last row; one
+                logically impossible stale-TLB case is sufficient explanation.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019(c) and 2023(d): Define locality of reference.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                Locality of reference is the tendency of programs to access a
+                small set of instructions/data repeatedly (temporal locality)
+                and nearby addresses in clusters (spatial locality). This
+                property enables cache and virtual memory to improve average
+                performance significantly.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ Hamming 2019: data=1001010101, bit-10 changed. Find code and
+              correct error.
+            </div>
+            <div class="qa-body">
+              <p><b>Assumption:</b> Even parity, rightmost bit position = 1.</p>
+              <div class="answer-steps">
+                m=10. Find r such that 2^r >= m+r+1. r=4 since 16 >= 15. Total
+                length n=14.
+              </div>
+              <div class="answer-steps">
+                Computed codeword = 10010110100101.
+              </div>
+              <div class="answer-steps">
+                If bit position 10 is flipped, received word becomes
+                10011110100101. Syndrome calculation gives S=10. Therefore error
+                is at bit 10 from right; flipping it restores 10010110100101.
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ Hamming 2022: data=1001110101, bit-8 changed. Find code and
+              correct error.
+            </div>
+            <div class="qa-body">
+              <p><b>Assumption:</b> Even parity, rightmost bit position = 1.</p>
+              <div class="answer-steps">
+                m=10, r=4, n=14. Codeword = 10011100100111.
+              </div>
+              <div class="answer-steps">
+                If bit-8 flips, received = 10011110100111. Syndrome S=8, so
+                error position is 8 (from right). Corrected codeword =
+                10011100100111.
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ Hamming 2023: data=11001111 (odd parity), bit-7 changed. Find
+              code and correct error.
+            </div>
+            <div class="qa-body">
+              <p><b>Given:</b> Odd parity and rightmost position counting.</p>
+              <div class="answer-steps">
+                m=8, r=4, n=12. Codeword (odd parity) = 110011111111.
+              </div>
+              <div class="answer-steps">
+                After bit-7 flip, received word = 110010111111. Syndrome value
+                S=7. So bit-7 is erroneous; flip it back. Correct codeword =
+                110011111111.
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q4(c) style numerical: 90% cache hit, T1=0.03 us, T2=0.2
+              us. Average access time.
+            </div>
+            <div class="qa-body">
+              <div class="formula">
+                Ta = T1 + (1-H)T2 H = 0.9 Ta = 0.03 + (0.1)(0.2) Ta = 0.03 +
+                0.02 = 0.05 us
+              </div>
+              <p>
+                <b>Final answer:</b> Average access time = 0.05 microseconds.
+              </p>
+            </div>
+          </div>
+
+          <div class="danger-box" style="margin-top: 0.86rem">
+            Some memory questions in PYQ overlap with cache-heavy formulas
+            (often Module 5). They are still included here when directly
+            supporting Module 4 fundamentals and exam continuity.
+          </div>
+        </section>
+
+        <section id="revision" class="card reveal">
+          <h2>Final Revision Sheet for Module 4</h2>
+
+          <h3>Most important memory trends</h3>
+          <div class="formula">
+            Down hierarchy: Capacity increases Cost per bit decreases Access
+            time increases CPU access frequency decreases
+          </div>
+
+          <h3>Must-remember formulas</h3>
+          <div class="formula">
+            Average memory access time (single cache level): Ta = Tc + (1-H)Tm
+            Hamming parity bits: find r from 2^r >= m+r+1 Syndrome value gives
+            error bit position
+          </div>
+
+          <h3>Most likely exam combinations</h3>
+          <ol>
+            <li>
+              Memory hierarchy diagram + trend correction + locality definition.
+            </li>
+            <li>SRAM vs DRAM plus SDRAM/RDRAM/DDR short notes.</li>
+            <li>EPROM/EEPROM/Flash differences in table.</li>
+            <li>
+              Virtual memory factors + relation with cache + TLB logic case
+              table.
+            </li>
+            <li>
+              Hamming code generation and single-bit correction numerical.
+            </li>
+          </ol>
+
+          <div class="ok-box">
+            Final self-test before exam: 1) Write memory hierarchy trends
+            without looking. 2) Solve one Hamming problem in under 8 minutes. 3)
+            Explain virtual memory vs cache in 5 clear points.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer reveal">
+      Prepared for CSE 517 final exam, Module 4 only: Memory System
+      Fundamentals.
+    </footer>
+
+    <script>
+      (function () {
+        var progressBar = document.getElementById("progressBar");
+
+        function updateProgress() {
+          var top =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          var h =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          var p = h > 0 ? (top / h) * 100 : 0;
+          progressBar.style.width = p + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("load", updateProgress);
+
+        var runHierarchy = document.getElementById("runHierarchy");
+        var hIds = ["h1", "h2", "h3", "h4", "h5", "h6", "h7"];
+        var hTimer = null;
+
+        if (runHierarchy) {
+          runHierarchy.addEventListener("click", function () {
+            if (hTimer) {
+              clearInterval(hTimer);
+            }
+            for (var i = 0; i < hIds.length; i += 1) {
+              var resetNode = document.getElementById(hIds[i]);
+              if (resetNode) {
+                resetNode.classList.remove("active");
+              }
+            }
+
+            var idx = 0;
+            hTimer = setInterval(function () {
+              for (var j = 0; j < hIds.length; j += 1) {
+                var n = document.getElementById(hIds[j]);
+                if (n) {
+                  n.classList.remove("active");
+                }
+              }
+              if (idx < hIds.length) {
+                var active = document.getElementById(hIds[idx]);
+                if (active) {
+                  active.classList.add("active");
+                }
+                idx += 1;
+              } else {
+                clearInterval(hTimer);
+                hTimer = null;
+              }
+            }, 620);
+          });
+        }
+
+        var runVa = document.getElementById("runVa");
+        var vaResult = document.getElementById("vaResult");
+
+        if (runVa) {
+          runVa.addEventListener("click", function () {
+            var va = Number(document.getElementById("vaInput").value);
+            var pageSize = Number(
+              document.getElementById("pageSizeInput").value,
+            );
+
+            if (!(va >= 0) || !(pageSize > 0)) {
+              vaResult.textContent =
+                "Enter valid virtual address and page size.";
+              return;
+            }
+
+            var pageNumber = Math.floor(va / pageSize);
+            var offset = va % pageSize;
+            vaResult.textContent =
+              "Page number = " + pageNumber + ", offset = " + offset;
+          });
+        }
+
+        function computeHamming(dataBits, parityMode) {
+          if (!/^[01]+$/.test(dataBits)) {
+            return { error: "Data bits must contain only 0 and 1." };
+          }
+
+          var m = dataBits.length;
+          var r = 0;
+          while (Math.pow(2, r) < m + r + 1) {
+            r += 1;
+          }
+          var n = m + r;
+          var code = new Array(n + 1);
+
+          var parityPos = {};
+          for (var i = 0; i < r; i += 1) {
+            parityPos[Math.pow(2, i)] = true;
+          }
+
+          var src = dataBits.split("").reverse();
+          var k = 0;
+          for (var pos = 1; pos <= n; pos += 1) {
+            if (!parityPos[pos]) {
+              code[pos] = Number(src[k]);
+              k += 1;
+            }
+          }
+
+          for (var p = 1; p <= n; p <<= 1) {
+            var x = 0;
+            for (var q = 1; q <= n; q += 1) {
+              if (q & p && q !== p) {
+                x ^= code[q];
+              }
+            }
+            if (parityMode === "even") {
+              code[p] = x;
+            } else {
+              code[p] = 1 - x;
+            }
+          }
+
+          var codewordArr = [];
+          for (var z = n; z >= 1; z -= 1) {
+            codewordArr.push(String(code[z]));
+          }
+
+          return {
+            codeword: codewordArr.join(""),
+            n: n,
+            r: r,
+          };
+        }
+
+        function flipAtPos(codeword, posFromRight) {
+          if (!(posFromRight >= 1 && posFromRight <= codeword.length)) {
+            return null;
+          }
+          var arr = codeword.split("");
+          var idx = arr.length - posFromRight;
+          arr[idx] = arr[idx] === "0" ? "1" : "0";
+          return arr.join("");
+        }
+
+        function syndrome(received, parityMode) {
+          var n = received.length;
+          var code = new Array(n + 1);
+          for (var i = 0; i < n; i += 1) {
+            code[n - i] = Number(received[i]);
+          }
+
+          var syn = 0;
+          for (var p = 1; p <= n; p <<= 1) {
+            var x = 0;
+            for (var q = 1; q <= n; q += 1) {
+              if (q & p) {
+                x ^= code[q];
+              }
+            }
+            if (parityMode === "even") {
+              if (x !== 0) {
+                syn += p;
+              }
+            } else {
+              if (x !== 1) {
+                syn += p;
+              }
+            }
+          }
+          return syn;
+        }
+
+        var runHamming = document.getElementById("runHamming");
+        var hammingResult = document.getElementById("hammingResult");
+
+        if (runHamming) {
+          runHamming.addEventListener("click", function () {
+            var data = (document.getElementById("dataBits").value || "").trim();
+            var mode = document.getElementById("parityMode").value;
+            var flipPos = Number(document.getElementById("flipPos").value);
+
+            var enc = computeHamming(data, mode);
+            if (enc.error) {
+              hammingResult.textContent = enc.error;
+              return;
+            }
+
+            var out =
+              "Codeword = " +
+              enc.codeword +
+              " (n=" +
+              enc.n +
+              ", r=" +
+              enc.r +
+              ")";
+
+            if (flipPos >= 1 && flipPos <= enc.n) {
+              var corrupted = flipAtPos(enc.codeword, flipPos);
+              var s = syndrome(corrupted, mode);
+              var corrected = corrupted;
+              if (s >= 1 && s <= enc.n) {
+                corrected = flipAtPos(corrupted, s);
+              }
+              out +=
+                " | Corrupted = " +
+                corrupted +
+                " | Syndrome = " +
+                s +
+                " | Corrected = " +
+                corrected;
+            }
+
+            hammingResult.textContent = out;
+          });
+        }
+
+        var revealNodes = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries, obs) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("show");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
+          );
+
+          revealNodes.forEach(function (n) {
+            observer.observe(n);
+          });
+        } else {
+          revealNodes.forEach(function (n) {
+            n.classList.add("show");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

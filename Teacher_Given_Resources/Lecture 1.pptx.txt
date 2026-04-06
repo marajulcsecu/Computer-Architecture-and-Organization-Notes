@@ -1,0 +1,57 @@
+Computer ArchitectureProf. Dr. Rashed Mustafa 
+Lecture-1
+10-11-2025
+1
+
+What is Computer Architecture?
+It refers to those attributes of the system that are visible to the software programmer and have a direct impact on the logical execution of a program like a number of bits used to represent various data types, the instruction set of the computer, technique for addressing memory, method used for input, output, etc.
+It basically defines the system in an abstract manner.
+It deals with the concepts that the programmer deals with directly.
+Includes logical units like instruction set, different types of addressing modes.
+The following 3 main categories are considered while considering design of architecture: System Design(contains hardware components that are used for building the system), Instruction Set Architecture(includes all the instructions provided to the computer system) and Micro Architecture( give minute detail about storage element)
+
+2
+
+3
+
+What is Computer Organization?
+It refers to the operational unit and the interconnection between them that achieve the architectural specifications. It tells us about different functional blocks of the system.
+It is basically the realization of architecture and deals with functional structure and various structural relationships.
+It deals with the concept that is transparent from the programmer.
+It includes physical connection component like circuits with adder subtractors.
+Single Accumulator Organisation, General Register organisation, Stack Organisation are the 3 types of CPU organisation.
+
+4
+
+COMPUTER ORGANISATION
+COMPUTER ARCHITECTURE
+1. Computer organisation is concerned with the way hardware component are connected together to form a computer system.
+1.Computer Architecture is concerned with the structure and behaviour of the computer system as seen by the user.
+2. While designing a computer system, an organisation is decided after the architecture.
+2. While designing computer system, architecture is decided first.
+3. It involve physical units such as circuit design, adders, signals, peripherals etc.
+3. It involves logical components such as Instruction Set, Addressing Modes etc.
+4. It describes how computer system works.
+4. It describes how computer system designed.
+5. It deals with the components of a computer and the interconnection of components.
+5. It acts as an interface between hardware and software.
+6. Computer Organisation deals with low-level design issues.
+6. Computer architecture deals with high-level design issues.
+7. Computer Organisation defines the physical aspects of the computer system.
+7. Computer architecture defines the logical aspects of computer system.
+8. It deals with the organizational structure of the computer and the various structural relationship.
+8. It deals with the functional behaviour of the computer system.
+9. It is also called micro architecture.
+9. It is also called as instruction set architecture.
+10. It is transparent from the software programmer.
+10. It is visible to the software programmer.
+11. How to do?(implementation of the architecture)
+11. What to do? (Instruction Set)
+5
+
+6
+
+Von Neumann Architecture
+The von Neumann architecture—also known as the von Neumann model or Princeton architecture—is a computer architecture based on a 1945 description by John von Neumann.
+7
+fields

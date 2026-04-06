@@ -1,0 +1,2636 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE 517 Module 6 Preparation Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f2937;
+        --ink-soft: #334155;
+        --bg-a: #fffbeb;
+        --bg-b: #ecfeff;
+        --bg-c: #f8fafc;
+        --card: rgba(255, 255, 255, 0.93);
+        --border: rgba(15, 23, 42, 0.17);
+        --accent-1: #0e7490;
+        --accent-2: #b45309;
+        --accent-3: #0f766e;
+        --accent-4: #dc2626;
+        --ok: #166534;
+        --warn: #92400e;
+        --danger: #991b1b;
+        --radius: 16px;
+        --shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Sora", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        line-height: 1.72;
+        overflow-x: hidden;
+        background: linear-gradient(
+          180deg,
+          var(--bg-a) 0%,
+          var(--bg-b) 54%,
+          var(--bg-c) 100%
+        );
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(38px);
+        opacity: 0.31;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      body::before {
+        width: 38vw;
+        height: 38vw;
+        left: -8vw;
+        top: -10vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(16, 185, 129, 0.26) 0%,
+          rgba(16, 185, 129, 0) 70%
+        );
+      }
+
+      body::after {
+        width: 42vw;
+        height: 42vw;
+        right: -10vw;
+        bottom: -10vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(234, 88, 12, 0.28) 0%,
+          rgba(234, 88, 12, 0) 70%
+        );
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Fraunces", "Times New Roman", serif;
+        margin-top: 0;
+        color: #0f172a;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4.2vw, 3.1rem);
+        line-height: 1.18;
+        margin-bottom: 0.72rem;
+      }
+
+      h2 {
+        font-size: clamp(1.4rem, 2.3vw, 2rem);
+        margin-bottom: 0.55rem;
+        color: #0b5f64;
+      }
+
+      h3 {
+        font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+        margin-bottom: 0.44rem;
+        color: #0f4c81;
+      }
+
+      h4 {
+        font-size: 1rem;
+        margin-bottom: 0.32rem;
+        color: #7c2d12;
+      }
+
+      .progress-track {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.77);
+        z-index: 999;
+      }
+
+      #progressBar {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-1),
+          var(--accent-3)
+        );
+      }
+
+      .hero {
+        max-width: 1260px;
+        margin: 0 auto;
+        padding: 5.8rem 1.15rem 2.5rem;
+      }
+
+      .hero-panel {
+        position: relative;
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 8px);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        padding: 1.9rem;
+        background: linear-gradient(
+          150deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(224, 242, 254, 0.84)
+        );
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        right: -50px;
+        top: -50px;
+        width: 220px;
+        height: 220px;
+        border-radius: 999px;
+        background: radial-gradient(
+          circle,
+          rgba(14, 165, 233, 0.25) 0%,
+          rgba(14, 165, 233, 0) 70%
+        );
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        margin-right: 0.42rem;
+        margin-bottom: 0.48rem;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #0f766e;
+        background: rgba(45, 212, 191, 0.14);
+        border: 1px solid rgba(15, 118, 110, 0.38);
+      }
+
+      .subtitle {
+        max-width: 94ch;
+        color: var(--ink-soft);
+      }
+
+      .meta-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(170px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .meta {
+        border: 1px solid rgba(148, 163, 184, 0.34);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.84);
+        padding: 0.72rem;
+        font-size: 0.93rem;
+      }
+
+      .meta b {
+        color: #0f766e;
+      }
+
+      .layout {
+        max-width: 1260px;
+        margin: 0 auto 2.8rem;
+        padding: 0 1.15rem 2rem;
+        display: grid;
+        grid-template-columns: minmax(220px, 315px) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0.85rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: rgba(255, 255, 255, 0.91);
+        backdrop-filter: blur(8px);
+        padding: 0.92rem;
+        max-height: calc(100vh - 1.7rem);
+        overflow: auto;
+      }
+
+      .toc h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        color: #0b4f87;
+        font-size: 0.91rem;
+        font-weight: 700;
+        padding: 0.33rem 0.42rem;
+        margin-bottom: 0.19rem;
+        border-left: 3px solid transparent;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .toc a:hover {
+        border-left-color: var(--accent-2);
+        transform: translateX(2px);
+        background: rgba(180, 83, 9, 0.09);
+      }
+
+      .content {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: var(--card);
+        padding: 1.16rem;
+      }
+
+      .definition {
+        border-left: 5px solid #0ea5e9;
+        border-radius: 10px;
+        background: rgba(14, 165, 233, 0.1);
+        padding: 0.64rem 0.8rem;
+        margin: 0.62rem 0;
+      }
+
+      .exam-focus {
+        border-left: 5px solid var(--accent-2);
+        border-radius: 10px;
+        background: rgba(180, 83, 9, 0.12);
+        padding: 0.66rem 0.82rem;
+        margin-top: 0.78rem;
+      }
+
+      .formula {
+        border: 1px dashed rgba(14, 116, 144, 0.45);
+        border-radius: 10px;
+        background: rgba(14, 116, 144, 0.08);
+        padding: 0.6rem 0.72rem;
+        margin: 0.6rem 0;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.87rem;
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      .mini {
+        border: 1px solid rgba(148, 163, 184, 0.33);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.74rem;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.82rem;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.82rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.66rem 0;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(148, 163, 184, 0.42);
+        padding: 0.55rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: rgba(14, 116, 144, 0.16);
+        font-weight: 800;
+      }
+
+      .diagram {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.84);
+        padding: 0.62rem;
+        overflow-x: auto;
+      }
+
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 0.6rem;
+        align-items: end;
+      }
+
+      .tool-grid label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 0.16rem;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.54);
+        border-radius: 8px;
+        padding: 0.42rem 0.5rem;
+        background: rgba(255, 255, 255, 0.96);
+        font-size: 0.93rem;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.54rem 0.96rem;
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(90deg, #b45309, #0e7490);
+        box-shadow: 0 8px 16px rgba(14, 116, 144, 0.25);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .result {
+        margin-top: 0.6rem;
+        border: 1px solid rgba(14, 116, 144, 0.34);
+        border-radius: 10px;
+        background: rgba(224, 242, 254, 0.72);
+        padding: 0.56rem 0.68rem;
+        font-weight: 700;
+      }
+
+      .stage-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(110px, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.62rem;
+      }
+
+      .stage-box {
+        text-align: center;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 0.56rem;
+        transition: all 0.24s ease;
+      }
+
+      .stage-box.active {
+        border-color: #0f766e;
+        background: rgba(16, 185, 129, 0.2);
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .qa {
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.85);
+        margin-top: 0.85rem;
+      }
+
+      .qa-head {
+        background: rgba(59, 130, 246, 0.16);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 0.68rem 0.8rem;
+        font-weight: 800;
+      }
+
+      .qa-body {
+        padding: 0.78rem;
+      }
+
+      .answer-steps {
+        border-left: 5px solid rgba(14, 116, 144, 0.72);
+        border-radius: 10px;
+        background: rgba(14, 116, 144, 0.09);
+        padding: 0.6rem 0.72rem;
+        margin: 0.56rem 0;
+      }
+
+      .ok-box {
+        border-left: 5px solid var(--ok);
+        border-radius: 10px;
+        background: rgba(34, 197, 94, 0.12);
+        padding: 0.62rem 0.76rem;
+      }
+
+      .warn-box {
+        border-left: 5px solid var(--warn);
+        border-radius: 10px;
+        background: rgba(251, 191, 36, 0.17);
+        padding: 0.62rem 0.76rem;
+      }
+
+      .danger-box {
+        border-left: 5px solid var(--danger);
+        border-radius: 10px;
+        background: rgba(254, 226, 226, 0.84);
+        padding: 0.62rem 0.76rem;
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: 0.17rem 0.5rem;
+        margin-right: 0.3rem;
+        margin-bottom: 0.25rem;
+        border: 1px solid rgba(2, 132, 199, 0.38);
+        color: #0c4a6e;
+        background: rgba(186, 230, 253, 0.66);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        max-width: 1260px;
+        margin: 0 auto 2.4rem;
+        padding: 0 1.15rem;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+
+        .meta-grid,
+        .grid-2,
+        .grid-3,
+        .tool-grid,
+        .stage-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-track"><div id="progressBar"></div></div>
+
+    <header class="hero reveal">
+      <div class="hero-panel">
+        <span class="chip">CSE 517</span>
+        <span class="chip">Module 6</span>
+        <span class="chip"
+          >Pipelining, Parallelism, and Architecture Extensions</span
+        >
+
+        <h1>Complete Exam-Ready Preparation Book: Module 6</h1>
+        <p class="subtitle">
+          Built from your module list, teacher syllabus, and PYQ (2019 to 2023).
+          This module covers pipeline timing and hazards, Flynn classes,
+          parallel processors, high-speed bus architecture, RAID levels, and
+          1-bit ALU plus single-bus datapath. Every high-yield exam topic is
+          explained with formulas, diagrams, numericals, and detailed solved PYQ
+          answers.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta">
+            <b>Scope:</b> Full Module 6 with no topic skipped
+          </div>
+          <div class="meta">
+            <b>Numericals:</b> Pipeline speedup, timing, register-content style
+            answers
+          </div>
+          <div class="meta">
+            <b>Exam Mode:</b> Theory + diagrams + detailed PYQ model solutions
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="toc reveal">
+        <h3>Quick Navigation</h3>
+        <a href="#study">How to Study Module 6</a>
+        <a href="#p1">1. Pipeline Concept and Speedup</a>
+        <a href="#p2">2. Pipeline Timing and Numerical Comparison</a>
+        <a href="#p3">3. Pipeline Hazards and Stalls</a>
+        <a href="#p4"
+          >4. Pipeline Configuration and Register-Content Problems</a
+        >
+        <a href="#p5">5. Flynn Classification and Parallel Processors</a>
+        <a href="#p6">6. Traditional vs High-Speed Bus Architecture</a>
+        <a href="#p7">7. RAID Basics (0/1/2/3 + overview)</a>
+        <a href="#p8">8. 1-bit ALU and Single-Bus Datapath</a>
+        <a href="#pyq">Matching PYQ with Complete Detailed Solutions</a>
+        <a href="#revision">Final Revision Sheet</a>
+      </aside>
+
+      <article class="content">
+        <section id="study" class="card reveal">
+          <h2>How to Study Module 6 for Maximum Marks</h2>
+          <ol>
+            <li>
+              Memorize pipeline timing formula first, then solve examples.
+            </li>
+            <li>
+              Master hazards: identify type, then mention one concrete avoidance
+              method.
+            </li>
+            <li>
+              Practice one register-content style pipeline table for i = 1 to 6.
+            </li>
+            <li>
+              Prepare short-note quality answers for Flynn classes, bus
+              architecture, and RAID.
+            </li>
+            <li>
+              Draw one clean 1-bit ALU diagram and one single-bus datapath
+              diagram from memory.
+            </li>
+          </ol>
+          <div class="ok-box">
+            If you can derive pipeline speedup, explain hazards with remedies,
+            and write RAID 0 to RAID 3 features in table form, this module
+            becomes a strong scoring area.
+          </div>
+        </section>
+
+        <section id="p1" class="card reveal">
+          <h2>Topic 1: Pipeline Concept and Speedup</h2>
+
+          <div class="definition">
+            <b>Pipelining</b> divides instruction execution into stages so
+            multiple instructions are processed concurrently, one per stage,
+            like an assembly line.
+          </div>
+
+          <h3>Classic 5-stage instruction pipeline</h3>
+          <div class="stage-grid">
+            <div class="stage-box" id="s1">IF<br />Instruction Fetch</div>
+            <div class="stage-box" id="s2">ID<br />Decode/Register Read</div>
+            <div class="stage-box" id="s3">EX<br />Execute/ALU</div>
+            <div class="stage-box" id="s4">MEM<br />Memory Access</div>
+            <div class="stage-box" id="s5">WB<br />Write Back</div>
+          </div>
+          <button
+            class="btn"
+            id="runStages"
+            type="button"
+            style="margin-top: 0.68rem"
+          >
+            Animate Pipeline Stages
+          </button>
+
+          <h3>Core formulas</h3>
+          <div class="formula">
+            Let n = number of instructions k = number of pipeline stages t =
+            stage time Non-pipelined time: Tnp = n x k x t Pipelined time: Tp =
+            (k + n - 1) x t Speedup: S = Tnp / Tp = (n x k) / (k + n - 1) As n
+            gets very large, S approaches k.
+          </div>
+
+          <h3>Important interpretation</h3>
+          <ul>
+            <li>
+              Pipelining improves throughput more than single-instruction
+              latency.
+            </li>
+            <li>Speedup is reduced by hazards, stalls, and stage imbalance.</li>
+            <li>Ideal speedup is rarely achieved in real processors.</li>
+          </ul>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Always write fill and drain term (k + n - 1) in Tp.</li>
+              <li>Mention "throughput increases" in theoretical answers.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p2" class="card reveal">
+          <h2>Topic 2: Pipeline Timing and Numerical Comparison</h2>
+
+          <h3>Non-pipeline vs pipeline timeline (example)</h3>
+          <div class="diagram">
+            <svg
+              width="920"
+              height="290"
+              viewBox="0 0 920 290"
+              role="img"
+              aria-label="Pipeline timeline comparison"
+            >
+              <rect
+                x="30"
+                y="25"
+                width="860"
+                height="240"
+                fill="#fff"
+                stroke="#94a3b8"
+                stroke-width="1.2"
+              />
+              <text
+                x="50"
+                y="50"
+                font-size="14"
+                font-weight="700"
+                fill="#1e3a8a"
+              >
+                Non-pipelined (k=5)
+              </text>
+              <rect
+                x="50"
+                y="62"
+                width="130"
+                height="26"
+                fill="#fef3c7"
+                stroke="#b45309"
+              />
+              <text x="56" y="80" font-size="11" fill="#7c2d12">
+                I1: IF-ID-EX-MEM-WB
+              </text>
+              <rect
+                x="185"
+                y="62"
+                width="130"
+                height="26"
+                fill="#fef3c7"
+                stroke="#b45309"
+              />
+              <text x="191" y="80" font-size="11" fill="#7c2d12">
+                I2 complete
+              </text>
+              <rect
+                x="320"
+                y="62"
+                width="130"
+                height="26"
+                fill="#fef3c7"
+                stroke="#b45309"
+              />
+              <text x="326" y="80" font-size="11" fill="#7c2d12">
+                I3 complete
+              </text>
+
+              <text
+                x="50"
+                y="130"
+                font-size="14"
+                font-weight="700"
+                fill="#0f766e"
+              >
+                Pipelined (overlapped)
+              </text>
+              <rect
+                x="50"
+                y="142"
+                width="52"
+                height="22"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <rect
+                x="104"
+                y="142"
+                width="52"
+                height="22"
+                fill="#cffafe"
+                stroke="#0e7490"
+              />
+              <rect
+                x="158"
+                y="142"
+                width="52"
+                height="22"
+                fill="#dcfce7"
+                stroke="#166534"
+              />
+              <rect
+                x="212"
+                y="142"
+                width="52"
+                height="22"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <rect
+                x="266"
+                y="142"
+                width="52"
+                height="22"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="57" y="158" font-size="10" fill="#1e3a8a">I1 IF</text>
+
+              <rect
+                x="104"
+                y="168"
+                width="52"
+                height="22"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <rect
+                x="158"
+                y="168"
+                width="52"
+                height="22"
+                fill="#cffafe"
+                stroke="#0e7490"
+              />
+              <rect
+                x="212"
+                y="168"
+                width="52"
+                height="22"
+                fill="#dcfce7"
+                stroke="#166534"
+              />
+              <rect
+                x="266"
+                y="168"
+                width="52"
+                height="22"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <rect
+                x="320"
+                y="168"
+                width="52"
+                height="22"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="110" y="184" font-size="10" fill="#1e3a8a">I2 IF</text>
+
+              <rect
+                x="158"
+                y="194"
+                width="52"
+                height="22"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <rect
+                x="212"
+                y="194"
+                width="52"
+                height="22"
+                fill="#cffafe"
+                stroke="#0e7490"
+              />
+              <rect
+                x="266"
+                y="194"
+                width="52"
+                height="22"
+                fill="#dcfce7"
+                stroke="#166534"
+              />
+              <rect
+                x="320"
+                y="194"
+                width="52"
+                height="22"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <rect
+                x="374"
+                y="194"
+                width="52"
+                height="22"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="164" y="210" font-size="10" fill="#1e3a8a">I3 IF</text>
+
+              <text x="50" y="245" font-size="13" fill="#334155">
+                Overlapped execution reduces total completion time for
+                instruction stream.
+              </text>
+            </svg>
+          </div>
+
+          <h3>Interactive speedup calculator</h3>
+          <div class="tool-grid">
+            <div>
+              <label for="nInst">Instructions n</label>
+              <input id="nInst" type="number" min="1" value="20" />
+            </div>
+            <div>
+              <label for="kStage">Stages k</label>
+              <input id="kStage" type="number" min="2" value="5" />
+            </div>
+            <div>
+              <label for="tStage">Stage time t (ns)</label>
+              <input
+                id="tStage"
+                type="number"
+                min="0.01"
+                step="0.01"
+                value="1"
+              />
+            </div>
+            <div>
+              <label for="stallCpi">Avg stall cycles/instr</label>
+              <input
+                id="stallCpi"
+                type="number"
+                min="0"
+                step="0.01"
+                value="0"
+              />
+            </div>
+            <div>
+              <button class="btn" id="runPipeCalc" type="button">
+                Compute
+              </button>
+            </div>
+          </div>
+          <div class="result" id="pipeResult">Enter values and compute.</div>
+
+          <div class="warn-box">
+            Real speedup is lower than ideal when stalls are present. Effective
+            CPI can be modeled as: CPIeffective = CPIideal + stall cycles per
+            instruction.
+          </div>
+        </section>
+
+        <section id="p3" class="card reveal">
+          <h2>Topic 3: Pipeline Hazards and Stalls</h2>
+
+          <h3>Main hazard categories</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Hazard Type</th>
+                <th>Cause</th>
+                <th>Typical Example</th>
+                <th>Avoidance / Remedy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structural</td>
+                <td>Resource conflict in same cycle</td>
+                <td>Single memory used by IF and MEM together</td>
+                <td>Separate I-cache and D-cache, duplicate resources</td>
+              </tr>
+              <tr>
+                <td>Data</td>
+                <td>Instruction depends on previous result</td>
+                <td>lw r1,... followed by add r2,r1,r3</td>
+                <td>Forwarding, compiler scheduling, stalling</td>
+              </tr>
+              <tr>
+                <td>Control</td>
+                <td>Branch/jump changes next PC</td>
+                <td>Wrong-path fetched after branch</td>
+                <td>Branch prediction, delayed branch, flush</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Hazard detection example</h3>
+          <div class="formula">
+            I1: lw t1, 0(t0) I2: lw t2, 4(t0) I3: add t3, t1, t2 I4: sw t3,
+            12(t0) I5: lw t4, 8(t0) I6: add t5, t1, t4 I7: sw t5, 16(t0)
+            Potential hazards: - load-use between I2 and I3 - RAW from I3 to I4
+            - load-use between I5 and I6
+          </div>
+
+          <h3>Stall-avoiding reorder (one practical schedule)</h3>
+          <div class="formula">
+            lw t1, 0(t0) lw t2, 4(t0) lw t4, 8(t0) add t3, t1, t2 add t5, t1, t4
+            sw t3, 12(t0) sw t5, 16(t0)
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                First identify hazard type, then write remedy; this gives
+                full-credit structure.
+              </li>
+              <li>
+                For 2-mark questions, one example each for data/control hazards
+                is enough.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p4" class="card reveal">
+          <h2>
+            Topic 4: Pipeline Configuration and Register-Content Numerical Style
+          </h2>
+
+          <h3>Pipeline configuration for (Ai + Bi)(Ci + Di)</h3>
+          <div class="grid-3">
+            <div class="mini">
+              <h4>Stage S1</h4>
+              <p>R1 <- Ai + Bi</p>
+            </div>
+            <div class="mini">
+              <h4>Stage S2</h4>
+              <p>R2 <- Ci + Di</p>
+            </div>
+            <div class="mini">
+              <h4>Stage S3</h4>
+              <p>R3 <- R1 x R2</p>
+            </div>
+          </div>
+
+          <h3>Automatic register-content table generator (i = 1 to m)</h3>
+          <div
+            class="tool-grid"
+            style="grid-template-columns: repeat(3, minmax(120px, 1fr))"
+          >
+            <div>
+              <label for="streamCount">Stream count m</label>
+              <input
+                id="streamCount"
+                type="number"
+                min="1"
+                max="20"
+                value="6"
+              />
+            </div>
+            <div>
+              <button class="btn" id="genPipeTable" type="button">
+                Generate Table
+              </button>
+            </div>
+            <div>
+              <div class="result" style="margin-top: 0">For PYQ 2023 Q8(b)</div>
+            </div>
+          </div>
+          <div id="pipeTableWrap" style="margin-top: 0.6rem"></div>
+
+          <h3>Pipeline hardware idea for Ai x Bi + (Ci + Di)</h3>
+          <div class="formula">
+            Parallel partial operations: P1 <- Ai x Bi P2 <- Ci + Di R <- P1 +
+            P2 Hardware blocks needed: - one multiplier - two adders (one for
+            Ci+Di, one final adder) - pipeline registers between stages
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Draw stage blocks and pipeline registers in between.</li>
+              <li>
+                In register-content tables, show cycle-wise occupancy clearly.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p5" class="card reveal">
+          <h2>Topic 5: Flynn Classification and Parallel Processors</h2>
+
+          <div class="definition">
+            Flynn taxonomy classifies computers by number of concurrent
+            instruction streams and data streams.
+          </div>
+
+          <div class="diagram">
+            <svg
+              width="900"
+              height="320"
+              viewBox="0 0 900 320"
+              role="img"
+              aria-label="Flynn classification diagram"
+            >
+              <rect
+                x="30"
+                y="30"
+                width="840"
+                height="250"
+                fill="#fff"
+                stroke="#94a3b8"
+                stroke-width="1.2"
+              />
+              <line x1="450" y1="30" x2="450" y2="280" stroke="#64748b" />
+              <line x1="30" y1="155" x2="870" y2="155" stroke="#64748b" />
+
+              <text
+                x="230"
+                y="54"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+                fill="#0f4c81"
+              >
+                Single Data Stream
+              </text>
+              <text
+                x="670"
+                y="54"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+                fill="#0f4c81"
+              >
+                Multiple Data Streams
+              </text>
+              <text
+                x="52"
+                y="95"
+                font-size="13"
+                font-weight="700"
+                fill="#0f4c81"
+                transform="rotate(-90 52 95)"
+              >
+                Single Instruction
+              </text>
+              <text
+                x="52"
+                y="230"
+                font-size="13"
+                font-weight="700"
+                fill="#0f4c81"
+                transform="rotate(-90 52 230)"
+              >
+                Multiple Instruction
+              </text>
+
+              <text
+                x="230"
+                y="115"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#166534"
+              >
+                SISD
+              </text>
+              <text
+                x="230"
+                y="140"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                Classic scalar CPU
+              </text>
+
+              <text
+                x="670"
+                y="115"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#166534"
+              >
+                SIMD
+              </text>
+              <text
+                x="670"
+                y="140"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                Vector/GPU style
+              </text>
+
+              <text
+                x="230"
+                y="240"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#b45309"
+              >
+                MISD
+              </text>
+              <text
+                x="230"
+                y="265"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                Mostly theoretical interest
+              </text>
+
+              <text
+                x="670"
+                y="240"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#b45309"
+              >
+                MIMD
+              </text>
+              <text
+                x="670"
+                y="265"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                Multicore/cluster systems
+              </text>
+            </svg>
+          </div>
+
+          <h3>Summary table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Instruction Streams</th>
+                <th>Data Streams</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SISD</td>
+                <td>1</td>
+                <td>1</td>
+                <td>Single-core scalar execution</td>
+              </tr>
+              <tr>
+                <td>SIMD</td>
+                <td>1</td>
+                <td>Many</td>
+                <td>GPU, vector processors</td>
+              </tr>
+              <tr>
+                <td>MISD</td>
+                <td>Many</td>
+                <td>1</td>
+                <td>Rare fault-tolerant niche systems</td>
+              </tr>
+              <tr>
+                <td>MIMD</td>
+                <td>Many</td>
+                <td>Many</td>
+                <td>Multicore CPUs, distributed systems</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Parallel processor notes (SIMD and MIMD)</h3>
+          <ul>
+            <li>
+              SIMD is efficient for regular data-parallel workloads (matrix,
+              image, ML vector kernels).
+            </li>
+            <li>
+              MIMD is flexible for task parallelism and heterogeneous workloads.
+            </li>
+            <li>
+              Scalability depends on interconnect, memory bandwidth, and
+              synchronization overhead.
+            </li>
+          </ul>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                If asked theoretical-interest class: answer MISD and explain
+                limited practical workload match.
+              </li>
+              <li>
+                For 2-mark questions, define SIMD and MIMD with one real example
+                each.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p6" class="card reveal">
+          <h2>Topic 6: Traditional vs High-Speed Bus Architecture</h2>
+
+          <h3>Traditional bus model</h3>
+          <ul>
+            <li>Single shared bus for CPU, memory, and I/O.</li>
+            <li>Simple design but high contention and limited bandwidth.</li>
+            <li>As CPU speed increases, shared bus becomes bottleneck.</li>
+          </ul>
+
+          <h3>High-speed bus model</h3>
+          <ul>
+            <li>Hierarchical buses or switched interconnect.</li>
+            <li>Dedicated high-speed processor-memory path.</li>
+            <li>
+              Split transaction, pipelined transaction, and burst transfer
+              support.
+            </li>
+            <li>
+              Modern examples use point-to-point links (for example PCIe style).
+            </li>
+          </ul>
+
+          <h3>Diagrammatic difference</h3>
+          <div class="diagram">
+            <svg
+              width="920"
+              height="320"
+              viewBox="0 0 920 320"
+              role="img"
+              aria-label="Traditional vs high-speed bus diagram"
+            >
+              <rect
+                x="30"
+                y="20"
+                width="410"
+                height="280"
+                fill="#fff"
+                stroke="#94a3b8"
+              />
+              <text
+                x="235"
+                y="44"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+                fill="#7c2d12"
+              >
+                Traditional Shared Bus
+              </text>
+              <rect
+                x="70"
+                y="70"
+                width="80"
+                height="38"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="110" y="94" text-anchor="middle" font-size="12">
+                CPU
+              </text>
+              <rect
+                x="190"
+                y="70"
+                width="90"
+                height="38"
+                fill="#dcfce7"
+                stroke="#15803d"
+              />
+              <text x="235" y="94" text-anchor="middle" font-size="12">
+                Memory
+              </text>
+              <rect
+                x="320"
+                y="70"
+                width="80"
+                height="38"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="360" y="94" text-anchor="middle" font-size="12">
+                I/O
+              </text>
+              <rect
+                x="70"
+                y="145"
+                width="330"
+                height="24"
+                fill="#fef3c7"
+                stroke="#b45309"
+              />
+              <text x="235" y="162" text-anchor="middle" font-size="12">
+                Single Shared Bus
+              </text>
+              <text
+                x="235"
+                y="215"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                High contention, low scalability
+              </text>
+
+              <rect
+                x="480"
+                y="20"
+                width="410"
+                height="280"
+                fill="#fff"
+                stroke="#94a3b8"
+              />
+              <text
+                x="685"
+                y="44"
+                text-anchor="middle"
+                font-size="15"
+                font-weight="700"
+                fill="#0f766e"
+              >
+                High-Speed Hierarchical Bus
+              </text>
+              <rect
+                x="520"
+                y="70"
+                width="80"
+                height="38"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="560" y="94" text-anchor="middle" font-size="12">
+                CPU
+              </text>
+              <rect
+                x="640"
+                y="70"
+                width="90"
+                height="38"
+                fill="#dcfce7"
+                stroke="#15803d"
+              />
+              <text x="685" y="94" text-anchor="middle" font-size="12">
+                L2/MC
+              </text>
+              <rect
+                x="770"
+                y="70"
+                width="80"
+                height="38"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="810" y="94" text-anchor="middle" font-size="12">
+                I/O Hub
+              </text>
+              <rect
+                x="520"
+                y="145"
+                width="210"
+                height="22"
+                fill="#cffafe"
+                stroke="#0e7490"
+              />
+              <text x="625" y="160" text-anchor="middle" font-size="11">
+                High-speed memory bus
+              </text>
+              <rect
+                x="770"
+                y="145"
+                width="80"
+                height="22"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <text x="810" y="160" text-anchor="middle" font-size="11">
+                I/O bus
+              </text>
+              <line
+                x1="730"
+                y1="156"
+                x2="770"
+                y2="156"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <text
+                x="685"
+                y="215"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                Higher bandwidth, reduced contention
+              </text>
+            </svg>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For diagram question, draw two-part comparison exactly like left
+                and right architecture.
+              </li>
+              <li>
+                Use keywords: contention, throughput, scalability, dedicated
+                path.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p7" class="card reveal">
+          <h2>Topic 7: RAID Basics (0/1/2/3 + Brief Overview of Others)</h2>
+
+          <div class="definition">
+            <b>RAID</b> (Redundant Array of Independent Disks) combines multiple
+            disks for performance, reliability, or both.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>RAID Level</th>
+                <th>Main Idea</th>
+                <th>Fault Tolerance</th>
+                <th>Performance Character</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>RAID 0</td>
+                <td>Block striping, no parity/mirror</td>
+                <td>None</td>
+                <td>Very high read/write throughput</td>
+              </tr>
+              <tr>
+                <td>RAID 1</td>
+                <td>Mirroring</td>
+                <td>High (one copy survives)</td>
+                <td>Fast reads, write duplicated</td>
+              </tr>
+              <tr>
+                <td>RAID 2</td>
+                <td>Bit-level striping with Hamming ECC disks</td>
+                <td>ECC-based recovery</td>
+                <td>Historically important, rarely used now</td>
+              </tr>
+              <tr>
+                <td>RAID 3</td>
+                <td>Byte-level striping + dedicated parity disk</td>
+                <td>Survives one disk failure</td>
+                <td>Good sequential throughput, parity bottleneck</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Compact visual</h3>
+          <div class="diagram">
+            <svg
+              width="900"
+              height="220"
+              viewBox="0 0 900 220"
+              role="img"
+              aria-label="RAID visual"
+            >
+              <rect
+                x="20"
+                y="20"
+                width="860"
+                height="180"
+                fill="#fff"
+                stroke="#94a3b8"
+              />
+
+              <text
+                x="90"
+                y="45"
+                font-size="13"
+                font-weight="700"
+                fill="#1f2937"
+              >
+                RAID0
+              </text>
+              <rect x="50" y="55" width="18" height="70" fill="#bfdbfe" />
+              <rect x="70" y="55" width="18" height="70" fill="#86efac" />
+              <rect x="90" y="55" width="18" height="70" fill="#fcd34d" />
+              <rect x="110" y="55" width="18" height="70" fill="#fca5a5" />
+              <text x="90" y="142" text-anchor="middle" font-size="11">
+                striped
+              </text>
+
+              <text
+                x="250"
+                y="45"
+                font-size="13"
+                font-weight="700"
+                fill="#1f2937"
+              >
+                RAID1
+              </text>
+              <rect x="220" y="55" width="24" height="70" fill="#bfdbfe" />
+              <rect x="248" y="55" width="24" height="70" fill="#bfdbfe" />
+              <rect x="276" y="55" width="24" height="70" fill="#86efac" />
+              <rect x="304" y="55" width="24" height="70" fill="#86efac" />
+              <text x="273" y="142" text-anchor="middle" font-size="11">
+                mirrored pairs
+              </text>
+
+              <text
+                x="450"
+                y="45"
+                font-size="13"
+                font-weight="700"
+                fill="#1f2937"
+              >
+                RAID2
+              </text>
+              <rect x="410" y="55" width="16" height="70" fill="#bfdbfe" />
+              <rect x="428" y="55" width="16" height="70" fill="#86efac" />
+              <rect x="446" y="55" width="16" height="70" fill="#fcd34d" />
+              <rect x="464" y="55" width="16" height="70" fill="#ddd6fe" />
+              <rect x="482" y="55" width="16" height="70" fill="#fecaca" />
+              <text x="458" y="142" text-anchor="middle" font-size="11">
+                bit-striping + ECC
+              </text>
+
+              <text
+                x="680"
+                y="45"
+                font-size="13"
+                font-weight="700"
+                fill="#1f2937"
+              >
+                RAID3
+              </text>
+              <rect x="630" y="55" width="18" height="70" fill="#bfdbfe" />
+              <rect x="650" y="55" width="18" height="70" fill="#86efac" />
+              <rect x="670" y="55" width="18" height="70" fill="#fcd34d" />
+              <rect x="690" y="55" width="18" height="70" fill="#fca5a5" />
+              <rect
+                x="710"
+                y="55"
+                width="18"
+                height="70"
+                fill="#a7f3d0"
+                stroke="#047857"
+                stroke-width="1.2"
+              />
+              <text x="719" y="98" text-anchor="middle" font-size="10">P</text>
+              <text x="690" y="142" text-anchor="middle" font-size="11">
+                dedicated parity disk
+              </text>
+            </svg>
+          </div>
+
+          <h3>Quick capacity estimator (for RAID 0/1/3)</h3>
+          <div
+            class="tool-grid"
+            style="grid-template-columns: repeat(4, minmax(130px, 1fr))"
+          >
+            <div>
+              <label for="raidLevel">RAID level</label>
+              <select id="raidLevel">
+                <option value="0">RAID 0</option>
+                <option value="1">RAID 1</option>
+                <option value="3">RAID 3</option>
+              </select>
+            </div>
+            <div>
+              <label for="raidDisks">Number of disks</label>
+              <input id="raidDisks" type="number" min="2" value="4" />
+            </div>
+            <div>
+              <label for="diskSize">Each disk size (TB)</label>
+              <input
+                id="diskSize"
+                type="number"
+                min="0.1"
+                step="0.1"
+                value="2"
+              />
+            </div>
+            <div>
+              <button class="btn" id="runRaid" type="button">
+                Estimate Capacity
+              </button>
+            </div>
+          </div>
+          <div class="result" id="raidResult">
+            Enter values and compute usable capacity.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For PYQ, write one-line feature list of RAID 0,1,2,3 in table
+                form.
+              </li>
+              <li>
+                Mention RAID 2 as mostly historical due modern ECC in
+                drives/controllers.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="p8" class="card reveal">
+          <h2>Topic 8: 1-bit ALU and Single-Bus Datapath</h2>
+
+          <h3>1-bit ALU concept</h3>
+          <div class="definition">
+            A 1-bit ALU is a building block that performs arithmetic/logic on
+            one bit pair and can be cascaded to make n-bit ALU.
+          </div>
+
+          <h3>Common operations</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Control</th>
+                <th>Operation</th>
+                <th>Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>00</td>
+                <td>AND</td>
+                <td>A AND B</td>
+              </tr>
+              <tr>
+                <td>01</td>
+                <td>OR</td>
+                <td>A OR B</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>ADD</td>
+                <td>A + B + Cin</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>SUB</td>
+                <td>A + (NOT B) + 1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>1-bit ALU block diagram</h3>
+          <div class="diagram">
+            <svg
+              width="920"
+              height="280"
+              viewBox="0 0 920 280"
+              role="img"
+              aria-label="1-bit ALU block diagram"
+            >
+              <rect
+                x="30"
+                y="20"
+                width="860"
+                height="230"
+                fill="#fff"
+                stroke="#94a3b8"
+              />
+              <rect
+                x="90"
+                y="80"
+                width="110"
+                height="70"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="145" y="120" text-anchor="middle" font-size="12">
+                Logic Unit
+              </text>
+
+              <rect
+                x="250"
+                y="80"
+                width="130"
+                height="70"
+                fill="#dcfce7"
+                stroke="#15803d"
+              />
+              <text x="315" y="120" text-anchor="middle" font-size="12">
+                Full Adder
+              </text>
+
+              <rect
+                x="440"
+                y="80"
+                width="120"
+                height="70"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <text x="500" y="120" text-anchor="middle" font-size="12">
+                MUX
+              </text>
+
+              <rect
+                x="630"
+                y="80"
+                width="130"
+                height="70"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="695" y="120" text-anchor="middle" font-size="12">
+                Result/F/Cout
+              </text>
+
+              <line
+                x1="70"
+                y1="90"
+                x2="90"
+                y2="90"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <text x="52" y="94" font-size="11">A</text>
+              <line
+                x1="70"
+                y1="120"
+                x2="90"
+                y2="120"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <text x="52" y="124" font-size="11">B</text>
+              <line
+                x1="200"
+                y1="115"
+                x2="250"
+                y2="115"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <line
+                x1="380"
+                y1="115"
+                x2="440"
+                y2="115"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <line
+                x1="560"
+                y1="115"
+                x2="630"
+                y2="115"
+                stroke="#334155"
+                stroke-width="2"
+              />
+
+              <line
+                x1="220"
+                y1="165"
+                x2="315"
+                y2="165"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <text x="240" y="180" font-size="11">Cin</text>
+              <line
+                x1="315"
+                y1="165"
+                x2="315"
+                y2="150"
+                stroke="#334155"
+                stroke-width="2"
+              />
+
+              <line
+                x1="500"
+                y1="165"
+                x2="500"
+                y2="150"
+                stroke="#334155"
+                stroke-width="2"
+              />
+              <text x="508" y="182" font-size="11">Control S1,S0</text>
+            </svg>
+          </div>
+
+          <h3>Single-bus processor organization (datapath)</h3>
+          <div class="diagram">
+            <svg
+              width="920"
+              height="330"
+              viewBox="0 0 920 330"
+              role="img"
+              aria-label="Single bus datapath"
+            >
+              <rect
+                x="20"
+                y="20"
+                width="880"
+                height="290"
+                fill="#fff"
+                stroke="#94a3b8"
+              />
+              <rect
+                x="70"
+                y="60"
+                width="90"
+                height="45"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="115" y="88" text-anchor="middle" font-size="12">PC</text>
+              <rect
+                x="70"
+                y="120"
+                width="90"
+                height="45"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="115" y="148" text-anchor="middle" font-size="12">
+                IR
+              </text>
+              <rect
+                x="70"
+                y="180"
+                width="90"
+                height="45"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="115" y="208" text-anchor="middle" font-size="12">
+                MAR
+              </text>
+              <rect
+                x="70"
+                y="240"
+                width="90"
+                height="45"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <text x="115" y="268" text-anchor="middle" font-size="12">
+                MDR
+              </text>
+
+              <rect
+                x="290"
+                y="90"
+                width="130"
+                height="65"
+                fill="#dcfce7"
+                stroke="#15803d"
+              />
+              <text x="355" y="125" text-anchor="middle" font-size="12">
+                Register File
+              </text>
+              <rect
+                x="470"
+                y="90"
+                width="110"
+                height="65"
+                fill="#fef9c3"
+                stroke="#a16207"
+              />
+              <text x="525" y="125" text-anchor="middle" font-size="12">
+                ALU
+              </text>
+              <rect
+                x="640"
+                y="90"
+                width="120"
+                height="65"
+                fill="#fee2e2"
+                stroke="#b91c1c"
+              />
+              <text x="700" y="125" text-anchor="middle" font-size="12">
+                Shifter
+              </text>
+
+              <rect
+                x="220"
+                y="210"
+                width="560"
+                height="24"
+                fill="#cffafe"
+                stroke="#0e7490"
+              />
+              <text x="500" y="227" text-anchor="middle" font-size="12">
+                Common Internal Bus
+              </text>
+
+              <line x1="160" y1="82" x2="220" y2="222" stroke="#334155" />
+              <line x1="160" y1="142" x2="220" y2="222" stroke="#334155" />
+              <line x1="160" y1="202" x2="220" y2="222" stroke="#334155" />
+              <line x1="160" y1="262" x2="220" y2="222" stroke="#334155" />
+
+              <line x1="355" y1="155" x2="355" y2="210" stroke="#334155" />
+              <line x1="525" y1="155" x2="525" y2="210" stroke="#334155" />
+              <line x1="700" y1="155" x2="700" y2="210" stroke="#334155" />
+
+              <text
+                x="500"
+                y="275"
+                text-anchor="middle"
+                font-size="12"
+                fill="#334155"
+              >
+                One transfer on internal bus at a time; control unit sequences
+                operations.
+              </text>
+            </svg>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                In single-bus answer, emphasize that only one source should
+                drive bus at a time.
+              </li>
+              <li>
+                In ALU answer, mention full adder and logic block with
+                multiplexer-based selection.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="pyq" class="card reveal">
+          <h2>
+            Matching Previous Year Questions with Complete Detailed Solutions
+          </h2>
+
+          <div>
+            <span class="tag">2019 Q3(c), Q8(b), Q8(c)</span>
+            <span class="tag">2020 A(a), A(h), A(k), B(b), B(c)</span>
+            <span class="tag">2021 A(d), A2(d), B(b)</span>
+            <span class="tag">2022 Q7(c), Q8(b), Q8(d)</span>
+            <span class="tag">2023 Q3(b), Q6(c), Q8(a), Q8(b)</span>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020/2022: "The pipelined approach takes much less time" show
+              with example.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Model answer:</b> Consider n = 20 instructions, k = 5 stages,
+                and stage time t = 1 ns.
+              </p>
+              <div class="formula">
+                Tnp = n x k x t = 20 x 5 x 1 = 100 ns Tp = (k + n - 1) x t = (5
+                + 20 - 1) x 1 = 24 ns Speedup S = Tnp/Tp = 100/24 = 4.167
+              </div>
+              <p>
+                So pipelined design completes the same instruction stream much
+                faster. This validates the statement. For larger n, speedup gets
+                closer to k.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 A(k), 2021 A2(d), 2022 Q8(d): What are pipeline hazards
+              and stalls? How to avoid?
+            </div>
+            <div class="qa-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Hazard</th>
+                    <th>Definition</th>
+                    <th>Avoidance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Structural</td>
+                    <td>Two stages need same hardware simultaneously</td>
+                    <td>Resource duplication, split caches</td>
+                  </tr>
+                  <tr>
+                    <td>Data</td>
+                    <td>Instruction depends on unavailable prior result</td>
+                    <td>Forwarding, scheduling, stalling</td>
+                  </tr>
+                  <tr>
+                    <td>Control</td>
+                    <td>Branch target/decision not known early</td>
+                    <td>Branch prediction, delayed branch, flush</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="answer-steps">
+                A stall is a bubble inserted into the pipeline to preserve
+                correctness when hazard cannot be resolved immediately.
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 B(c): Find hazards in given MIPS sequence and reorder to
+              avoid stalls.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Given code (shortened):</b> lw, lw, add, sw, lw, add, sw.
+              </p>
+              <div class="answer-steps">
+                Hazards identified: 1) load-use hazard before first add. 2)
+                load-use hazard before second add. 3) RAW dependency from add to
+                store.
+              </div>
+              <div class="formula">
+                A stall-reduced schedule: lw t1, 0(t0) lw t2, 4(t0) lw t4, 8(t0)
+                add t3, t1, t2 add t5, t1, t4 sw t3, 12(t0) sw t5, 16(t0)
+              </div>
+              <p>
+                This schedule separates dependent operations and reduces bubble
+                insertions.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q8(b): What is pipelining? What do you mean by SIMD and
+              MIMD?
+            </div>
+            <div class="qa-body">
+              <p><b>Exam-ready answer:</b></p>
+              <ul>
+                <li>
+                  Pipelining is overlapped instruction execution using multiple
+                  stages.
+                </li>
+                <li>
+                  SIMD executes one instruction over many data items in
+                  parallel.
+                </li>
+                <li>
+                  MIMD executes different instructions on different data streams
+                  in parallel processors.
+                </li>
+              </ul>
+              <p>
+                Example: SIMD for image pixel operations; MIMD for multicore
+                task-parallel workloads.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q8(a): Among SISD, SIMD, MISD and MIMD, which is mostly
+              theoretical interest and why?
+            </div>
+            <div class="qa-body">
+              <p><b>Answer:</b> MISD is mostly of theoretical interest.</p>
+              <div class="answer-steps">
+                Reason: 1) Real workloads rarely apply multiple different
+                instruction streams to exactly same data stream. 2) Hardware
+                complexity is high with limited practical gain. 3) Only niche
+                fault-tolerant or signal-processing style systems resemble it.
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q8(b): Pipeline configuration for (Ai + Bi)(Ci + Di) and
+              list register contents for i = 1 to 6.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Configuration:</b> S1: R1 <- Ai+Bi, S2: R2 <- Ci+Di, S3: R3
+                <- R1xR2.
+              </p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Cycle</th>
+                    <th>S1</th>
+                    <th>S2</th>
+                    <th>S3</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>i1</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>i2</td>
+                    <td>i1</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>i3</td>
+                    <td>i2</td>
+                    <td>i1</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>i4</td>
+                    <td>i3</td>
+                    <td>i2</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>i5</td>
+                    <td>i4</td>
+                    <td>i3</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>i6</td>
+                    <td>i5</td>
+                    <td>i4</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>-</td>
+                    <td>i6</td>
+                    <td>i5</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>i6</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="answer-steps">
+                Register interpretation at cycle c: R1 has sum for i = c, R2 has
+                sum for i = c-1, R3 has product for i = c-2 (when valid index
+                exists).
+              </div>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q8(c): Show hardware to analyze pipeline Ai x Bi + (Ci +
+              Di), i = 1 ... 10.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Model hardware blocks:</b> Multiplier for Ai x Bi, adder for
+                Ci + Di, final adder for combining both partial results, and
+                inter-stage registers.
+              </p>
+              <div class="formula">
+                Stage A: P <- Ai x Bi Stage B: Q <- Ci + Di Stage C: R <- P + Q
+              </div>
+              <p>
+                For i = 1 to 10, pipeline accepts one new tuple each cycle after
+                fill, then produces one result per cycle.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023 Q3(b) and 2019 Q3(c): Diagrammatically show traditional
+              vs high-speed bus architecture.
+            </div>
+            <div class="qa-body">
+              <p><b>Answer points to include in diagram:</b></p>
+              <ul>
+                <li>
+                  Traditional: one shared bus among CPU, memory, I/O (high
+                  contention).
+                </li>
+                <li>
+                  High-speed: hierarchical/segmented buses, dedicated memory
+                  path, better arbitration.
+                </li>
+                <li>Result: higher bandwidth and improved scalability.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q7(c) and 2023 Q6(c): Features of RAID 0, RAID 1, RAID 2,
+              RAID 3.
+            </div>
+            <div class="qa-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>RAID</th>
+                    <th>Feature summary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0</td>
+                    <td>
+                      Striping only, highest throughput, no fault tolerance.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>
+                      Mirroring, strong fault tolerance, storage efficiency
+                      about half.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>
+                      Bit-level striping with ECC disks, mostly historical now.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>
+                      Byte-level striping plus dedicated parity disk, good
+                      sequential bandwidth.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 A(a): Define datapath and explain single-bus organization
+              of a processor.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Datapath:</b> The collection of functional units and
+                interconnections that carry and transform data inside CPU
+                (registers, ALU, buses, shifter, memory interface).
+              </p>
+              <div class="answer-steps">
+                Single-bus organization: 1) A common internal bus interconnects
+                CPU registers and functional units. 2) Control unit selects
+                source register to place data on bus. 3) Destination register
+                latches data from bus. 4) ALU operation and memory register
+                transfers are sequenced over clock cycles.
+              </div>
+              <p>
+                Advantage: simpler wiring. Limitation: one transfer at a time
+                creates bandwidth bottleneck.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 A(h)/2021 B(b): Construct a 1-bit ALU using basic logic
+              gates.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Model answer:</b> Build logic block (AND, OR), full-adder
+                block, and select output through MUX using control lines.
+              </p>
+              <div class="formula">
+                Inputs: A, B, Cin, controls S1,S0 Logic outputs: L0 = A AND B,
+                L1 = A OR B Arithmetic output: Sum = A + B + Cin Subtraction
+                using two's complement: A + (NOT B) + 1 Output F selected by
+                control through 4-to-1 MUX
+              </div>
+              <p>Cascading this cell forms 4-bit, 8-bit, 32-bit ALU designs.</p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2021 A(d): Write five stages of MIPS pipeline.
+            </div>
+            <div class="qa-body">
+              <p><b>Answer:</b> IF, ID, EX, MEM, WB.</p>
+              <div class="answer-steps">
+                IF: fetch instruction ID: decode and read registers EX: ALU
+                execute / address computation MEM: data memory access WB: write
+                result back to register file
+              </div>
+            </div>
+          </div>
+
+          <div class="danger-box" style="margin-top: 0.86rem">
+            Some PYQ scans are partially unclear in places, but all clearly
+            visible Module 6 related questions are covered with complete answer
+            patterns.
+          </div>
+        </section>
+
+        <section id="revision" class="card reveal">
+          <h2>Final Revision Sheet for Module 6</h2>
+
+          <h3>High-yield formulas and identities</h3>
+          <div class="formula">
+            Pipeline timing: Tnp = n x k x t Tp = (k + n - 1) x t S = (n x k)/(k
+            + n - 1) CPI with stalls: CPIeffective = CPIideal + stall cycles per
+            instruction Throughput (ideal long stream): about 1
+            instruction/cycle
+          </div>
+
+          <h3>Must-prepare answer blocks</h3>
+          <ol>
+            <li>Pipeline timing example proving speedup.</li>
+            <li>Hazards with one avoidance method each.</li>
+            <li>Flynn classes and MISD theoretical-interest explanation.</li>
+            <li>Traditional vs high-speed bus architecture diagram.</li>
+            <li>RAID 0, 1, 2, 3 features in compact table.</li>
+            <li>1-bit ALU block and single-bus datapath explanation.</li>
+            <li>
+              Pipeline register-content table for stream problems (i=1 to 6).
+            </li>
+          </ol>
+
+          <div class="ok-box">
+            Final self-test: 1) Solve one pipeline timing numerical in under 2
+            minutes. 2) Write hazard types with one-line fixes from memory. 3)
+            Draw 1-bit ALU and single-bus block diagram without notes.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer reveal">
+      Prepared for CSE 517 final exam, Module 6 only: Pipelining, Parallelism,
+      and Architecture Extensions.
+    </footer>
+
+    <script>
+      (function () {
+        var progressBar = document.getElementById("progressBar");
+
+        function updateProgress() {
+          var top =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          var h =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          var p = h > 0 ? (top / h) * 100 : 0;
+          progressBar.style.width = p + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("load", updateProgress);
+
+        var runStages = document.getElementById("runStages");
+        var stageIds = ["s1", "s2", "s3", "s4", "s5"];
+        var stageTimer = null;
+
+        if (runStages) {
+          runStages.addEventListener("click", function () {
+            if (stageTimer) {
+              clearInterval(stageTimer);
+            }
+            for (var i = 0; i < stageIds.length; i += 1) {
+              var rst = document.getElementById(stageIds[i]);
+              if (rst) {
+                rst.classList.remove("active");
+              }
+            }
+
+            var idx = 0;
+            stageTimer = setInterval(function () {
+              for (var j = 0; j < stageIds.length; j += 1) {
+                var n = document.getElementById(stageIds[j]);
+                if (n) {
+                  n.classList.remove("active");
+                }
+              }
+
+              if (idx < stageIds.length) {
+                var active = document.getElementById(stageIds[idx]);
+                if (active) {
+                  active.classList.add("active");
+                }
+                idx += 1;
+              } else {
+                clearInterval(stageTimer);
+                stageTimer = null;
+              }
+            }, 560);
+          });
+        }
+
+        var runPipeCalc = document.getElementById("runPipeCalc");
+        var pipeResult = document.getElementById("pipeResult");
+
+        if (runPipeCalc) {
+          runPipeCalc.addEventListener("click", function () {
+            var n = Number(document.getElementById("nInst").value);
+            var k = Number(document.getElementById("kStage").value);
+            var t = Number(document.getElementById("tStage").value);
+            var stall = Number(document.getElementById("stallCpi").value);
+
+            if (!(n > 0) || !(k > 1) || !(t > 0) || !(stall >= 0)) {
+              pipeResult.textContent = "Enter valid positive values.";
+              return;
+            }
+
+            var tnp = n * k * t;
+            var tpIdeal = (k + n - 1) * t;
+            var sideal = tnp / tpIdeal;
+            var tpWithStall = tpIdeal + n * stall * t;
+            var sreal = tnp / tpWithStall;
+
+            pipeResult.textContent =
+              "Tnp=" +
+              tnp.toFixed(4) +
+              " ns, Tp(ideal)=" +
+              tpIdeal.toFixed(4) +
+              " ns, S(ideal)=" +
+              sideal.toFixed(4) +
+              ", Tp(with stalls)=" +
+              tpWithStall.toFixed(4) +
+              " ns, S(real)=" +
+              sreal.toFixed(4);
+          });
+        }
+
+        var runRaid = document.getElementById("runRaid");
+        var raidResult = document.getElementById("raidResult");
+
+        if (runRaid) {
+          runRaid.addEventListener("click", function () {
+            var level = String(document.getElementById("raidLevel").value);
+            var disks = Number(document.getElementById("raidDisks").value);
+            var size = Number(document.getElementById("diskSize").value);
+
+            if (!(disks >= 2) || !(size > 0)) {
+              raidResult.textContent = "Enter valid disk count and size.";
+              return;
+            }
+
+            var capacity = 0;
+            var note = "";
+
+            if (level === "0") {
+              capacity = disks * size;
+              note = "No redundancy.";
+            } else if (level === "1") {
+              capacity = Math.floor(disks / 2) * size;
+              note = "Mirrored pairs; fault tolerance improves.";
+            } else if (level === "3") {
+              if (disks < 3) {
+                raidResult.textContent =
+                  "RAID 3 typically needs at least 3 disks.";
+                return;
+              }
+              capacity = (disks - 1) * size;
+              note = "One dedicated parity disk.";
+            }
+
+            raidResult.textContent =
+              "Usable capacity approx = " +
+              capacity.toFixed(2) +
+              " TB. " +
+              note;
+          });
+        }
+
+        function makePipelineTable(m) {
+          var rows = [];
+          var totalCycles = m + 2;
+
+          rows.push(
+            "<table><thead><tr><th>Cycle</th><th>S1 (R1)</th><th>S2 (R2)</th><th>S3 (R3)</th></tr></thead><tbody>",
+          );
+
+          for (var c = 1; c <= totalCycles; c += 1) {
+            var i1 = c;
+            var i2 = c - 1;
+            var i3 = c - 2;
+
+            var s1 =
+              i1 >= 1 && i1 <= m
+                ? "i" + i1 + " : R1=(A" + i1 + "+B" + i1 + ")"
+                : "-";
+            var s2 =
+              i2 >= 1 && i2 <= m
+                ? "i" + i2 + " : R2=(C" + i2 + "+D" + i2 + ")"
+                : "-";
+            var s3 =
+              i3 >= 1 && i3 <= m
+                ? "i" +
+                  i3 +
+                  " : R3=(A" +
+                  i3 +
+                  "+B" +
+                  i3 +
+                  ")(C" +
+                  i3 +
+                  "+D" +
+                  i3 +
+                  ")"
+                : "-";
+
+            rows.push(
+              "<tr><td>" +
+                c +
+                "</td><td>" +
+                s1 +
+                "</td><td>" +
+                s2 +
+                "</td><td>" +
+                s3 +
+                "</td></tr>",
+            );
+          }
+
+          rows.push("</tbody></table>");
+          return rows.join("");
+        }
+
+        var genPipeTable = document.getElementById("genPipeTable");
+        var pipeTableWrap = document.getElementById("pipeTableWrap");
+
+        if (genPipeTable && pipeTableWrap) {
+          genPipeTable.addEventListener("click", function () {
+            var m = Number(document.getElementById("streamCount").value);
+            if (!(m >= 1 && m <= 20)) {
+              pipeTableWrap.innerHTML =
+                '<div class="result">Enter stream count between 1 and 20.</div>';
+              return;
+            }
+            pipeTableWrap.innerHTML = makePipelineTable(m);
+          });
+
+          pipeTableWrap.innerHTML = makePipelineTable(6);
+        }
+
+        var revealNodes = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries, obs) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("show");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
+          );
+
+          revealNodes.forEach(function (n) {
+            observer.observe(n);
+          });
+        } else {
+          revealNodes.forEach(function (n) {
+            n.classList.add("show");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

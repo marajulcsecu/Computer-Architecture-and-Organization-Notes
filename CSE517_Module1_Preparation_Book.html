@@ -1,0 +1,2326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE 517 Module 1 Preparation Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700;800&family=Fira+Code:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f2937;
+        --ink-soft: #334155;
+        --paper: #fffef8;
+        --bg-top: #f4efe2;
+        --bg-mid: #eaf7f0;
+        --bg-bottom: #f4f8ff;
+        --accent-1: #0f766e;
+        --accent-2: #ea580c;
+        --accent-3: #2563eb;
+        --accent-4: #0ea5a4;
+        --warn: #b45309;
+        --good: #166534;
+        --card: rgba(255, 255, 255, 0.82);
+        --border: rgba(15, 118, 110, 0.22);
+        --shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+        --radius: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        background: linear-gradient(
+          180deg,
+          var(--bg-top) 0%,
+          var(--bg-mid) 50%,
+          var(--bg-bottom) 100%
+        );
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        z-index: -1;
+        width: 45vw;
+        height: 45vw;
+        border-radius: 999px;
+        filter: blur(24px);
+        opacity: 0.25;
+        pointer-events: none;
+        animation: drift 20s ease-in-out infinite alternate;
+      }
+
+      body::before {
+        top: -10vw;
+        left: -10vw;
+        background: radial-gradient(
+          circle at center,
+          #14b8a6 0%,
+          rgba(20, 184, 166, 0) 70%
+        );
+      }
+
+      body::after {
+        right: -14vw;
+        bottom: -14vw;
+        background: radial-gradient(
+          circle at center,
+          #fb923c 0%,
+          rgba(251, 146, 60, 0) 72%
+        );
+        animation-delay: 3s;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(20px, -18px) scale(1.07);
+        }
+      }
+
+      .progress-track {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 7px;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+      }
+
+      #progressBar {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-1),
+          var(--accent-2),
+          var(--accent-3)
+        );
+        transition: width 0.08s linear;
+      }
+
+      .hero {
+        padding: 5.7rem 1.2rem 2.6rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero-wrap {
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 8px);
+        padding: 2rem;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(238, 250, 244, 0.9)
+        );
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-wrap::after {
+        content: "";
+        position: absolute;
+        top: -38px;
+        right: -38px;
+        width: 180px;
+        height: 180px;
+        background: radial-gradient(
+          circle,
+          rgba(37, 99, 235, 0.26) 0%,
+          rgba(37, 99, 235, 0) 72%
+        );
+        pointer-events: none;
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 0.34rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-weight: 800;
+        background: rgba(15, 118, 110, 0.12);
+        color: var(--accent-1);
+        border: 1px solid rgba(15, 118, 110, 0.28);
+        margin-right: 0.45rem;
+        margin-bottom: 0.45rem;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", "Times New Roman", serif;
+        line-height: 1.25;
+        margin-top: 0;
+        color: #0f172a;
+      }
+
+      h1 {
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        margin-bottom: 0.7rem;
+        letter-spacing: 0.01em;
+      }
+
+      h2 {
+        font-size: clamp(1.45rem, 2.3vw, 2rem);
+        margin-bottom: 0.55rem;
+        color: #0b4f4a;
+      }
+
+      h3 {
+        font-size: clamp(1.15rem, 1.85vw, 1.45rem);
+        color: #1f3b69;
+        margin-bottom: 0.45rem;
+      }
+
+      h4 {
+        font-size: 1.05rem;
+        margin-bottom: 0.4rem;
+        color: #7c2d12;
+      }
+
+      .subtitle {
+        color: var(--ink-soft);
+        font-size: 1.08rem;
+        max-width: 78ch;
+        margin-bottom: 0.95rem;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 0.8rem;
+        margin-top: 1.2rem;
+      }
+
+      .meta-card {
+        border: 1px solid rgba(148, 163, 184, 0.32);
+        border-radius: 12px;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .meta-card b {
+        color: #0f766e;
+      }
+
+      .page {
+        display: grid;
+        grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+        gap: 1.1rem;
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+        padding: 0 1.2rem 2rem;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 1.05rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.86);
+        backdrop-filter: blur(7px);
+        box-shadow: var(--shadow);
+        max-height: calc(100vh - 2rem);
+        overflow: auto;
+      }
+
+      .toc h3 {
+        margin-bottom: 0.6rem;
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        color: #0f4d69;
+        border-left: 3px solid transparent;
+        padding: 0.36rem 0.38rem;
+        margin-bottom: 0.25rem;
+        border-radius: 7px;
+        transition: all 0.2s ease;
+        font-weight: 700;
+        font-size: 0.93rem;
+      }
+
+      .toc a:hover {
+        background: rgba(14, 165, 164, 0.12);
+        border-left-color: var(--accent-4);
+        transform: translateX(2px);
+      }
+
+      .content {
+        display: grid;
+        gap: 1.05rem;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        padding: 1.18rem;
+      }
+
+      .small-note {
+        font-size: 0.95rem;
+        color: #475569;
+      }
+
+      .definition {
+        border-left: 5px solid var(--accent-3);
+        background: rgba(37, 99, 235, 0.08);
+        padding: 0.7rem 0.8rem;
+        border-radius: 10px;
+        margin: 0.7rem 0;
+      }
+
+      .exam-focus {
+        border-left: 5px solid var(--accent-2);
+        background: rgba(234, 88, 12, 0.1);
+        padding: 0.75rem 0.85rem;
+        border-radius: 10px;
+        margin-top: 0.95rem;
+      }
+
+      .formula-box {
+        border: 1px dashed rgba(15, 118, 110, 0.45);
+        background: rgba(15, 118, 110, 0.07);
+        border-radius: 10px;
+        padding: 0.68rem 0.85rem;
+        margin: 0.7rem 0;
+        font-family: "Fira Code", "Courier New", monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+      }
+
+      .grid-two {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .grid-three {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      ul,
+      ol {
+        margin-top: 0.45rem;
+        margin-bottom: 0.45rem;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 0.72rem 0;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        padding: 0.58rem 0.55rem;
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.95rem;
+      }
+
+      th {
+        background: rgba(20, 184, 166, 0.14);
+        color: #0f172a;
+        font-weight: 800;
+      }
+
+      .layer-stack {
+        display: grid;
+        gap: 0.5rem;
+        max-width: 520px;
+        margin: 0.7rem auto;
+      }
+
+      .layer {
+        text-align: center;
+        font-weight: 800;
+        border-radius: 10px;
+        padding: 0.52rem;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+      }
+
+      .layer.arch {
+        background: rgba(14, 165, 233, 0.16);
+        color: #0c4a6e;
+      }
+
+      .layer.isa {
+        background: rgba(59, 130, 246, 0.13);
+        color: #1e3a8a;
+      }
+
+      .layer.micro {
+        background: rgba(234, 88, 12, 0.14);
+        color: #7c2d12;
+      }
+
+      .layer.circuit {
+        background: rgba(22, 163, 74, 0.13);
+        color: #14532d;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .diagram-shell {
+        border: 1px solid rgba(148, 163, 184, 0.38);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.65rem;
+        overflow-x: auto;
+      }
+
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-top: 0.65rem;
+      }
+
+      .compare-card {
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 12px;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.73);
+      }
+
+      .compare-card h4 {
+        margin-bottom: 0.35rem;
+      }
+
+      .timeline {
+        position: relative;
+        margin: 1rem 0;
+        padding-left: 1.1rem;
+        border-left: 4px solid rgba(14, 165, 164, 0.55);
+      }
+
+      .time-item {
+        position: relative;
+        padding: 0.68rem 0.7rem;
+        margin: 0.62rem 0;
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.76);
+        animation: floatTiny 4s ease-in-out infinite alternate;
+      }
+
+      .time-item:nth-child(2n) {
+        animation-delay: 0.45s;
+      }
+
+      .time-item::before {
+        content: "";
+        position: absolute;
+        left: -1.56rem;
+        top: 1rem;
+        width: 0.78rem;
+        height: 0.78rem;
+        border-radius: 999px;
+        background: var(--accent-2);
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
+      }
+
+      @keyframes floatTiny {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-3px);
+        }
+      }
+
+      .year {
+        font-weight: 800;
+        color: #0f766e;
+      }
+
+      .cycle-board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin-top: 0.75rem;
+      }
+
+      .cycle-step {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 10px;
+        padding: 0.62rem;
+        background: rgba(255, 255, 255, 0.72);
+        transition: all 0.25s ease;
+        transform: scale(1);
+      }
+
+      .cycle-step.active {
+        border-color: #0ea5a4;
+        background: rgba(45, 212, 191, 0.2);
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(20, 184, 166, 0.2);
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+        color: #fff;
+        font-weight: 800;
+        padding: 0.56rem 1rem;
+        cursor: pointer;
+        box-shadow: 0 8px 16px rgba(14, 116, 144, 0.24);
+        transition: transform 0.2s ease;
+        margin-top: 0.35rem;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .moore-tools {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 0.62rem;
+        align-items: end;
+        margin-top: 0.65rem;
+      }
+
+      .moore-tools label {
+        font-size: 0.84rem;
+        color: #334155;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.18rem;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        border-radius: 8px;
+        padding: 0.42rem 0.5rem;
+        font-size: 0.96rem;
+        background: rgba(255, 255, 255, 0.88);
+      }
+
+      .moore-result {
+        margin-top: 0.6rem;
+        font-weight: 700;
+        color: #0f172a;
+        background: rgba(37, 99, 235, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.24);
+        border-radius: 10px;
+        padding: 0.5rem 0.7rem;
+      }
+
+      .pyq-map {
+        font-size: 0.95rem;
+      }
+
+      .qa {
+        border: 1px solid rgba(148, 163, 184, 0.38);
+        border-radius: 12px;
+        margin-top: 0.85rem;
+        background: rgba(255, 255, 255, 0.82);
+        overflow: hidden;
+      }
+
+      .qa-head {
+        padding: 0.7rem 0.8rem;
+        background: rgba(20, 184, 166, 0.14);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      .qa-body {
+        padding: 0.8rem;
+      }
+
+      .answer-structure {
+        border-left: 5px solid rgba(37, 99, 235, 0.7);
+        background: rgba(37, 99, 235, 0.08);
+        border-radius: 10px;
+        padding: 0.63rem 0.77rem;
+        margin: 0.5rem 0;
+      }
+
+      .warn-box {
+        border-left: 5px solid var(--warn);
+        background: rgba(245, 158, 11, 0.12);
+        border-radius: 10px;
+        padding: 0.64rem 0.77rem;
+        margin-top: 0.7rem;
+      }
+
+      .good-box {
+        border-left: 5px solid var(--good);
+        background: rgba(34, 197, 94, 0.12);
+        border-radius: 10px;
+        padding: 0.64rem 0.77rem;
+        margin-top: 0.7rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        max-width: 1200px;
+        margin: 0 auto 2.4rem;
+        padding: 0 1.2rem;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 0.18rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        color: #0f172a;
+        background: rgba(253, 186, 116, 0.45);
+        border: 1px solid rgba(251, 146, 60, 0.5);
+        margin-right: 0.38rem;
+        margin-bottom: 0.22rem;
+      }
+
+      @media (max-width: 980px) {
+        .page {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+
+        .grid-two,
+        .grid-three,
+        .compare-grid,
+        .meta-grid,
+        .cycle-board,
+        .moore-tools {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 4.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-track"><div id="progressBar"></div></div>
+
+    <header class="hero reveal">
+      <div class="hero-wrap">
+        <span class="chip">CSE 517</span>
+        <span class="chip">Computer Architecture</span>
+        <span class="chip">Module 1</span>
+        <h1>Foundations and Evolution of Computer Systems</h1>
+        <p class="subtitle">
+          Complete exam-ready preparation book designed from your teacher
+          syllabus, lecture notes, evolution notes, and previous year questions
+          (2019-2023). Each topic is explained in simple language, with visual
+          diagrams, formula-based examples, and full-length solved PYQs in exam
+          writing style.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta-card">
+            <b>Target:</b> University semester final exam
+          </div>
+          <div class="meta-card">
+            <b>Coverage:</b> All Module 1 topics without skipping
+          </div>
+          <div class="meta-card">
+            <b>Mode:</b> Learn + visualize + practice answers
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <aside class="toc reveal">
+        <h3>Quick Navigation</h3>
+        <a href="#how-to-study">How To Use This Book</a>
+        <a href="#topic1">Topic 1: Architecture vs Organization</a>
+        <a href="#topic2">Topic 2: Top-Level View and Functions</a>
+        <a href="#topic3">Topic 3: Von Neumann and Harvard</a>
+        <a href="#topic4">Topic 4: Computing vs Calculation</a>
+        <a href="#topic5">Topic 5: Evolution of Computers</a>
+        <a href="#topic6">Topic 6: Moore Law and Transistor Growth</a>
+        <a href="#topic7">Topic 7: Law of Diminishing Returns</a>
+        <a href="#pyq">Matching PYQ with Full Solutions</a>
+        <a href="#final-revision">Final Revision Sheet</a>
+        <p class="small-note">
+          Tip: Start with Topic 1 and Topic 2. Most exam long questions combine
+          these.
+        </p>
+      </aside>
+
+      <article class="content">
+        <section id="how-to-study" class="card reveal">
+          <h2>How To Use This Book Effectively</h2>
+          <p>
+            This book is designed as a full module note and an answer writing
+            trainer. Use it in 3 phases:
+          </p>
+          <ol>
+            <li>Read each topic concept and its diagram carefully.</li>
+            <li>
+              Read the "Exam Focus" points and formula boxes for memory
+              retention.
+            </li>
+            <li>
+              Practice writing the solved PYQ answers in your own words with
+              same structure.
+            </li>
+          </ol>
+          <div class="good-box">
+            If you can explain each diagram and write each solved PYQ answer
+            within exam time, you are ready for Module 1.
+          </div>
+        </section>
+
+        <section id="topic1" class="card reveal">
+          <h2>Topic 1: Computer Architecture vs Computer Organization</h2>
+          <div class="definition">
+            <b>Computer Architecture:</b> Attributes visible to software
+            programmers that affect logical execution of programs. Examples:
+            instruction set, addressing modes, data types, I/O method.
+          </div>
+          <div class="definition">
+            <b>Computer Organization:</b> Internal operational units and
+            hardware interconnections that implement architecture. Examples:
+            control signals, buses, ALU design, cache arrangement.
+          </div>
+
+          <h3>Simple Intuition</h3>
+          <p>
+            Architecture is <b>what the machine offers</b>. Organization is
+            <b>how the machine is built</b> to offer that behavior. You can
+            change organization (implementation) while keeping architecture
+            (interface) same.
+          </p>
+
+          <div class="layer-stack">
+            <div class="layer arch">User-visible behavior (Architecture)</div>
+            <div class="layer isa">Instruction Set Architecture (ISA)</div>
+            <div class="layer micro">Microarchitecture / Organization</div>
+            <div class="layer circuit">Physical circuits and devices</div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Point</th>
+                <th>Architecture</th>
+                <th>Organization</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Main question answered</td>
+                <td>What should computer do?</td>
+                <td>How does computer do it?</td>
+              </tr>
+              <tr>
+                <td>Visible to programmer?</td>
+                <td>Yes</td>
+                <td>Mostly no</td>
+              </tr>
+              <tr>
+                <td>Examples</td>
+                <td>Instruction set, addressing mode, register model</td>
+                <td>
+                  Pipeline depth, bus width, cache placement, control logic
+                </td>
+              </tr>
+              <tr>
+                <td>Design level</td>
+                <td>High level logical design</td>
+                <td>Low level physical/functional realization</td>
+              </tr>
+              <tr>
+                <td>Can change independently?</td>
+                <td>Usually stable for compatibility</td>
+                <td>Often changed for performance/cost/power</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Real Example</h3>
+          <p>
+            Many processors in Intel x86 family execute the same software (same
+            architecture/ISA), but they have different internal organization
+            (cache size, core count, branch predictor, pipeline).
+          </p>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Always define both terms first in one line each.</li>
+              <li>Then give 4 to 6 direct differences in table format.</li>
+              <li>Always add one practical example (x86 family is best).</li>
+              <li>Final line: organization implements architecture.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic2" class="card reveal">
+          <h2>
+            Topic 2: Functional and Top-Level View of Computer, Structure and
+            Functions
+          </h2>
+
+          <div class="definition">
+            <b>Top-level structure:</b> CPU, Main Memory, Input/Output modules,
+            and System Interconnection (bus).
+          </div>
+
+          <h3>Core Functions of a Computer System</h3>
+          <div class="grid-two">
+            <div class="compare-card">
+              <h4>1) Data Processing</h4>
+              <p>
+                ALU performs arithmetic and logic operations (add, compare,
+                shift, bit operations).
+              </p>
+            </div>
+            <div class="compare-card">
+              <h4>2) Data Storage</h4>
+              <p>Memory stores programs and data temporarily or permanently.</p>
+            </div>
+            <div class="compare-card">
+              <h4>3) Data Movement</h4>
+              <p>
+                Data moves between CPU, memory, and I/O devices through buses
+                and controllers.
+              </p>
+            </div>
+            <div class="compare-card">
+              <h4>4) Control</h4>
+              <p>
+                Control unit coordinates all operations by generating
+                timing/control signals.
+              </p>
+            </div>
+          </div>
+
+          <h3>Top-Level Functional Diagram</h3>
+          <div class="diagram-shell">
+            <svg
+              width="860"
+              height="320"
+              viewBox="0 0 860 320"
+              role="img"
+              aria-label="Top level view diagram"
+            >
+              <defs>
+                <marker
+                  id="arrowA"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,5 L0,10 z" fill="#0f766e" />
+                </marker>
+              </defs>
+
+              <rect
+                x="330"
+                y="36"
+                width="200"
+                height="96"
+                rx="12"
+                fill="#dff7f1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="430"
+                y="74"
+                text-anchor="middle"
+                font-size="20"
+                font-weight="700"
+                fill="#0f172a"
+              >
+                CPU
+              </text>
+              <text
+                x="430"
+                y="99"
+                text-anchor="middle"
+                font-size="14"
+                fill="#334155"
+              >
+                ALU + Control + Registers
+              </text>
+
+              <rect
+                x="70"
+                y="180"
+                width="220"
+                height="94"
+                rx="12"
+                fill="#e7efff"
+                stroke="#2563eb"
+                stroke-width="2"
+              />
+              <text
+                x="180"
+                y="216"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+                fill="#1e3a8a"
+              >
+                Input/Output
+              </text>
+              <text
+                x="180"
+                y="238"
+                text-anchor="middle"
+                font-size="14"
+                fill="#334155"
+              >
+                I/O modules and devices
+              </text>
+
+              <rect
+                x="570"
+                y="180"
+                width="220"
+                height="94"
+                rx="12"
+                fill="#fff2e6"
+                stroke="#ea580c"
+                stroke-width="2"
+              />
+              <text
+                x="680"
+                y="216"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+                fill="#9a3412"
+              >
+                Main Memory
+              </text>
+              <text
+                x="680"
+                y="238"
+                text-anchor="middle"
+                font-size="14"
+                fill="#334155"
+              >
+                Programs + Data
+              </text>
+
+              <rect
+                x="165"
+                y="138"
+                width="530"
+                height="28"
+                rx="8"
+                fill="#f0fdfa"
+                stroke="#14b8a6"
+                stroke-width="1.6"
+              />
+              <text
+                x="430"
+                y="158"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+                fill="#0f766e"
+              >
+                System Bus (Data Bus + Address Bus + Control Bus)
+              </text>
+
+              <line
+                x1="430"
+                y1="132"
+                x2="430"
+                y2="138"
+                stroke="#0f766e"
+                stroke-width="2"
+                marker-end="url(#arrowA)"
+              />
+              <line
+                x1="220"
+                y1="180"
+                x2="220"
+                y2="166"
+                stroke="#0f766e"
+                stroke-width="2"
+                marker-end="url(#arrowA)"
+              />
+              <line
+                x1="640"
+                y1="180"
+                x2="640"
+                y2="166"
+                stroke="#0f766e"
+                stroke-width="2"
+                marker-end="url(#arrowA)"
+              />
+
+              <text
+                x="430"
+                y="301"
+                text-anchor="middle"
+                font-size="13"
+                fill="#475569"
+              >
+                Exam tip: Draw this simple block diagram first, then explain
+                each block in 1-2 lines.
+              </text>
+            </svg>
+          </div>
+
+          <h3>Structure vs Function</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>View</th>
+                <th>Meaning</th>
+                <th>Typical exam wording</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Structure</td>
+                <td>How components are arranged and connected</td>
+                <td>
+                  "Draw top-level view" / "Show blocks and interconnection"
+                </td>
+              </tr>
+              <tr>
+                <td>Function</td>
+                <td>What each component does</td>
+                <td>"Explain structure and functions"</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Always draw CPU, Memory, I/O, and Bus.</li>
+              <li>Write 4 basic functions: process, store, move, control.</li>
+              <li>Define each function with one practical line.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic3" class="card reveal">
+          <h2>
+            Topic 3: Von Neumann Architecture, Stored Program Concept, and
+            Harvard Contrast
+          </h2>
+
+          <div class="definition">
+            <b>Von Neumann architecture:</b> Data and instructions are stored in
+            the same memory and share the same bus path.
+          </div>
+
+          <h3>Stored Program Concept</h3>
+          <p>
+            Before stored-program systems, reprogramming often required manual
+            rewiring. In the stored-program model, both instruction and data are
+            placed in memory, so the CPU can fetch instructions, decode, and
+            execute automatically. This made computers far more flexible and
+            general purpose.
+          </p>
+
+          <div class="compare-grid">
+            <div class="compare-card">
+              <h4>Von Neumann (Princeton)</h4>
+              <ul>
+                <li>Single memory for instruction and data</li>
+                <li>Single shared bus path</li>
+                <li>Simpler design and lower cost</li>
+                <li>Can face bottleneck due to shared path</li>
+              </ul>
+            </div>
+            <div class="compare-card">
+              <h4>Harvard</h4>
+              <ul>
+                <li>Separate memory for instruction and data</li>
+                <li>Separate buses can work in parallel</li>
+                <li>Higher throughput in many cases</li>
+                <li>More hardware complexity</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Visual Diagram: Von Neumann vs Harvard</h3>
+          <div class="diagram-shell">
+            <svg
+              width="860"
+              height="340"
+              viewBox="0 0 860 340"
+              role="img"
+              aria-label="Von Neumann and Harvard comparison"
+            >
+              <defs>
+                <marker
+                  id="arrowB"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,5 L0,10 z" fill="#1f2937" />
+                </marker>
+              </defs>
+
+              <text
+                x="210"
+                y="28"
+                text-anchor="middle"
+                font-size="20"
+                font-weight="700"
+                fill="#0f4d69"
+              >
+                Von Neumann
+              </text>
+              <rect
+                x="80"
+                y="50"
+                width="260"
+                height="70"
+                rx="10"
+                fill="#dff7f1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="210"
+                y="90"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="700"
+              >
+                CPU
+              </text>
+
+              <rect
+                x="80"
+                y="220"
+                width="260"
+                height="70"
+                rx="10"
+                fill="#fff2e6"
+                stroke="#ea580c"
+                stroke-width="2"
+              />
+              <text
+                x="210"
+                y="260"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="700"
+              >
+                Single Memory (Instr + Data)
+              </text>
+
+              <line
+                x1="210"
+                y1="120"
+                x2="210"
+                y2="220"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrowB)"
+              />
+              <line
+                x1="226"
+                y1="220"
+                x2="226"
+                y2="120"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrowB)"
+              />
+              <text x="246" y="172" font-size="12" fill="#334155">
+                Shared bus
+              </text>
+
+              <text
+                x="650"
+                y="28"
+                text-anchor="middle"
+                font-size="20"
+                font-weight="700"
+                fill="#7c2d12"
+              >
+                Harvard
+              </text>
+              <rect
+                x="520"
+                y="50"
+                width="260"
+                height="70"
+                rx="10"
+                fill="#dff7f1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="650"
+                y="90"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="700"
+              >
+                CPU
+              </text>
+
+              <rect
+                x="430"
+                y="220"
+                width="180"
+                height="70"
+                rx="10"
+                fill="#e7efff"
+                stroke="#2563eb"
+                stroke-width="2"
+              />
+              <text
+                x="520"
+                y="260"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                Instruction Memory
+              </text>
+
+              <rect
+                x="690"
+                y="220"
+                width="150"
+                height="70"
+                rx="10"
+                fill="#fff2e6"
+                stroke="#ea580c"
+                stroke-width="2"
+              />
+              <text
+                x="765"
+                y="260"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                Data Memory
+              </text>
+
+              <line
+                x1="610"
+                y1="120"
+                x2="545"
+                y2="220"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrowB)"
+              />
+              <line
+                x1="690"
+                y1="120"
+                x2="750"
+                y2="220"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrowB)"
+              />
+              <text x="560" y="170" font-size="12" fill="#334155">
+                Instr path
+              </text>
+              <text x="728" y="170" font-size="12" fill="#334155">
+                Data path
+              </text>
+            </svg>
+          </div>
+
+          <h3>
+            Mini Animation: Instruction Cycle (Fetch -> Decode -> Execute)
+          </h3>
+          <p class="small-note">
+            Click the button to highlight stages one by one.
+          </p>
+          <button class="btn" id="runCycle" type="button">
+            Run Cycle Animation
+          </button>
+          <div class="cycle-board">
+            <div class="cycle-step" id="step1">
+              <b>Fetch</b><br />PC gives address, instruction moves to IR.
+            </div>
+            <div class="cycle-step" id="step2">
+              <b>Decode</b><br />Control unit interprets operation and operands.
+            </div>
+            <div class="cycle-step" id="step3">
+              <b>Execute</b><br />ALU/I/O/memory action performed, result
+              stored.
+            </div>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Mention "stored program" explicitly for Von Neumann questions.
+              </li>
+              <li>
+                State the key limitation: shared path causes Von Neumann
+                bottleneck.
+              </li>
+              <li>
+                If asked for contrast, write memory arrangement + bus
+                arrangement + speed implication.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic4" class="card reveal">
+          <h2>Topic 4: Computing vs Calculation</h2>
+
+          <div class="definition">
+            <b>Calculation</b> usually means direct arithmetic operations to get
+            numeric result. <b>Computing</b> is a wider concept: algorithmic
+            processing, decision making, data handling, control flow, and
+            interaction with memory and I/O.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Calculation</th>
+                <th>Computing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Scope</td>
+                <td>Narrow (mostly arithmetic)</td>
+                <td>
+                  Broad (arithmetic + logic + control + storage + communication)
+                </td>
+              </tr>
+              <tr>
+                <td>Example task</td>
+                <td>Compute 234 x 19</td>
+                <td>
+                  Run banking app, process requests, update DB, generate report
+                </td>
+              </tr>
+              <tr>
+                <td>Program flow</td>
+                <td>Usually straight sequence</td>
+                <td>Branches, loops, function calls, exceptions</td>
+              </tr>
+              <tr>
+                <td>Data type</td>
+                <td>Mostly numbers</td>
+                <td>Text, image, video, sensor data, structured records</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Example</h3>
+          <p>
+            A calculator app can compute "15 + 27". A ride-sharing app does
+            computing: maps location, finds nearest driver, estimates fare,
+            processes payment, and sends notifications.
+          </p>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                In short-answer form: "Every calculation is computing, but every
+                computing task is not only calculation."
+              </li>
+              <li>Give one modern software example to score extra marks.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic5" class="card reveal">
+          <h2>
+            Topic 5: Evolution of Computers (Early Devices to Microprocessor
+            Age)
+          </h2>
+
+          <p>
+            Evolution matters in exam because it explains why architecture
+            changed: speed demand, reliability demand, programmability demand,
+            and miniaturization demand.
+          </p>
+
+          <div class="timeline">
+            <div class="time-item">
+              <span class="year">300 BC:</span> Abacus used for manual-aided
+              arithmetic.
+            </div>
+            <div class="time-item">
+              <span class="year">1617:</span> John Napier introduced logarithms
+              (multiplication via addition idea).
+            </div>
+            <div class="time-item">
+              <span class="year">1642:</span> Pascal built Pascaline for
+              mechanical addition.
+            </div>
+            <div class="time-item">
+              <span class="year">1670s:</span> Leibniz stepped reckoner, early
+              four-operation calculator and binary advocacy.
+            </div>
+            <div class="time-item">
+              <span class="year">1801:</span> Jacquard loom used punch-card
+              control pattern concept.
+            </div>
+            <div class="time-item">
+              <span class="year">1822-1837:</span> Babbage proposed Difference
+              Engine and Analytical Engine; Ada Byron wrote early program ideas.
+            </div>
+            <div class="time-item">
+              <span class="year">1890:</span> Hollerith punch-card tabulation
+              accelerated census and later influenced IBM.
+            </div>
+            <div class="time-item">
+              <span class="year">1939-1945:</span> ABC and ENIAC era, electronic
+              digital foundations with vacuum tubes.
+            </div>
+            <div class="time-item">
+              <span class="year">1945:</span> Von Neumann stored-program concept
+              formalized.
+            </div>
+            <div class="time-item">
+              <span class="year">1947:</span> Transistor invention triggered
+              second generation improvement.
+            </div>
+            <div class="time-item">
+              <span class="year">1960s:</span> Integrated circuits enabled
+              smaller, faster, more reliable machines.
+            </div>
+            <div class="time-item">
+              <span class="year">1971 onward:</span> Microprocessor integrated
+              CPU on chip; personal computing revolution.
+            </div>
+          </div>
+
+          <h3>Computer Generation Summary</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Generation</th>
+                <th>Main technology</th>
+                <th>Typical characteristics</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>First</td>
+                <td>Vacuum tubes</td>
+                <td>
+                  Very large size, high heat, low reliability, machine-level
+                  programming
+                </td>
+              </tr>
+              <tr>
+                <td>Second</td>
+                <td>Transistors</td>
+                <td>Smaller, faster, better reliability, reduced power</td>
+              </tr>
+              <tr>
+                <td>Third</td>
+                <td>Integrated circuits</td>
+                <td>Higher component density, better speed/cost ratio</td>
+              </tr>
+              <tr>
+                <td>Fourth</td>
+                <td>Microprocessor (VLSI)</td>
+                <td>
+                  CPU on chip, PCs, embedded systems, broad software ecosystem
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Mention transition driver in each phase (speed, size, cost,
+                reliability).
+              </li>
+              <li>
+                For long answers, include Babbage, Ada, ENIAC, stored-program,
+                transistor, microprocessor.
+              </li>
+              <li>
+                If time is short, write timeline as bullet + one line impact for
+                each milestone.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic6" class="card reveal">
+          <h2>Topic 6: Moore Law, CPU Transistor Growth, and Consequences</h2>
+
+          <div class="definition">
+            <b>Moore law (classic form):</b> Number of transistors on a chip
+            tends to double approximately every 18 to 24 months (historical
+            trend, not strict physical law).
+          </div>
+
+          <h3>Formula View (Trend Approximation)</h3>
+          <div class="formula-box">
+            N(t) = N0 * 2 ^ ((t - t0) / T) where: N0 = transistor count at
+            reference year t0 T = doubling period in years (often approx 2)
+          </div>
+
+          <h3>Small Numerical Example</h3>
+          <p>
+            Suppose a chip has 50 million transistors in year 2000 and doubling
+            period is 2 years. In 2006, number of doublings = (2006 - 2000)/2 =
+            3. Estimated count = 50 * 2^3 = 400 million transistors.
+          </p>
+
+          <h3>Historical Growth Snapshot (Approximate)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Processor</th>
+                <th>Year</th>
+                <th>Approx transistor count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Intel 4004</td>
+                <td>1971</td>
+                <td>2,300</td>
+              </tr>
+              <tr>
+                <td>Intel 8086</td>
+                <td>1978</td>
+                <td>29,000</td>
+              </tr>
+              <tr>
+                <td>Intel 80386</td>
+                <td>1985</td>
+                <td>275,000</td>
+              </tr>
+              <tr>
+                <td>Pentium</td>
+                <td>1993</td>
+                <td>3.1 million</td>
+              </tr>
+              <tr>
+                <td>Pentium 4</td>
+                <td>2000</td>
+                <td>42 million</td>
+              </tr>
+              <tr>
+                <td>Core 2 Duo</td>
+                <td>2006</td>
+                <td>291 million</td>
+              </tr>
+              <tr>
+                <td>Modern SoC class chips</td>
+                <td>2020+</td>
+                <td>billions</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quick Visual Growth Trend</h3>
+          <div class="diagram-shell">
+            <svg
+              width="860"
+              height="300"
+              viewBox="0 0 860 300"
+              role="img"
+              aria-label="Transistor growth plot"
+            >
+              <rect
+                x="70"
+                y="26"
+                width="730"
+                height="220"
+                fill="#ffffff"
+                stroke="#94a3b8"
+                stroke-width="1.4"
+              />
+              <line
+                x1="90"
+                y1="230"
+                x2="780"
+                y2="230"
+                stroke="#64748b"
+                stroke-width="1.5"
+              />
+              <line
+                x1="90"
+                y1="230"
+                x2="90"
+                y2="40"
+                stroke="#64748b"
+                stroke-width="1.5"
+              />
+
+              <polyline
+                points="90,223 175,216 260,204 345,183 430,147 515,112 600,88 685,58"
+                fill="none"
+                stroke="#ea580c"
+                stroke-width="4"
+              />
+
+              <circle cx="90" cy="223" r="5" fill="#0f766e" />
+              <circle cx="175" cy="216" r="5" fill="#0f766e" />
+              <circle cx="260" cy="204" r="5" fill="#0f766e" />
+              <circle cx="345" cy="183" r="5" fill="#0f766e" />
+              <circle cx="430" cy="147" r="5" fill="#0f766e" />
+              <circle cx="515" cy="112" r="5" fill="#0f766e" />
+              <circle cx="600" cy="88" r="5" fill="#0f766e" />
+              <circle cx="685" cy="58" r="5" fill="#0f766e" />
+
+              <text
+                x="760"
+                y="252"
+                text-anchor="end"
+                font-size="13"
+                fill="#334155"
+              >
+                Year
+              </text>
+              <text x="100" y="50" font-size="13" fill="#334155">
+                Transistor count (log-like trend)
+              </text>
+            </svg>
+          </div>
+
+          <h3>Interactive Estimator (Moore Trend)</h3>
+          <div class="moore-tools">
+            <div>
+              <label for="startCount">Start count</label>
+              <input
+                id="startCount"
+                type="number"
+                value="2300"
+                min="1"
+                step="1"
+              />
+            </div>
+            <div>
+              <label for="startYear">Start year</label>
+              <input
+                id="startYear"
+                type="number"
+                value="1971"
+                min="1900"
+                step="1"
+              />
+            </div>
+            <div>
+              <label for="endYear">End year</label>
+              <input
+                id="endYear"
+                type="number"
+                value="1981"
+                min="1900"
+                step="1"
+              />
+            </div>
+            <div>
+              <button class="btn" id="estimateMoore" type="button">
+                Estimate
+              </button>
+            </div>
+          </div>
+          <div class="moore-result" id="mooreResult">
+            Estimated count will appear here.
+          </div>
+
+          <h3>Consequences of Moore Law</h3>
+          <div class="grid-two">
+            <div class="compare-card">
+              <h4>Positive impacts</h4>
+              <ul>
+                <li>Higher performance and richer software</li>
+                <li>Lower cost per transistor</li>
+                <li>Smaller devices with more capability</li>
+                <li>Growth of personal computing, cloud, AI, mobile</li>
+              </ul>
+            </div>
+            <div class="compare-card">
+              <h4>New challenges</h4>
+              <ul>
+                <li>Power density and heat limits</li>
+                <li>Memory wall and data movement bottlenecks</li>
+                <li>Complexity and verification difficulty</li>
+                <li>Diminishing easy gains from frequency scaling</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Write law statement plus trend formula.</li>
+              <li>
+                Add one small growth table or graph in answer for high marks.
+              </li>
+              <li>
+                Always include both advantages and limitations in consequences.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="topic7" class="card reveal">
+          <h2>Topic 7: Law of Diminishing Returns in System Design</h2>
+
+          <div class="definition">
+            <b>Law of diminishing returns:</b> If one input is increased while
+            others are fixed, the additional gain eventually gets smaller. In
+            computer architecture, optimizing one part repeatedly gives less and
+            less overall system improvement.
+          </div>
+
+          <h3>Why This Is Important in Computer Architecture</h3>
+          <ul>
+            <li>
+              If CPU core becomes extremely fast but memory is slow, total
+              system still waits.
+            </li>
+            <li>
+              If cache is enlarged too much, extra hit-rate gain becomes very
+              small beyond a point.
+            </li>
+            <li>
+              If you only optimize one stage, unoptimized stages dominate
+              remaining execution time.
+            </li>
+          </ul>
+
+          <h3>Numerical Example (Architecture Context)</h3>
+          <p>
+            Assume baseline program time is 100 units. ALU-related work is 40
+            units, and remaining work is 60 units.
+          </p>
+          <ol>
+            <li>
+              First optimization: make ALU part 2x faster. New time = 60 +
+              (40/2) = 80 units. Speedup = 100/80 = 1.25x.
+            </li>
+            <li>
+              Second optimization: make same ALU part from 2x to 4x faster. New
+              time = 60 + (40/4) = 70 units. Speedup = 100/70 = 1.43x.
+            </li>
+          </ol>
+
+          <p>
+            Notice: first improvement gave +0.25x speedup (from 1.00 to 1.25),
+            but second gave only +0.18x (from 1.25 to 1.43). This shrinking gain
+            is diminishing returns.
+          </p>
+
+          <div class="warn-box">
+            Common exam mistake: Writing only definition from economics without
+            linking to architecture. Always connect to CPU-memory bottleneck,
+            cache sizing, or partial optimization behavior.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Start with one-line law definition.</li>
+              <li>
+                Give one architecture example (memory wall or cache size).
+              </li>
+              <li>Add one mini numeric demonstration to secure full marks.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="pyq" class="card reveal">
+          <h2>
+            Matching Previous Year Questions With Complete Exam-Ready Solutions
+          </h2>
+
+          <div class="pyq-map">
+            <span class="tag">2019 Q1(a,b,c)</span>
+            <span class="tag">2022 Q1(a,b,c)</span>
+            <span class="tag">2023 Q1(a,c)</span>
+            <span class="tag">2023 Q2(a)</span>
+            <span class="tag">2023 Q4(a)</span>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th>Matching PYQ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Architecture vs Organization</td>
+                <td>2019 Q1(a), 2022 Q1(b), 2023 Q1(a)</td>
+              </tr>
+              <tr>
+                <td>Top-level view and structure/functions</td>
+                <td>2019 Q1(a), 2019 Q3(a)</td>
+              </tr>
+              <tr>
+                <td>Von Neumann / stored program</td>
+                <td>
+                  Directly in syllabus and lecture, appears indirectly in
+                  conceptual questions
+                </td>
+              </tr>
+              <tr>
+                <td>Moore law and transistor growth</td>
+                <td>2019 Q1(b), 2022 Q2(a), 2023 Q4(a), 2023 Q2(a)</td>
+              </tr>
+              <tr>
+                <td>Architecture family statement</td>
+                <td>2019 Q1(c), 2022 Q1(c), 2023 Q1(c)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019, Section A, Q1(a): Compare and contrast computer
+              architecture and computer organization. Draw functional view of a
+              computer.
+            </div>
+            <div class="qa-body">
+              <div class="answer-structure">
+                <b>Exam-ready writing structure:</b> Definition of architecture
+                -> definition of organization -> tabular comparison ->
+                functional diagram -> short concluding line.
+              </div>
+              <p><b>Model answer:</b></p>
+              <p>
+                Computer architecture refers to programmer-visible attributes
+                such as instruction set, data formats, addressing methods, and
+                I/O model. Computer organization refers to hardware
+                implementation details such as control signals, cache design,
+                interconnection, and internal data paths used to realize
+                architecture.
+              </p>
+              <p>
+                Architecture defines what is exposed to software, while
+                organization defines how that behavior is physically achieved.
+                Therefore architecture is a higher-level design view and
+                organization is a lower-level realization view.
+              </p>
+              <p>
+                Functional view of a computer consists of CPU, memory, and I/O
+                modules connected by system bus. CPU performs data processing
+                and control; memory stores instructions/data; I/O transfers data
+                between computer and external environment.
+              </p>
+              <p>
+                A clean exam diagram should include these four labels: CPU, Main
+                Memory, I/O Modules, System Bus (data/address/control). Use
+                arrows for two-way data movement.
+              </p>
+              <p>
+                <b>Conclusion line for full marks:</b> Organization is the
+                mechanism that implements architecture specifications.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019, Section A, Q1(b): Show growth in CPU transistor count.
+              What are consequences of Moore law?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                CPU transistor count has increased dramatically over decades:
+                from a few thousand in early 1970s microprocessors to millions
+                in the 1990s and billions in modern chips. This growth roughly
+                followed Moore trend of doubling transistor density every about
+                2 years for many decades.
+              </p>
+              <p>Consequences:</p>
+              <ol>
+                <li>
+                  Large increase in processing power and system capability.
+                </li>
+                <li>
+                  Reduction in cost per transistor and wider technology access.
+                </li>
+                <li>
+                  Miniaturization: desktop to laptop to mobile and embedded
+                  devices.
+                </li>
+                <li>
+                  Higher integration: more cache, more cores, special
+                  accelerators on-chip.
+                </li>
+                <li>
+                  New limits: heat, power, leakage, design complexity, memory
+                  bottleneck.
+                </li>
+              </ol>
+              <p>
+                Thus Moore law accelerated computer evolution but also shifted
+                focus from pure clock-speed increase to multicore and
+                architecture-level optimization.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019, Section A, Q1(c): "Intel 80x86 family shares the same
+              architecture" - Illustrate.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                The statement is conceptually correct in ISA compatibility
+                sense. Many generations of x86 processors keep
+                backward-compatible architecture, so software compiled for
+                earlier ISA versions can run on newer processors.
+              </p>
+              <p>
+                However internal organization changes significantly across
+                generations: pipeline depth, cache hierarchy, branch prediction,
+                micro-op execution engine, number of cores, and fabrication
+                process.
+              </p>
+              <p>
+                Therefore we can say: "Same architecture family, different
+                organization/microarchitecture." This is the key exam logic
+                expected.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022, Section A, Q1(a): "Processing speed has increased more
+              rapidly than memory access time" - justify with example.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                Processor speed improved rapidly due to transistor scaling,
+                pipelining, superscalar designs, and improved manufacturing.
+                Main memory latency improved much more slowly due to
+                physical/circuit constraints.
+              </p>
+              <p>
+                Example: suppose old CPU cycle time is 10 ns and memory access
+                is 100 ns (ratio 10:1). After several years, CPU cycle time
+                becomes 1 ns while memory becomes 60 ns. Ratio now 60:1. Even
+                with faster memory, relative gap increased a lot.
+              </p>
+              <p>
+                This increasing gap is called memory wall, and it motivates
+                cache hierarchy, prefetching, and locality-based design.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022, Section A, Q1(b): Which describes how computer system
+              works? Why?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                In architecture-organization distinction,
+                <b>computer organization</b> mainly describes how the system
+                works internally. It explains operational units and their
+                interconnection: control signals, buses, memory interface, ALU
+                path, and timing behavior.
+              </p>
+              <p>
+                Architecture focuses on user-visible specification (what is
+                offered), while organization explains implementation mechanism
+                (how offered). Hence for the phrase "how system works",
+                organization is the more direct answer.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022, Section A, Q1(c): "Intel Core i9 family shares the same
+              organization" - do you agree?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                A precise answer is: not fully. Across generations of Core i9,
+                architecture/ISA continuity is strong, but organization details
+                can differ (core count, cache size, power management,
+                microarchitecture, process node).
+              </p>
+              <p>
+                If the question expects agreement, mention that members of same
+                generation may share broad organization strategy. But exam-safe
+                interpretation is: "same family architecture, organization
+                evolves for better performance." This balanced answer gets
+                marks.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023, Section A, Q1(a): Which term refers to attributes
+              visible to software programmer and impacting logical execution?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                The correct term is <b>computer architecture</b>. Because the
+                description explicitly includes user-visible properties such as
+                data representation width, instruction set, memory addressing
+                method, and input/output model, all of which are
+                architecture-level properties.
+              </p>
+              <p>
+                These directly affect how programs are written, compiled, and
+                executed. Therefore this definition points to computer
+                architecture, not organization.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023, Section A, Q1(c): "Windows 9X family OS shares the same
+              architecture" - discuss.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                This statement is usually not framed correctly for hardware
+                architecture discussions. Architecture in this course mostly
+                refers to computer/CPU architecture. Operating systems are
+                software platforms, not CPU architecture definitions.
+              </p>
+              <p>
+                Better statement: multiple CPUs may share same architecture (for
+                example x86 ISA), and multiple OS versions can run on that
+                architecture. Therefore, saying an OS family "shares same
+                architecture" is ambiguous unless architecture context (hardware
+                ISA vs software design architecture) is clearly specified.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023, Section A, Q2(a): One factor responsible for great
+              increase in processor speed - what factor and why?
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                A major factor is transistor density growth enabled by
+                semiconductor scaling (historically aligned with Moore trend).
+                More transistors allow more functional units, larger caches,
+                deeper out-of-order engines, and better branch prediction, which
+                increase instructions executed per second.
+              </p>
+              <p>
+                Additional reason: improved circuit and architecture techniques
+                (pipeline, superscalar, multicore) converted transistor growth
+                into effective performance gain.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2023, Section A, Q4(a): Consequences of Moore law and impact
+              on computer evolution.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                Moore trend increased transistor integration rapidly. This
+                transformed computers from room-scale systems to compact
+                personal and mobile devices, while reducing cost per computation
+                and enabling software complexity growth.
+              </p>
+              <p>In evolution terms:</p>
+              <ol>
+                <li>
+                  Vacuum tube to transistor to IC to microprocessor transition
+                  accelerated.
+                </li>
+                <li>
+                  Performance and memory/cache capacity improved strongly.
+                </li>
+                <li>
+                  Consumer computing, internet era, cloud, and AI systems became
+                  practical.
+                </li>
+                <li>
+                  Current era emphasizes multicore and specialized accelerators
+                  due to thermal and scaling limits.
+                </li>
+              </ol>
+              <p>
+                Thus Moore law was a central driving force of modern computer
+                evolution, though now gains are harder and require architecture
+                innovation.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="final-revision" class="card reveal">
+          <h2>Final Revision Sheet For Module 1</h2>
+
+          <h3>One-page key points</h3>
+          <ul>
+            <li>
+              Architecture = user-visible behavior; Organization =
+              implementation details.
+            </li>
+            <li>
+              Top-level blocks: CPU, Memory, I/O, Bus. Core functions: process,
+              store, move, control.
+            </li>
+            <li>
+              Von Neumann uses shared memory path for instruction and data;
+              Harvard separates them.
+            </li>
+            <li>Computing is broader than arithmetic calculation.</li>
+            <li>
+              Evolution chain: mechanical aid -> programmable concept ->
+              electronic digital -> transistor -> IC -> microprocessor.
+            </li>
+            <li>
+              Moore law explains historical transistor growth trend and many
+              performance/cost improvements.
+            </li>
+            <li>
+              Diminishing returns warns that optimizing one part repeatedly
+              gives less total gain.
+            </li>
+          </ul>
+
+          <h3>Likely exam long-question combinations</h3>
+          <ol>
+            <li>
+              Architecture vs Organization + Functional block diagram + example
+              family statement.
+            </li>
+            <li>
+              Moore law + transistor growth chart + consequences on evolution.
+            </li>
+            <li>
+              Von Neumann + stored program + Harvard contrast + bottleneck
+              discussion.
+            </li>
+          </ol>
+
+          <div class="good-box">
+            Final check before exam: if you can draw 3 diagrams from memory
+            (top-level block, Von vs Harvard, trend chart) and reproduce at
+            least 4 PYQ model answers, Module 1 is strongly prepared.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer reveal">
+      Prepared for CSE 517 semester exam preparation. Focused on Module 1 from
+      syllabus and class resources with PYQ alignment.
+    </footer>
+
+    <script>
+      (function () {
+        var progressBar = document.getElementById("progressBar");
+        var runCycleBtn = document.getElementById("runCycle");
+        var steps = [
+          document.getElementById("step1"),
+          document.getElementById("step2"),
+          document.getElementById("step3"),
+        ];
+        var estimateBtn = document.getElementById("estimateMoore");
+        var mooreResult = document.getElementById("mooreResult");
+        var cycleTimer = null;
+
+        function updateProgress() {
+          var scrollTop =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          var docHeight =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          progressBar.style.width = progress + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("load", updateProgress);
+
+        if (runCycleBtn) {
+          runCycleBtn.addEventListener("click", function () {
+            if (cycleTimer) {
+              clearInterval(cycleTimer);
+            }
+            for (var j = 0; j < steps.length; j += 1) {
+              steps[j].classList.remove("active");
+            }
+
+            var i = 0;
+            cycleTimer = setInterval(function () {
+              for (var k = 0; k < steps.length; k += 1) {
+                steps[k].classList.remove("active");
+              }
+              if (i < steps.length) {
+                steps[i].classList.add("active");
+                i += 1;
+              } else {
+                clearInterval(cycleTimer);
+                cycleTimer = null;
+              }
+            }, 850);
+          });
+        }
+
+        function formatNumber(num) {
+          var parts = Math.round(num).toString().split("");
+          var out = "";
+          var count = 0;
+          for (var i = parts.length - 1; i >= 0; i -= 1) {
+            out = parts[i] + out;
+            count += 1;
+            if (count % 3 === 0 && i !== 0) {
+              out = "," + out;
+            }
+          }
+          return out;
+        }
+
+        if (estimateBtn) {
+          estimateBtn.addEventListener("click", function () {
+            var startCount = Number(
+              document.getElementById("startCount").value,
+            );
+            var startYear = Number(document.getElementById("startYear").value);
+            var endYear = Number(document.getElementById("endYear").value);
+
+            if (!startCount || startCount < 1) {
+              mooreResult.textContent =
+                "Enter a valid starting transistor count.";
+              return;
+            }
+            if (!startYear || !endYear || endYear < startYear) {
+              mooreResult.textContent =
+                "Enter valid years where end year is >= start year.";
+              return;
+            }
+
+            var doublings = (endYear - startYear) / 2;
+            var estimate = startCount * Math.pow(2, doublings);
+            mooreResult.textContent =
+              "Estimated transistor count in " +
+              endYear +
+              " (assuming 2-year doubling trend): " +
+              formatNumber(estimate) +
+              " transistors.";
+          });
+        }
+
+        var revealNodes = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries, obs) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("show");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.12 },
+          );
+
+          revealNodes.forEach(function (node) {
+            observer.observe(node);
+          });
+        } else {
+          revealNodes.forEach(function (node) {
+            node.classList.add("show");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

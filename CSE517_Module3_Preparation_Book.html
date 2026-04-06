@@ -1,0 +1,2111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE 517 Module 3 Preparation Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Source+Code+Pro:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f2937;
+        --ink-soft: #334155;
+        --bg-top: #fef3c7;
+        --bg-mid: #f0f9ff;
+        --bg-bottom: #f5f3ff;
+        --card: rgba(255, 255, 255, 0.88);
+        --border: rgba(15, 23, 42, 0.16);
+        --accent-1: #0f766e;
+        --accent-2: #c2410c;
+        --accent-3: #1d4ed8;
+        --accent-4: #7c3aed;
+        --good: #166534;
+        --warn: #b45309;
+        --danger: #991b1b;
+        --radius: 16px;
+        --shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Plus Jakarta Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        line-height: 1.72;
+        background: linear-gradient(
+          180deg,
+          var(--bg-top) 0%,
+          var(--bg-mid) 48%,
+          var(--bg-bottom) 100%
+        );
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(32px);
+        opacity: 0.3;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      body::before {
+        width: 42vw;
+        height: 42vw;
+        left: -12vw;
+        top: -13vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(236, 72, 153, 0.38) 0%,
+          rgba(236, 72, 153, 0) 70%
+        );
+      }
+
+      body::after {
+        width: 40vw;
+        height: 40vw;
+        right: -12vw;
+        bottom: -12vw;
+        background: radial-gradient(
+          circle at center,
+          rgba(14, 165, 233, 0.36) 0%,
+          rgba(14, 165, 233, 0) 70%
+        );
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Spectral", "Times New Roman", serif;
+        margin-top: 0;
+        color: #0f172a;
+      }
+
+      h1 {
+        font-size: clamp(1.95rem, 4vw, 3rem);
+        line-height: 1.23;
+        margin-bottom: 0.65rem;
+      }
+
+      h2 {
+        font-size: clamp(1.42rem, 2.2vw, 2rem);
+        color: #0f4d4d;
+        margin-bottom: 0.55rem;
+      }
+
+      h3 {
+        font-size: clamp(1.12rem, 1.8vw, 1.42rem);
+        color: #1e40af;
+        margin-bottom: 0.44rem;
+      }
+
+      h4 {
+        font-size: 1.02rem;
+        color: #7c2d12;
+        margin-bottom: 0.34rem;
+      }
+
+      .progress-track {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 999;
+      }
+
+      #progressFill {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          var(--accent-1),
+          var(--accent-3)
+        );
+      }
+
+      .hero {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 5.7rem 1.1rem 2.5rem;
+      }
+
+      .hero-panel {
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 8px);
+        box-shadow: var(--shadow);
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.94),
+          rgba(240, 249, 255, 0.92)
+        );
+        padding: 1.85rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        top: -42px;
+        right: -42px;
+        width: 190px;
+        height: 190px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 58, 237, 0.24) 0%,
+          rgba(124, 58, 237, 0) 70%
+        );
+      }
+
+      .chip {
+        display: inline-block;
+        padding: 0.3rem 0.72rem;
+        border-radius: 999px;
+        margin-right: 0.42rem;
+        margin-bottom: 0.46rem;
+        font-size: 0.79rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-weight: 800;
+        color: #0f766e;
+        border: 1px solid rgba(15, 118, 110, 0.4);
+        background: rgba(45, 212, 191, 0.14);
+      }
+
+      .subtitle {
+        color: var(--ink-soft);
+        max-width: 90ch;
+      }
+
+      .meta-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(160px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .meta {
+        border: 1px solid rgba(148, 163, 184, 0.33);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.72rem;
+        font-size: 0.94rem;
+      }
+
+      .meta b {
+        color: #0f766e;
+      }
+
+      .layout {
+        max-width: 1220px;
+        margin: 0 auto 2.8rem;
+        padding: 0 1.1rem 1.8rem;
+        display: grid;
+        grid-template-columns: minmax(220px, 310px) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(8px);
+        padding: 0.9rem;
+        max-height: calc(100vh - 1.7rem);
+        overflow: auto;
+      }
+
+      .toc h3 {
+        margin-bottom: 0.48rem;
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        color: #1d4ed8;
+        font-weight: 700;
+        font-size: 0.92rem;
+        padding: 0.33rem 0.4rem;
+        margin-bottom: 0.2rem;
+        border-left: 3px solid transparent;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .toc a:hover {
+        border-left-color: var(--accent-2);
+        background: rgba(194, 65, 12, 0.09);
+        transform: translateX(2px);
+      }
+
+      .content {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        padding: 1.16rem;
+      }
+
+      .definition {
+        border-left: 5px solid var(--accent-3);
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 10px;
+        padding: 0.67rem 0.8rem;
+        margin: 0.65rem 0;
+      }
+
+      .exam-focus {
+        border-left: 5px solid var(--accent-2);
+        background: rgba(194, 65, 12, 0.1);
+        border-radius: 10px;
+        padding: 0.68rem 0.82rem;
+        margin-top: 0.78rem;
+      }
+
+      .formula {
+        border: 1px dashed rgba(15, 118, 110, 0.45);
+        border-radius: 10px;
+        background: rgba(15, 118, 110, 0.08);
+        padding: 0.6rem 0.76rem;
+        margin: 0.62rem 0;
+        font-family: "Source Code Pro", "Courier New", monospace;
+        font-size: 0.89rem;
+        overflow-x: auto;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.82rem;
+      }
+
+      .mini {
+        border: 1px solid rgba(148, 163, 184, 0.34);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 0.72rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.68rem 0;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        padding: 0.56rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: rgba(20, 184, 166, 0.16);
+        font-weight: 800;
+      }
+
+      ul,
+      ol {
+        margin-top: 0.43rem;
+        margin-bottom: 0.44rem;
+      }
+
+      .diagram {
+        border: 1px solid rgba(148, 163, 184, 0.38);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.83);
+        padding: 0.62rem;
+        overflow-x: auto;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.54rem 0.95rem;
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+        box-shadow: 0 8px 16px rgba(29, 78, 216, 0.24);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 0.55rem;
+        margin-top: 0.62rem;
+      }
+
+      .step {
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 0.56rem;
+        text-align: center;
+        transition: all 0.25s ease;
+      }
+
+      .step.active {
+        border-color: #0f766e;
+        background: rgba(45, 212, 191, 0.2);
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(130px, 1fr));
+        gap: 0.62rem;
+        align-items: end;
+      }
+
+      .tool-grid label {
+        display: block;
+        font-size: 0.83rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 0.16rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        border-radius: 8px;
+        padding: 0.42rem 0.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        font-size: 0.94rem;
+      }
+
+      .result {
+        margin-top: 0.6rem;
+        border: 1px solid rgba(37, 99, 235, 0.32);
+        border-radius: 10px;
+        background: rgba(219, 234, 254, 0.62);
+        padding: 0.55rem 0.68rem;
+        font-weight: 700;
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: 0.17rem 0.5rem;
+        margin-right: 0.34rem;
+        margin-bottom: 0.25rem;
+        border: 1px solid rgba(2, 132, 199, 0.38);
+        color: #0c4a6e;
+        background: rgba(186, 230, 253, 0.65);
+      }
+
+      .qa {
+        border: 1px solid rgba(148, 163, 184, 0.36);
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.84);
+        margin-top: 0.85rem;
+      }
+
+      .qa-head {
+        background: rgba(59, 130, 246, 0.16);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 0.69rem 0.8rem;
+        font-weight: 800;
+      }
+
+      .qa-body {
+        padding: 0.78rem;
+      }
+
+      .answer-steps {
+        border-left: 5px solid rgba(37, 99, 235, 0.72);
+        background: rgba(37, 99, 235, 0.08);
+        border-radius: 10px;
+        padding: 0.6rem 0.74rem;
+        margin: 0.56rem 0;
+      }
+
+      .ok-box {
+        border-left: 5px solid var(--good);
+        background: rgba(34, 197, 94, 0.12);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .warn-box {
+        border-left: 5px solid var(--warn);
+        background: rgba(251, 191, 36, 0.15);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .danger-box {
+        border-left: 5px solid var(--danger);
+        background: rgba(254, 226, 226, 0.8);
+        border-radius: 10px;
+        padding: 0.62rem 0.76rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.45s ease;
+      }
+
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        max-width: 1220px;
+        margin: 0 auto 2.4rem;
+        padding: 0 1.1rem;
+        color: #475569;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: relative;
+          top: 0;
+          max-height: none;
+        }
+
+        .meta-grid,
+        .grid-2,
+        .grid-3,
+        .tool-grid,
+        .step-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-track"><div id="progressFill"></div></div>
+
+    <header class="hero reveal">
+      <div class="hero-panel">
+        <span class="chip">CSE 517</span>
+        <span class="chip">Module 3</span>
+        <span class="chip">Instruction Cycle + ISA + CPU Organization</span>
+
+        <h1>Complete Exam-Ready Preparation Book: Module 3</h1>
+        <p class="subtitle">
+          Built from your teacher syllabus, lecture notes, and PYQ (2019-2023).
+          This note covers all Module 3 topics with simple explanation,
+          register-level flow, numerical examples, visual diagrams, interaction
+          tools, and full exam-style solved questions.
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta">
+            <b>Coverage:</b> All Module 3 topics from your module list
+          </div>
+          <div class="meta">
+            <b>Focus:</b> Understand cycle flow + solve numericals + write exam
+            answers
+          </div>
+          <div class="meta">
+            <b>Output:</b> Structured theory + complete solved PYQ section
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="toc reveal">
+        <h3>Quick Navigation</h3>
+        <a href="#study">How to Study This Module</a>
+        <a href="#t1">1. Basic Instruction Cycle and Register Transfer Flow</a>
+        <a href="#t2">2. Register Roles: PC, IR, MAR, MDR, AC, GPR</a>
+        <a href="#t3">3. Program Execution Trace (Hex Examples)</a>
+        <a href="#t4">4. Three CPU Organizations</a>
+        <a href="#t5">5. Addressing Modes and Effective Address</a>
+        <a href="#t6">6. RISC vs CISC and RISC Characteristics</a>
+        <a href="#t7">7. Basic MIPS Translation and Assembly Conversion</a>
+        <a href="#pyq">Matching PYQ with Full Detailed Solutions</a>
+        <a href="#revision">Final Revision Sheet</a>
+      </aside>
+
+      <article class="content">
+        <section id="study" class="card reveal">
+          <h2>How to Study Module 3 for Maximum Exam Marks</h2>
+          <ol>
+            <li>
+              Start with instruction cycle and register roles until you can
+              explain every step in words.
+            </li>
+            <li>
+              Then practice effective address problems and instruction trace
+              tables.
+            </li>
+            <li>
+              After that, master CPU organization mapping and RISC vs CISC
+              comparison.
+            </li>
+            <li>
+              Finally, practice MIPS translation and write complete PYQ-style
+              answers.
+            </li>
+          </ol>
+          <div class="ok-box">
+            If you can solve the 2019 effective address problem and 2022
+            instruction-cycle trace without notes, your Module 3 preparation is
+            strong.
+          </div>
+        </section>
+
+        <section id="t1" class="card reveal">
+          <h2>Topic 1: Basic Instruction Cycle and Register Transfer Flow</h2>
+
+          <div class="definition">
+            <b>Instruction cycle:</b> The complete process by which CPU fetches
+            one instruction, decodes it, executes it, and updates state for the
+            next instruction.
+          </div>
+
+          <h3>Main stages</h3>
+          <div class="grid-3">
+            <div class="mini">
+              <h4>Fetch</h4>
+              <p>Instruction is read from memory using PC.</p>
+            </div>
+            <div class="mini">
+              <h4>Decode</h4>
+              <p>Control unit identifies operation and addressing mode.</p>
+            </div>
+            <div class="mini">
+              <h4>Execute / Write back</h4>
+              <p>ALU, memory, or control action runs and result is stored.</p>
+            </div>
+          </div>
+
+          <h3>Typical register transfer micro-operations</h3>
+          <div class="formula">
+            Fetch phase: MAR <- PC MDR <- M[MAR] IR <- MDR PC <- PC + 1 Decode
+            phase: Decode opcode and addressing mode in IR Execute phase
+            (depends on opcode): AC <- AC + M[EA] (for ADD type) AC <- M[EA]
+            (for LOAD type) M[EA] <- AC (for STORE type)
+          </div>
+
+          <h3>Instruction cycle flow diagram</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="300"
+              viewBox="0 0 860 300"
+              role="img"
+              aria-label="Instruction cycle flow"
+            >
+              <defs>
+                <marker
+                  id="arrA"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="8"
+                  refY="5"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,5 L0,10 z" fill="#1f2937" />
+                </marker>
+              </defs>
+
+              <rect
+                x="40"
+                y="110"
+                width="150"
+                height="72"
+                rx="10"
+                fill="#fee2e2"
+                stroke="#c2410c"
+                stroke-width="2"
+              />
+              <text
+                x="115"
+                y="150"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                Fetch
+              </text>
+
+              <rect
+                x="230"
+                y="110"
+                width="150"
+                height="72"
+                rx="10"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+                stroke-width="2"
+              />
+              <text
+                x="305"
+                y="150"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                Decode
+              </text>
+
+              <rect
+                x="420"
+                y="110"
+                width="170"
+                height="72"
+                rx="10"
+                fill="#ccfbf1"
+                stroke="#0f766e"
+                stroke-width="2"
+              />
+              <text
+                x="505"
+                y="150"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                EA / Operand
+              </text>
+
+              <rect
+                x="630"
+                y="110"
+                width="170"
+                height="72"
+                rx="10"
+                fill="#ede9fe"
+                stroke="#7c3aed"
+                stroke-width="2"
+              />
+              <text
+                x="715"
+                y="150"
+                text-anchor="middle"
+                font-size="18"
+                font-weight="700"
+              >
+                Execute + WB
+              </text>
+
+              <line
+                x1="190"
+                y1="146"
+                x2="230"
+                y2="146"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrA)"
+              />
+              <line
+                x1="380"
+                y1="146"
+                x2="420"
+                y2="146"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrA)"
+              />
+              <line
+                x1="590"
+                y1="146"
+                x2="630"
+                y2="146"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrA)"
+              />
+
+              <path
+                d="M800,182 C800,245 80,245 80,182"
+                fill="none"
+                stroke="#1f2937"
+                stroke-width="2"
+                marker-end="url(#arrA)"
+              />
+              <text
+                x="430"
+                y="268"
+                text-anchor="middle"
+                font-size="14"
+                fill="#334155"
+              >
+                Repeat for next instruction until HALT.
+              </text>
+            </svg>
+          </div>
+
+          <h3>Mini animation: run cycle</h3>
+          <button class="btn" id="runCycle" type="button">Run Cycle</button>
+          <div class="step-grid">
+            <div class="step" id="st1"><b>1</b><br />MAR <- PC</div>
+            <div class="step" id="st2"><b>2</b><br />IR <- M[PC]</div>
+            <div class="step" id="st3"><b>3</b><br />Decode IR</div>
+            <div class="step" id="st4"><b>4</b><br />Compute EA</div>
+            <div class="step" id="st5"><b>5</b><br />Execute + Update</div>
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>Always mention PC increment during fetch.</li>
+              <li>Use MAR/MDR/IR terms to get full conceptual marks.</li>
+              <li>
+                If asked for cycle, write both stage names and micro-operations.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t2" class="card reveal">
+          <h2>Topic 2: Register Roles (PC, IR, MAR, MDR, AC, GPR)</h2>
+
+          <div class="definition">
+            <b>CPU registers</b> are very small and very fast storage locations
+            inside CPU used for instruction execution control and data
+            manipulation.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Register</th>
+                <th>Full form</th>
+                <th>Main role</th>
+                <th>Example action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PC</td>
+                <td>Program Counter</td>
+                <td>Holds address of next instruction</td>
+                <td>PC <- PC + 1 after fetch</td>
+              </tr>
+              <tr>
+                <td>IR</td>
+                <td>Instruction Register</td>
+                <td>Holds currently fetched instruction</td>
+                <td>IR <- MDR</td>
+              </tr>
+              <tr>
+                <td>MAR</td>
+                <td>Memory Address Register</td>
+                <td>Holds memory address for read/write</td>
+                <td>MAR <- PC or MAR <- EA</td>
+              </tr>
+              <tr>
+                <td>MDR</td>
+                <td>Memory Data Register</td>
+                <td>Holds data moving to/from memory</td>
+                <td>MDR <- M[MAR]</td>
+              </tr>
+              <tr>
+                <td>AC</td>
+                <td>Accumulator</td>
+                <td>Main arithmetic data register in accumulator machines</td>
+                <td>AC <- AC + M[EA]</td>
+              </tr>
+              <tr>
+                <td>R0...Rn</td>
+                <td>General Purpose Registers</td>
+                <td>Hold operands/results in register-based CPUs</td>
+                <td>ADD R1, R2, R3</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Register-level fetch example</h3>
+          <div class="formula">
+            Initial: PC = 301 MAR <- PC => MAR = 301 MDR <- M[301] => MDR = 5941
+            IR <- MDR => IR = 5941 PC <- PC + 1 => PC = 302
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For short notes: define each register in one line with one
+                micro-operation.
+              </li>
+              <li>
+                For long answers: include register role table plus one fetch
+                example.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t3" class="card reveal">
+          <h2>
+            Topic 3: Program Execution Trace Using Memory/Register Hex Values
+          </h2>
+
+          <div class="definition">
+            <b>Execution trace</b> means tracking register and memory state
+            step-by-step for each instruction cycle.
+          </div>
+
+          <h3>
+            Example A (PYQ 2022 style): three instruction cycles to add M[940]
+            and M[941]
+          </h3>
+          <p>Given memory and instruction stream:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Address</th>
+                <th>Content</th>
+                <th>Meaning used in solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>300</td>
+                <td>1940</td>
+                <td>LOAD 940</td>
+              </tr>
+              <tr>
+                <td>301</td>
+                <td>5941</td>
+                <td>ADD 941</td>
+              </tr>
+              <tr>
+                <td>302</td>
+                <td>2941</td>
+                <td>STORE 941</td>
+              </tr>
+              <tr>
+                <td>940</td>
+                <td>0004</td>
+                <td>Operand 1</td>
+              </tr>
+              <tr>
+                <td>941</td>
+                <td>0003</td>
+                <td>Operand 2</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warn-box">
+            Exact opcode mapping may vary by textbook machine model. In this
+            exam pattern, this sequence is treated as LOAD -> ADD -> STORE to
+            realize M[941] = M[940] + M[941].
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Cycle</th>
+                <th>Fetch result</th>
+                <th>Execute result</th>
+                <th>State after cycle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>IR=1940, PC=301</td>
+                <td>LOAD 940 -> AC=0004</td>
+                <td>AC=0004, IR=1940, PC=301</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>IR=5941, PC=302</td>
+                <td>ADD 941 -> AC=0004+0003=0007</td>
+                <td>AC=0007, IR=5941, PC=302</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>IR=2941, PC=303</td>
+                <td>STORE 941 -> M[941]=0007</td>
+                <td>AC=0007, IR=2941, PC=303, M[941]=0007</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Example B (PYQ 2019 style): if PC = 301, find AC and IR</h3>
+          <div class="answer-steps">
+            With PC=301, fetch reads instruction at address 301. So IR becomes
+            5941. AC at this point comes from previously executed first
+            instruction (LOAD first operand), so AC=0004 in the standard
+            sequence interpretation.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                Always show cycle-by-cycle table; examiners reward state
+                tracking clarity.
+              </li>
+              <li>Write PC changes at every fetch.</li>
+              <li>Keep values in hex format if question uses hex.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t4" class="card reveal">
+          <h2>Topic 4: Three CPU Organizations</h2>
+
+          <div class="definition">
+            The three common CPU organizations are <b>Accumulator</b>,
+            <b>General Register</b>, and <b>Stack</b> organization.
+          </div>
+
+          <div class="grid-3">
+            <div class="mini">
+              <h4>Accumulator organization</h4>
+              <p>
+                Single main register AC participates in almost all arithmetic
+                operations.
+              </p>
+              <div class="formula">Example: ADD A => AC <- AC + M[A]</div>
+            </div>
+            <div class="mini">
+              <h4>General register organization</h4>
+              <p>
+                Multiple registers hold operands and results; flexible and fast.
+              </p>
+              <div class="formula">Example: ADD R1, R2, R3</div>
+            </div>
+            <div class="mini">
+              <h4>Stack organization</h4>
+              <p>
+                Operands are implicitly taken from stack top; zero-address
+                operations common.
+              </p>
+              <div class="formula">Example: PUSH A, PUSH B, ADD</div>
+            </div>
+          </div>
+
+          <h3>Organization vs instruction style</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Instruction style</th>
+                <th>Likely organization</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ADD R1, A, B</td>
+                <td>General register (3-address)</td>
+                <td>Explicit destination and two sources</td>
+              </tr>
+              <tr>
+                <td>LOAD A</td>
+                <td>Accumulator (1-address)</td>
+                <td>Implicit AC as destination</td>
+              </tr>
+              <tr>
+                <td>PUSH AX</td>
+                <td>Stack</td>
+                <td>Stack pointer based push operation</td>
+              </tr>
+              <tr>
+                <td>ADD R1, B</td>
+                <td>General register (2-address)</td>
+                <td>One explicit register destination/source</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                If instruction has many explicit registers, think
+                general-register organization.
+              </li>
+              <li>
+                One-address arithmetic usually indicates accumulator machine.
+              </li>
+              <li>Zero-address arithmetic usually indicates stack machine.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t5" class="card reveal">
+          <h2>
+            Topic 5: Addressing Modes and Effective Address (EA) Calculation
+          </h2>
+
+          <div class="definition">
+            <b>Addressing mode</b> defines how CPU obtains operand address or
+            immediate data from an instruction.
+          </div>
+
+          <h3>Core formulas</h3>
+          <div class="formula">
+            Direct: EA = A, Operand = M[EA] Indirect: EA = M[A], Operand = M[EA]
+            Register indirect: EA = (R), Operand = M[EA] Indexed: EA = A + XR,
+            Operand = M[EA] Immediate: Operand = A (no memory read for operand)
+            Register: Operand = (R)
+          </div>
+
+          <h3>Addressing mode summary table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th>How operand is obtained</th>
+                <th>Speed</th>
+                <th>Typical use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Direct</td>
+                <td>Use address field directly</td>
+                <td>Medium</td>
+                <td>Simple memory reference</td>
+              </tr>
+              <tr>
+                <td>Indirect</td>
+                <td>Address field points to another address</td>
+                <td>Slower</td>
+                <td>Pointer-like memory access</td>
+              </tr>
+              <tr>
+                <td>Register indirect</td>
+                <td>Register contains memory address</td>
+                <td>Fast</td>
+                <td>Array/pointer traversal</td>
+              </tr>
+              <tr>
+                <td>Immediate</td>
+                <td>Operand value is inside instruction</td>
+                <td>Fastest</td>
+                <td>Constants</td>
+              </tr>
+              <tr>
+                <td>Indexed</td>
+                <td>Base address + index register</td>
+                <td>Fast</td>
+                <td>Array indexing</td>
+              </tr>
+              <tr>
+                <td>Register</td>
+                <td>Operand from register</td>
+                <td>Fastest</td>
+                <td>Arithmetic pipelines</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Numerical example (from PYQ 2019 style)</h3>
+          <p>
+            Given: address field A=500, R1=400, XR=100, and memory M[400]=700,
+            M[500]=800, M[600]=900, M[800]=300.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th>EA</th>
+                <th>AC after LOAD-like operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Direct</td>
+                <td>500</td>
+                <td>M[500]=800</td>
+              </tr>
+              <tr>
+                <td>Indirect</td>
+                <td>M[500]=800</td>
+                <td>M[800]=300</td>
+              </tr>
+              <tr>
+                <td>Register indirect</td>
+                <td>R1=400</td>
+                <td>M[400]=700</td>
+              </tr>
+              <tr>
+                <td>Immediate</td>
+                <td>Not used</td>
+                <td>500</td>
+              </tr>
+              <tr>
+                <td>Indexed</td>
+                <td>500+100=600</td>
+                <td>M[600]=900</td>
+              </tr>
+              <tr>
+                <td>Register</td>
+                <td>R1</td>
+                <td>400</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Interactive EA tool (same PYQ values)</h3>
+          <div class="tool-grid">
+            <div>
+              <label for="modeSelect">Addressing mode</label>
+              <select id="modeSelect">
+                <option value="direct">Direct</option>
+                <option value="indirect">Indirect</option>
+                <option value="regindirect">Register indirect</option>
+                <option value="immediate">Immediate</option>
+                <option value="indexed">Indexed</option>
+                <option value="register">Register</option>
+              </select>
+            </div>
+            <div>
+              <label for="addrField">Address field A</label>
+              <input id="addrField" type="number" value="500" />
+            </div>
+            <div>
+              <label for="r1Field">R1</label>
+              <input id="r1Field" type="number" value="400" />
+            </div>
+            <div>
+              <label for="xrField">XR</label>
+              <input id="xrField" type="number" value="100" />
+            </div>
+          </div>
+          <button
+            class="btn"
+            id="runEA"
+            type="button"
+            style="margin-top: 0.55rem"
+          >
+            Compute EA and AC
+          </button>
+          <div class="result" id="eaResult">Select mode and click compute.</div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                In addressing-mode numericals, write EA first, then operand/AC.
+              </li>
+              <li>
+                Differentiate clearly between immediate value and memory
+                content.
+              </li>
+              <li>For indirect mode, do two-step memory lookup explicitly.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t6" class="card reveal">
+          <h2>Topic 6: RISC vs CISC and RISC Characteristics</h2>
+
+          <div class="definition">
+            <b>RISC</b> uses smaller, simpler instruction set and emphasizes
+            pipeline-friendly design. <b>CISC</b> uses larger, more complex
+            instruction set with richer instruction semantics.
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>RISC</th>
+                <th>CISC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Instruction complexity</td>
+                <td>Simple</td>
+                <td>Complex</td>
+              </tr>
+              <tr>
+                <td>Instruction length</td>
+                <td>Usually fixed</td>
+                <td>Often variable</td>
+              </tr>
+              <tr>
+                <td>Execution model</td>
+                <td>Mostly single-cycle style for many ops</td>
+                <td>Multi-cycle complex ops common</td>
+              </tr>
+              <tr>
+                <td>Memory access style</td>
+                <td>Load/store architecture</td>
+                <td>Memory operands in many instructions</td>
+              </tr>
+              <tr>
+                <td>Control implementation</td>
+                <td>Often hardwired</td>
+                <td>Historically microprogrammed emphasis</td>
+              </tr>
+              <tr>
+                <td>Pipeline friendliness</td>
+                <td>High</td>
+                <td>Lower than RISC generally</td>
+              </tr>
+              <tr>
+                <td>Code density</td>
+                <td>Can be lower</td>
+                <td>Often higher</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>RISC characteristics (exam points)</h3>
+          <ul>
+            <li>Simple instruction set and simple addressing modes.</li>
+            <li>Large register file.</li>
+            <li>Load/store architecture for memory operations.</li>
+            <li>Fixed instruction format supports efficient decode.</li>
+            <li>Designed for high pipeline efficiency.</li>
+          </ul>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For comparison question, present differences in table form for
+                better marks.
+              </li>
+              <li>
+                Always mention load/store idea while writing RISC
+                characteristics.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="t7" class="card reveal">
+          <h2>
+            Topic 7: Basic MIPS Instruction Translation and Assembly Conversion
+          </h2>
+
+          <div class="definition">
+            <b>MIPS ISA basics:</b> R-type for register arithmetic, I-type for
+            immediate/memory/branch, J-type for jump.
+          </div>
+
+          <h3>MIPS instruction formats</h3>
+          <div class="diagram">
+            <svg
+              width="860"
+              height="240"
+              viewBox="0 0 860 240"
+              role="img"
+              aria-label="MIPS instruction formats"
+            >
+              <rect
+                x="40"
+                y="30"
+                width="780"
+                height="46"
+                fill="#dbeafe"
+                stroke="#1d4ed8"
+              />
+              <line x1="160" y1="30" x2="160" y2="76" stroke="#1e3a8a" />
+              <line x1="250" y1="30" x2="250" y2="76" stroke="#1e3a8a" />
+              <line x1="340" y1="30" x2="340" y2="76" stroke="#1e3a8a" />
+              <line x1="430" y1="30" x2="430" y2="76" stroke="#1e3a8a" />
+              <line x1="530" y1="30" x2="530" y2="76" stroke="#1e3a8a" />
+              <text
+                x="100"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                op(6)
+              </text>
+              <text
+                x="205"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                rs(5)
+              </text>
+              <text
+                x="295"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                rt(5)
+              </text>
+              <text
+                x="385"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                rd(5)
+              </text>
+              <text
+                x="480"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                shamt(5)
+              </text>
+              <text
+                x="675"
+                y="58"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                funct(6)
+              </text>
+              <text x="52" y="23" font-size="13" fill="#334155">R-type</text>
+
+              <rect
+                x="40"
+                y="100"
+                width="780"
+                height="46"
+                fill="#ccfbf1"
+                stroke="#0f766e"
+              />
+              <line x1="160" y1="100" x2="160" y2="146" stroke="#065f46" />
+              <line x1="250" y1="100" x2="250" y2="146" stroke="#065f46" />
+              <line x1="340" y1="100" x2="340" y2="146" stroke="#065f46" />
+              <text
+                x="100"
+                y="128"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                op(6)
+              </text>
+              <text
+                x="205"
+                y="128"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                rs(5)
+              </text>
+              <text
+                x="295"
+                y="128"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                rt(5)
+              </text>
+              <text
+                x="580"
+                y="128"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                immediate(16)
+              </text>
+              <text x="52" y="93" font-size="13" fill="#334155">I-type</text>
+
+              <rect
+                x="40"
+                y="170"
+                width="780"
+                height="46"
+                fill="#ede9fe"
+                stroke="#7c3aed"
+              />
+              <line x1="160" y1="170" x2="160" y2="216" stroke="#6d28d9" />
+              <text
+                x="100"
+                y="198"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                op(6)
+              </text>
+              <text
+                x="490"
+                y="198"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="700"
+              >
+                target address(26)
+              </text>
+              <text x="52" y="163" font-size="13" fill="#334155">J-type</text>
+            </svg>
+          </div>
+
+          <h3>Register numbers used in PYQ translations</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Register</th>
+                <th>Number</th>
+                <th>5-bit code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$t1</td>
+                <td>9</td>
+                <td>01001</td>
+              </tr>
+              <tr>
+                <td>$t2</td>
+                <td>10</td>
+                <td>01010</td>
+              </tr>
+              <tr>
+                <td>$t4</td>
+                <td>12</td>
+                <td>01100</td>
+              </tr>
+              <tr>
+                <td>$s0</td>
+                <td>16</td>
+                <td>10000</td>
+              </tr>
+              <tr>
+                <td>$s1</td>
+                <td>17</td>
+                <td>10001</td>
+              </tr>
+              <tr>
+                <td>$s2</td>
+                <td>18</td>
+                <td>10010</td>
+              </tr>
+              <tr>
+                <td>$s3</td>
+                <td>19</td>
+                <td>10011</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Worked translation examples (PYQ 2020/2022 style)</h3>
+          <div class="formula">
+            lw $t4, 400($s3) Binary: 100011 10011 01100 0000000110010000 Hex:
+            0x8E6C0190 add $s0, $t1, $t2 Binary: 000000 01001 01010 10000 00000
+            100000 Hex: 0x012A8020 sub $s1, $s2, $s3 Binary: 000000 10010 10011
+            10001 00000 100010 Hex: 0x02538822
+          </div>
+
+          <h3>Simple MIPS assembly conversion example</h3>
+          <p>High-level statement: <b>while (A[i] == m) i = i + 1;</b></p>
+          <div class="formula">
+            # Assume: $s0 = base address of A, $s1 = i, $s2 = m Loop: sll $t0,
+            $s1, 2 add $t0, $t0, $s0 lw $t1, 0($t0) bne $t1, $s2, Exit addi $s1,
+            $s1, 1 j Loop Exit:
+          </div>
+
+          <h3>Interactive MIPS breakdown (from common PYQ instructions)</h3>
+          <div class="tool-grid">
+            <div>
+              <label for="mipsPick">Select instruction</label>
+              <select id="mipsPick">
+                <option value="lw">lw $t4, 400($s3)</option>
+                <option value="add">add $s0, $t1, $t2</option>
+                <option value="sub">sub $s1, $s2, $s3</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn" id="runMips" type="button">
+                Show Encoding
+              </button>
+            </div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="result" id="mipsResult">
+            Pick an instruction and click show encoding.
+          </div>
+
+          <div class="exam-focus">
+            <b>Exam Focus:</b>
+            <ul>
+              <li>
+                For machine translation, show register codes and field breakdown
+                before final binary/hex.
+              </li>
+              <li>
+                For loop conversion, include clear labels (Loop, Exit) and
+                branch logic.
+              </li>
+              <li>
+                Do not forget immediate is signed 16-bit in I-type format.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="pyq" class="card reveal">
+          <h2>
+            Matching Previous Year Questions with Complete Detailed Solutions
+          </h2>
+
+          <div>
+            <span class="tag">2019 Q3(b)</span>
+            <span class="tag">2019 Q7(c)</span>
+            <span class="tag">2019 Q8(a)</span>
+            <span class="tag">2020 A(b,d,e)</span>
+            <span class="tag">2020 B(b) + while loop</span>
+            <span class="tag">2022 Q3(b,c)</span>
+            <span class="tag">2022 Q8(a)</span>
+            <span class="tag">2023 Q8(c)</span>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q3(b): Given memory table and PC=301, find AC and IR.
+            </div>
+            <div class="qa-body">
+              <p><b>Exam-ready answer:</b></p>
+              <div class="answer-steps">
+                Step 1: IR is loaded from memory location pointed by PC. So with
+                PC=301, IR=M[301]=5941.
+              </div>
+              <div class="answer-steps">
+                Step 2: AC reflects result of previously executed instruction.
+                In this standard sequence (LOAD first operand then ADD), first
+                instruction loads 0004 into AC.
+              </div>
+              <p>
+                <b>Hence:</b> IR=5941 and AC=0004 (before executing IR=5941).
+              </p>
+              <p>
+                If question context explicitly provides different opcode
+                semantics, apply that map first. In this course pattern, the
+                above interpretation is accepted.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q3(c): Show CPU register contents for three instruction
+              cycles to add M[940] and M[941].
+            </div>
+            <div class="qa-body">
+              <p><b>Exam-ready detailed solution:</b></p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Cycle</th>
+                    <th>After fetch</th>
+                    <th>After execute</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1 (1940)</td>
+                    <td>PC=301, IR=1940</td>
+                    <td>AC=0004</td>
+                  </tr>
+                  <tr>
+                    <td>2 (5941)</td>
+                    <td>PC=302, IR=5941</td>
+                    <td>AC=0007</td>
+                  </tr>
+                  <tr>
+                    <td>3 (2941)</td>
+                    <td>PC=303, IR=2941</td>
+                    <td>M[941]=0007, AC=0007</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Final memory result: location 941 stores 0007.</p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q7(c): Identify CPU organization for given instructions.
+            </div>
+            <div class="qa-body">
+              <p><b>Exam-ready mapping:</b></p>
+              <ul>
+                <li>
+                  ADD R1, A, B -> General register organization (three-address
+                  style).
+                </li>
+                <li>LOAD A -> Accumulator organization (one-address style).</li>
+                <li>PUSH AX -> Stack organization.</li>
+                <li>
+                  ADD R1, B -> General register organization (two-address
+                  style).
+                </li>
+              </ul>
+              <p>
+                Justification should mention explicit vs implicit operands and
+                whether stack pointer mechanism is used.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2019 Q8(a): Find EA and AC for direct, indirect, register
+              indirect, immediate, indexed, register modes.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Given:</b> A=500, R1=400, XR=100, M[400]=700, M[500]=800,
+                M[600]=900, M[800]=300.
+              </p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mode</th>
+                    <th>EA</th>
+                    <th>AC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Direct</td>
+                    <td>500</td>
+                    <td>800</td>
+                  </tr>
+                  <tr>
+                    <td>Indirect</td>
+                    <td>800</td>
+                    <td>300</td>
+                  </tr>
+                  <tr>
+                    <td>Register indirect</td>
+                    <td>400</td>
+                    <td>700</td>
+                  </tr>
+                  <tr>
+                    <td>Immediate</td>
+                    <td>Not applicable</td>
+                    <td>500</td>
+                  </tr>
+                  <tr>
+                    <td>Indexed</td>
+                    <td>600</td>
+                    <td>900</td>
+                  </tr>
+                  <tr>
+                    <td>Register</td>
+                    <td>R1</td>
+                    <td>400</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 A(b) and 2023 Q8(c): Need of addressing modes and explain
+              any two.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <p>
+                Addressing modes are needed to provide flexibility in operand
+                access, support arrays/pointers, reduce instruction count, and
+                improve code efficiency.
+              </p>
+              <p>
+                <b>Direct mode:</b> instruction gives memory address directly
+                (EA=A). Simple but less flexible.
+              </p>
+              <p>
+                <b>Indexed mode:</b> EA=A+XR. Very useful for arrays and loops
+                because index changes while base remains fixed.
+              </p>
+              <p>
+                Other acceptable modes can also be explained: immediate,
+                indirect, register, register-indirect.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 A(d,e): Registers generally in processor and functions of
+              MDR, IR, PC, MAR.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <ul>
+                <li>PC: stores next instruction address.</li>
+                <li>IR: stores current instruction under execution.</li>
+                <li>
+                  MAR: stores memory address for current memory operation.
+                </li>
+                <li>
+                  MDR: stores data read from memory or to be written to memory.
+                </li>
+              </ul>
+              <p>
+                Other common registers: AC, general-purpose registers, stack
+                pointer, status/flag register.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 B(b) and 2022 Q3(b): Translate lw/add/sub instructions
+              into machine instructions.
+            </div>
+            <div class="qa-body">
+              <p><b>Model answer:</b></p>
+              <div class="formula">
+                lw $t4, 400($s3): 100011 10011 01100 0000000110010000 =
+                0x8E6C0190 add $s0, $t1, $t2: 000000 01001 01010 10000 00000
+                100000 = 0x012A8020 sub $s1, $s2, $s3: 000000 10010 10011 10001
+                00000 100010 = 0x02538822
+              </div>
+              <p>
+                For full marks, show register codes and instruction format
+                before final hex.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2020 while-loop conversion: while(A[i] == m) i = i+1;
+            </div>
+            <div class="qa-body">
+              <p><b>Model MIPS solution:</b></p>
+              <div class="formula">
+                # Assume: $s0 = base(A), $s1 = i, $s2 = m Loop: sll $t0, $s1, 2
+                add $t0, $t0, $s0 lw $t1, 0($t0) bne $t1, $s2, Exit addi $s1,
+                $s1, 1 j Loop Exit:
+              </div>
+              <p>
+                Explanation: shift-left by 2 multiplies index by 4 (word size),
+                then add base address, load A[i], compare with m, and increment
+                i only when condition holds.
+              </p>
+            </div>
+          </div>
+
+          <div class="qa">
+            <div class="qa-head">
+              PYQ 2022 Q8(a): Distinguish between CISC and RISC computer.
+            </div>
+            <div class="qa-body">
+              <p>
+                <b>Model answer:</b> Provide a compact table with at least 5
+                points:
+              </p>
+              <ul>
+                <li>
+                  Instruction complexity: simple in RISC, complex in CISC.
+                </li>
+                <li>
+                  Instruction length: fixed in RISC, variable common in CISC.
+                </li>
+                <li>Addressing modes: fewer in RISC, many in CISC.</li>
+                <li>Pipeline support: easier in RISC.</li>
+                <li>
+                  Memory model: load/store in RISC; memory operands in many CISC
+                  instructions.
+                </li>
+              </ul>
+              <p>
+                Final line: modern systems may combine ideas; difference is
+                design philosophy, not strict superiority.
+              </p>
+            </div>
+          </div>
+
+          <div class="danger-box" style="margin-top: 0.86rem">
+            2021 PYQ text is partially unclear in parts, but visible Module
+            3-relevant items were included: MIPS translation and
+            ISA/design-principle oriented content.
+          </div>
+        </section>
+
+        <section id="revision" class="card reveal">
+          <h2>Final Revision Sheet for Module 3</h2>
+
+          <h3>Must-remember formulas and flows</h3>
+          <div class="formula">
+            Fetch: MAR <- PC, MDR <- M[MAR], IR <- MDR, PC <- PC + 1 EA
+            formulas: Direct EA=A; Indirect EA=M[A]; Register indirect EA=(R);
+            Indexed EA=A+XR MIPS key encodings: I-type: op rs rt immediate
+            R-type: op rs rt rd shamt funct
+          </div>
+
+          <h3>Most likely exam combinations</h3>
+          <ol>
+            <li>Instruction cycle + register roles + one hex trace.</li>
+            <li>Addressing modes theory + effective address numerical.</li>
+            <li>CPU organization identification from instruction formats.</li>
+            <li>RISC vs CISC table + RISC characteristics.</li>
+            <li>MIPS translation (lw/add/sub) + loop conversion.</li>
+          </ol>
+
+          <div class="ok-box">
+            Final self-test before exam: 1) Solve 2019 effective-address
+            question fully. 2) Reproduce 2022 three-cycle trace table from
+            memory. 3) Encode one lw and one add instruction to binary and hex.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer reveal">
+      Prepared for CSE 517 final exam, Module 3 only: Instruction Cycle, ISA
+      Basics, and CPU Organization.
+    </footer>
+
+    <script>
+      (function () {
+        var progressFill = document.getElementById("progressFill");
+
+        function updateProgress() {
+          var top =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          var h =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          var p = h > 0 ? (top / h) * 100 : 0;
+          progressFill.style.width = p + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("load", updateProgress);
+
+        var runCycle = document.getElementById("runCycle");
+        var stepIds = ["st1", "st2", "st3", "st4", "st5"];
+        var timer = null;
+
+        if (runCycle) {
+          runCycle.addEventListener("click", function () {
+            if (timer) {
+              clearInterval(timer);
+            }
+            for (var x = 0; x < stepIds.length; x += 1) {
+              var nodeReset = document.getElementById(stepIds[x]);
+              if (nodeReset) {
+                nodeReset.classList.remove("active");
+              }
+            }
+
+            var i = 0;
+            timer = setInterval(function () {
+              for (var j = 0; j < stepIds.length; j += 1) {
+                var node = document.getElementById(stepIds[j]);
+                if (node) {
+                  node.classList.remove("active");
+                }
+              }
+
+              if (i < stepIds.length) {
+                var activeNode = document.getElementById(stepIds[i]);
+                if (activeNode) {
+                  activeNode.classList.add("active");
+                }
+                i += 1;
+              } else {
+                clearInterval(timer);
+                timer = null;
+              }
+            }, 780);
+          });
+        }
+
+        var runEA = document.getElementById("runEA");
+        var eaResult = document.getElementById("eaResult");
+
+        if (runEA) {
+          runEA.addEventListener("click", function () {
+            var mode = document.getElementById("modeSelect").value;
+            var A = Number(document.getElementById("addrField").value);
+            var R1 = Number(document.getElementById("r1Field").value);
+            var XR = Number(document.getElementById("xrField").value);
+
+            if (isNaN(A) || isNaN(R1) || isNaN(XR)) {
+              eaResult.textContent = "Please enter valid numeric values.";
+              return;
+            }
+
+            var memory = {
+              400: 700,
+              500: 800,
+              600: 900,
+              800: 300,
+            };
+
+            var eaText = "";
+            var acText = "";
+
+            if (mode === "direct") {
+              eaText = String(A);
+              acText =
+                memory[A] !== undefined
+                  ? String(memory[A])
+                  : "M[" + A + "] unknown";
+            } else if (mode === "indirect") {
+              var eaIndirect = memory[A];
+              if (eaIndirect === undefined) {
+                eaText = "M[" + A + "] unknown";
+                acText = "Cannot evaluate";
+              } else {
+                eaText = String(eaIndirect);
+                acText =
+                  memory[eaIndirect] !== undefined
+                    ? String(memory[eaIndirect])
+                    : "M[" + eaIndirect + "] unknown";
+              }
+            } else if (mode === "regindirect") {
+              eaText = String(R1);
+              acText =
+                memory[R1] !== undefined
+                  ? String(memory[R1])
+                  : "M[" + R1 + "] unknown";
+            } else if (mode === "immediate") {
+              eaText = "Not used in immediate mode";
+              acText = String(A);
+            } else if (mode === "indexed") {
+              var eaIndexed = A + XR;
+              eaText = String(eaIndexed);
+              acText =
+                memory[eaIndexed] !== undefined
+                  ? String(memory[eaIndexed])
+                  : "M[" + eaIndexed + "] unknown";
+            } else if (mode === "register") {
+              eaText = "Register R1";
+              acText = String(R1);
+            }
+
+            eaResult.textContent =
+              "EA = " + eaText + " , AC/Operand = " + acText;
+          });
+        }
+
+        var runMips = document.getElementById("runMips");
+        var mipsResult = document.getElementById("mipsResult");
+
+        var map = {
+          lw: {
+            format: "I-type",
+            binary: "100011 10011 01100 0000000110010000",
+            hex: "0x8E6C0190",
+            note: "op=lw(35), rs=s3, rt=t4, imm=400",
+          },
+          add: {
+            format: "R-type",
+            binary: "000000 01001 01010 10000 00000 100000",
+            hex: "0x012A8020",
+            note: "op=0, rs=t1, rt=t2, rd=s0, funct=32",
+          },
+          sub: {
+            format: "R-type",
+            binary: "000000 10010 10011 10001 00000 100010",
+            hex: "0x02538822",
+            note: "op=0, rs=s2, rt=s3, rd=s1, funct=34",
+          },
+        };
+
+        if (runMips) {
+          runMips.addEventListener("click", function () {
+            var key = document.getElementById("mipsPick").value;
+            var data = map[key];
+            mipsResult.textContent =
+              "Format: " +
+              data.format +
+              " | Binary: " +
+              data.binary +
+              " | Hex: " +
+              data.hex +
+              " | " +
+              data.note;
+          });
+        }
+
+        var revealNodes = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries, obs) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("show");
+                  obs.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
+          );
+
+          revealNodes.forEach(function (n) {
+            observer.observe(n);
+          });
+        } else {
+          revealNodes.forEach(function (n) {
+            n.classList.add("show");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

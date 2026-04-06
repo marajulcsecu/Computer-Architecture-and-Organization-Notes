@@ -1,0 +1,15 @@
+﻿The Law of Diminishing Returns, also known as the Law of Diminishing Marginal Productivity, states that as more and more units of a variable input (e.g., labor, capital) are added to a fixed input (e.g., land, machinery) while keeping all other factors constant, the additional output (marginal return) produced by each additional unit of the variable input will eventually decrease.
+Key Points:
+1. Initial Increase in Returns: At the beginning, adding more units of the variable input increases productivity because resources are utilized more efficiently.
+2. Diminishing Marginal Returns: After a certain point, adding more of the variable input leads to smaller increases in output.
+3. Negative Returns: If too much of the variable input is added, inefficiencies may arise, leading to a decline in total output.
+Example:
+* Consider a small farm with a fixed amount of land.
+* If one worker is employed, productivity is low.
+* Adding more workers increases productivity initially, as they can collaborate efficiently.
+* However, if too many workers are added, they begin to get in each other’s way, and productivity per worker decreases.
+* Eventually, adding another worker may even reduce total output due to overcrowding.
+Real-World Applications:
+* Manufacturing: Adding too many workers to an assembly line can reduce efficiency.
+* Agriculture: Excessive use of fertilizers may harm crops after a certain threshold.
+* Education: Too many students in a classroom can reduce the quality of learning.
