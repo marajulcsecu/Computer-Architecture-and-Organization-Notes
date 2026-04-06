@@ -600,6 +600,25 @@
             Cycles Per Instruction (CPI) x Clock Cycle Time
           </div>
 
+          <p>
+            This equation is the central performance model of processor design.
+            It explains that execution time is controlled by three independent
+            dimensions: how many instructions must run, how many cycles each
+            instruction needs on average, and how long each cycle lasts.
+          </p>
+          <p>
+            The strength of this model is diagnostic power. If performance is
+            poor, you can identify which factor dominates: inefficient code
+            generation increases IC, architectural stalls increase CPI, and
+            frequency/cycle limits increase cycle time.
+          </p>
+          <p>
+            In exam numericals, do not treat this as a memorized formula only.
+            Use it as a cause-effect map: software decisions mostly influence
+            IC, microarchitectural behavior mostly influences CPI, and hardware
+            timing/process limits influence cycle time.
+          </p>
+
           <div class="formula">
             CPU time = IC x CPI x Clock cycle time CPU time = (IC x CPI) / Clock
             rate CPU clock cycles = IC x CPI
@@ -637,6 +656,26 @@
               </tr>
             </tbody>
           </table>
+
+          <h3>How to reduce CPU time in practice</h3>
+          <ul>
+            <li>
+              Reduce IC: better algorithms, compiler optimization, instruction
+              selection improvements.
+            </li>
+            <li>
+              Reduce CPI: better cache behavior, fewer hazards/stalls,
+              microarchitecture enhancements.
+            </li>
+            <li>
+              Reduce cycle time: faster clock design, shorter critical path,
+              technology scaling.
+            </li>
+            <li>
+              Real optimization balances all three; improving one while harming
+              another may cancel gains.
+            </li>
+          </ul>
 
           <h3>Unit proof: Why "seconds per program"</h3>
           <div class="formula">
@@ -823,6 +862,20 @@
             all workloads.
           </div>
 
+          <p>
+            MIPS is a rate metric, so it is useful for quick comparison under
+            similar instruction characteristics. But processors with different
+            ISAs or different instruction mixes can produce very different work
+            per instruction, making raw MIPS comparison potentially misleading.
+          </p>
+          <p>
+            Throughput and execution time should be interpreted together:
+            throughput measures completed workload per unit time, while
+            execution time measures latency of a specific program. In system
+            design, both matter depending on whether the goal is faster single
+            job completion or more total jobs handled.
+          </p>
+
           <div class="grid-2">
             <div class="mini-card">
               <h4>MIPS formulas</h4>
@@ -847,11 +900,22 @@
             Performance is inversely proportional to execution time. If
             execution time decreases, performance increases.
           </div>
+          <p>
+            Therefore, when questions ask "which processor is faster," the most
+            reliable basis is program execution time (or equivalent instructions
+            per second for the same workload), not a standalone headline number.
+          </p>
 
           <h3>When MIPS can mislead</h3>
           <ul>
-            <li>Different ISAs use different instruction complexity.</li>
-            <li>Higher MIPS does not always mean lower program time.</li>
+            <li>
+              Different ISAs use different instruction complexity; one
+              instruction may represent more work than another ISA instruction.
+            </li>
+            <li>
+              Higher MIPS does not always mean lower program time if CPI or
+              instruction count rises for the same task.
+            </li>
             <li>
               Always combine MIPS with CPI, clock rate, and real execution time.
             </li>
@@ -981,6 +1045,18 @@
             global impact.
           </div>
 
+          <p>
+            Amdahl law is a decision tool for optimization planning. It prevents
+            unrealistic expectations by quantifying how much total performance
+            can change when only part of execution is accelerated.
+          </p>
+          <p>
+            Intuition: if a portion consumes little time, even huge acceleration
+            of that portion gives small end-to-end gain. If a portion dominates
+            total time, moderate acceleration may provide significant overall
+            improvement.
+          </p>
+
           <h3>Main formula (single enhanced fraction)</h3>
           <div class="formula">
             Speedup_overall = 1 / ((1 - f) + f/S) where f = fraction enhanced, S
@@ -995,12 +1071,27 @@
 
           <h3>Interpretation points</h3>
           <ul>
-            <li>If f is small, even very large S gives small overall gain.</li>
-            <li>As S -> infinity, maximum overall speedup = 1/(1-f).</li>
             <li>
-              So bottleneck (unimproved portion) sets upper performance limit.
+              If f is small, even very large S gives small overall gain because
+              most runtime is outside improved region.
+            </li>
+            <li>
+              As S -> infinity, maximum overall speedup = 1/(1-f), so there is a
+              hard upper bound.
+            </li>
+            <li>
+              The unimproved portion acts as bottleneck and sets achievable
+              system-level limit.
             </li>
           </ul>
+
+          <h3>Design implication</h3>
+          <p>
+            Best optimization strategy is to target the largest time-consuming
+            components first, then rebalance after each improvement. This is why
+            modern performance work combines algorithm changes, memory behavior
+            tuning, and architectural improvements together.
+          </p>
 
           <h3>Interactive Amdahl calculator</h3>
           <div class="calc-grid">
@@ -1054,6 +1145,18 @@
         <section id="topic4" class="card reveal">
           <h2>Topic 4: Numerical Speedup Problems with Partial Enhancements</h2>
 
+          <p>
+            Partial-enhancement numericals test whether you can convert verbal
+            statements into quantitative model steps. The key is to split total
+            execution time correctly and apply enhancement factors only where
+            specified.
+          </p>
+          <p>
+            Keep your answer transparent: show original partition, transformed
+            times, new total, then speedup. Even if arithmetic slips, this
+            structure preserves partial marks.
+          </p>
+
           <h3>Standard solving method</h3>
           <ol>
             <li>
@@ -1077,6 +1180,11 @@
             T_new = 10/2 + 30/2 + 60 = 5 + 15 + 60 = 80 ms Speedup = 100/80 =
             1.25
           </div>
+          <p>
+            Interpretation: although A and B are strongly improved, unchanged C
+            still dominates final runtime. This is exactly the Amdahl limit in a
+            concrete numerical form.
+          </p>
 
           <h3>Common interpretation trap</h3>
           <div class="warn-box">
@@ -1088,6 +1196,17 @@
 
         <section id="topic5" class="card reveal">
           <h2>Topic 5: CPI, Clock Rate, Execution-Time Based Numericals</h2>
+
+          <p>
+            This topic combines instruction statistics with timing hardware.
+            Many questions provide mixed instruction classes, so average CPI is
+            weighted, not simple arithmetic mean.
+          </p>
+          <p>
+            A common exam pattern asks for required clock rate after CPI changes
+            and target time reduction. Solve by ratio form to reduce algebra
+            mistakes, then verify unit consistency.
+          </p>
 
           <h3>Weighted CPI for instruction mix</h3>
           <div class="formula">CPI_avg = Sum(CPI_i x Fraction_i)</div>
@@ -1110,6 +1229,21 @@
               </div>
             </div>
           </div>
+
+          <h3>Practical interpretation</h3>
+          <ul>
+            <li>
+              Increasing clock rate may reduce cycle time, but can also increase
+              CPI if deeper pipelines increase stalls.
+            </li>
+            <li>
+              Reducing CPI through better memory behavior can outperform raw
+              frequency increase for many workloads.
+            </li>
+            <li>
+              Best answers mention trade-off between clock, CPI, and power.
+            </li>
+          </ul>
 
           <h3>Quick calculator: CPU time from IC, CPI, Clock rate</h3>
           <div class="calc-grid">
@@ -1169,6 +1303,19 @@
             continuity of hardware/system over time.
           </div>
 
+          <p>
+            Performance tells how fast a system works; reliability tells how
+            long and how consistently it keeps working. Real computer systems
+            require both, especially in servers, control systems, and critical
+            infrastructure.
+          </p>
+          <p>
+            MTTF is typically used for non-repairable failure modeling, MTBF is
+            used in repairable service context, FIT normalizes failure rate for
+            convenient comparison, and MTTR captures recovery capability.
+            Together they support maintainability and availability planning.
+          </p>
+
           <table>
             <thead>
               <tr>
@@ -1208,6 +1355,14 @@
             Failure rate lambda = 1 / MTTF FIT = 10^9 / MTTF(hours) MTBF = MTTF
             + MTTR (repairable system model) Availability = MTTF / (MTTF + MTTR)
           </div>
+
+          <h3>Why availability matters</h3>
+          <p>
+            Availability links reliability and repair. A system with moderate
+            failure rate can still offer high service continuity if repair is
+            rapid. This is why both hardware quality and maintenance process are
+            evaluated together in practical engineering.
+          </p>
 
           <h3>Reliability conversion example</h3>
           <p>Given MTTF = 200,000 hours:</p>
@@ -1276,12 +1431,33 @@
             total system performance.
           </div>
 
+          <p>
+            Bottleneck analysis is system-level thinking. Improving already-fast
+            components gives little benefit if requests are still queued at a
+            slower stage such as memory or I/O.
+          </p>
+          <p>
+            In architecture answers, identify where wait time accumulates, then
+            justify improvements with expected global impact rather than local
+            component speed only.
+          </p>
+
           <h3>Performance bottleneck examples</h3>
           <ul>
             <li>Fast CPU but slow memory access (memory wall).</li>
             <li>High clock rate but large CPI due to stalls.</li>
             <li>High compute speed but poor I/O throughput.</li>
           </ul>
+
+          <h3>Balanced optimization strategy</h3>
+          <ol>
+            <li>Measure stage-wise latency or utilization first.</li>
+            <li>Locate dominant delay contributor under realistic workload.</li>
+            <li>Estimate end-to-end gain using Amdahl-style fraction model.</li>
+            <li>
+              Apply improvement with cost/power/reliability trade-off check.
+            </li>
+          </ol>
 
           <h3>Animated bottleneck chain</h3>
           <button class="btn" type="button" id="showBottleneck">

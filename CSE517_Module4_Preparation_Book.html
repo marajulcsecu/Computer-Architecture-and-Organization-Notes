@@ -602,6 +602,19 @@
             fastest/smallest/most expensive to slowest/largest/cheapest.
           </div>
 
+          <p>
+            Memory hierarchy is a performance-economics compromise. If we build
+            the entire system with only the fastest memory, cost and power
+            become impractical. If we use only cheap large memory, CPU waits too
+            long for data.
+          </p>
+          <p>
+            Hierarchy solves this by keeping a small amount of very fast storage
+            close to CPU for frequent accesses and larger slower storage for the
+            long tail of data. This design works because real programs do not
+            access all memory uniformly.
+          </p>
+
           <h3>Typical hierarchy order (top to bottom)</h3>
           <div class="formula">
             Registers -> L1 Cache -> L2 Cache -> L3 Cache -> Main Memory (DRAM)
@@ -727,6 +740,18 @@
             set of memory locations repeatedly over short intervals.
           </div>
 
+          <p>
+            Locality is the fundamental reason cache and virtual-memory systems
+            provide strong average performance. Without locality, fast upper
+            levels would miss too often and hierarchy benefits would collapse.
+          </p>
+          <p>
+            Temporal locality is created by loops and repeated variable reuse,
+            while spatial locality comes from sequential instruction flow,
+            arrays, and nearby data structures. Good software layout often
+            improves hardware efficiency by increasing locality.
+          </p>
+
           <div class="grid-2">
             <div class="mini">
               <h4>Temporal locality</h4>
@@ -765,6 +790,18 @@
             capacity, unit of transfer, access method, performance, physical
             type, physical characteristics, and organization.
           </div>
+
+          <p>
+            These characteristics form a complete framework for analyzing any
+            memory technology. Instead of memorizing isolated terms, think of
+            them as design dimensions that together determine speed, cost,
+            reliability, and suitability for a workload.
+          </p>
+          <p>
+            For exam writing, a high-scoring answer usually does two things:
+            defines each characteristic briefly and gives one practical example
+            showing why that characteristic matters in architecture decisions.
+          </p>
 
           <table>
             <thead>
@@ -840,6 +877,23 @@
           <h2>
             Topic 3: Access Methods (Sequential, Direct, Random, Associative)
           </h2>
+
+          <div class="definition">
+            <b>Access method</b> describes how a storage system locates and
+            returns requested data.
+          </div>
+
+          <p>
+            Access method strongly affects latency behavior. Some media are fast
+            for nearby data but slow for arbitrary jumps, while others provide
+            near-uniform access. That is why different hierarchy levels use
+            different access models.
+          </p>
+          <p>
+            Associative access is especially important in cache and TLB design,
+            where content/tag matching is used instead of direct numeric address
+            indexing alone.
+          </p>
 
           <table>
             <thead>
@@ -965,6 +1019,19 @@
             Topic 4: Main Memory Technologies (SRAM, DRAM, SDRAM, RDRAM, DDR)
           </h2>
 
+          <p>
+            Main-memory technology choices reflect trade-offs among speed,
+            density, refresh complexity, power, and cost. No single technology
+            is best for all levels, which is why SRAM dominates cache while DRAM
+            families dominate main memory capacity.
+          </p>
+          <p>
+            Understanding the underlying cell structure helps memory
+            comparisons: latch-based SRAM is fast but area-expensive, while
+            capacitor-based DRAM is compact but needs periodic refresh and more
+            timing management.
+          </p>
+
           <div class="grid-2">
             <div class="mini">
               <h4>SRAM (Static RAM)</h4>
@@ -1077,6 +1144,18 @@
             firmware or bootstrap code.
           </div>
 
+          <p>
+            ROM-family devices are chosen by required update flexibility and
+            deployment model. Factory-fixed ROM gives stability at scale,
+            programmable variants support post-manufacture customization, and
+            electrically erasable variants support field updates.
+          </p>
+          <p>
+            In system context, ROM stores trusted startup code (bootloader,
+            firmware, hardware initialization routines) that must survive power
+            loss and remain available before operating system services start.
+          </p>
+
           <table>
             <thead>
               <tr>
@@ -1145,6 +1224,18 @@
             space by mapping virtual pages to physical frames.
           </div>
 
+          <p>
+            Virtual memory provides both capacity illusion and protection.
+            Programs can use large contiguous logical spaces even when physical
+            memory is limited, and process isolation is enforced through mapping
+            and permission control.
+          </p>
+          <p>
+            Translation cost is reduced by TLB. On TLB hit, translation is fast;
+            on TLB miss, page-table walk is needed; on page fault, OS and disk
+            activity are involved, making latency much larger.
+          </p>
+
           <h3>Core components</h3>
           <ul>
             <li>Virtual address split into page number and offset.</li>
@@ -1155,6 +1246,23 @@
               from disk.
             </li>
           </ul>
+
+          <h3>Translation path intuition</h3>
+          <ol>
+            <li>CPU issues virtual address from running process context.</li>
+            <li>MMU checks TLB for recent mapping.</li>
+            <li>
+              On TLB hit, frame number is obtained quickly and physical address
+              is formed with offset.
+            </li>
+            <li>
+              On TLB miss, page table is consulted; if absent, page fault
+              handler loads page and updates mapping.
+            </li>
+            <li>
+              After translation, normal cache/main-memory access continues.
+            </li>
+          </ol>
 
           <h3>Virtual memory translation diagram</h3>
           <div class="diagram">
@@ -1411,6 +1519,18 @@
             detect and correct single-bit errors.
           </div>
 
+          <p>
+            Hamming coding is a structured way to add redundancy so that error
+            location can be inferred from parity-check results (syndrome). This
+            is more powerful than simple parity, which can detect but not always
+            locate an error.
+          </p>
+          <p>
+            In exam solutions, clarity of bit-position convention is essential.
+            Most mistakes happen from inconsistent left/right indexing rather
+            than from parity arithmetic itself.
+          </p>
+
           <h3>How many parity bits are needed?</h3>
           <div class="formula">
             Find smallest r such that: 2^r >= m + r + 1 where m = number of data
@@ -1434,6 +1554,13 @@
               Syndrome value gives error position; flip that bit to correct.
             </li>
           </ol>
+
+          <h3>Syndrome interpretation</h3>
+          <p>
+            If syndrome is zero, no single-bit error is detected. If syndrome is
+            non-zero, its decimal value gives the erroneous bit position under
+            the chosen indexing convention. Correct by toggling that bit once.
+          </p>
 
           <h3>Coverage sets for parity bits</h3>
           <div class="formula">

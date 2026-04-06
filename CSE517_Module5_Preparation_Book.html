@@ -606,6 +606,18 @@
             memory that stores recently/frequently used blocks.
           </div>
 
+          <p>
+            Cache is the key architectural response to the memory wall problem.
+            CPU cores can execute operations much faster than main memory can
+            deliver operands, so without cache, execution units remain idle for
+            many cycles.
+          </p>
+          <p>
+            By storing likely-to-be-reused blocks close to CPU, cache converts
+            many slow memory accesses into fast accesses. This reduces average
+            latency and improves effective processor utilization.
+          </p>
+
           <h3>Why cache is needed</h3>
           <ul>
             <li>CPU speed has increased much faster than DRAM latency.</li>
@@ -615,6 +627,12 @@
               accesses.
             </li>
           </ul>
+
+          <p>
+            Exam-quality explanation should connect all three points: speed gap
+            creates wait, locality enables prediction of reuse, and cache uses
+            that reuse to hide most memory delay.
+          </p>
 
           <h3>Speed-gap diagram</h3>
           <div class="diagram">
@@ -697,6 +715,17 @@
             Topic 2: Cache Operation (Read/Write Flow) and Key Terminology
           </h2>
 
+          <p>
+            Cache operation is a lookup-and-validate process. Address bits are
+            split so hardware can quickly select candidate line/set, compare tag
+            identity, and decide hit or miss.
+          </p>
+          <p>
+            Correct understanding of this flow is essential for mapping and
+            performance numericals, because hit ratio and miss penalty are
+            direct outcomes of these lookup decisions.
+          </p>
+
           <h3>Core terms</h3>
           <table>
             <thead>
@@ -775,6 +804,13 @@
             </div>
           </div>
 
+          <p>
+            Write policy selection is a trade-off: write-through simplifies
+            consistency but increases memory traffic, while write-back improves
+            bandwidth efficiency but requires dirty-bit management and stronger
+            coherence control.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -796,6 +832,20 @@
             <b>Mapping function</b> defines where a main memory block can be
             placed in cache.
           </div>
+
+          <p>
+            Mapping method controls conflict behavior and hardware complexity.
+            Direct mapping minimizes hardware cost but can force unrelated
+            blocks to compete for one line. Fully associative minimizes conflict
+            but requires expensive parallel tag comparison. Set-associative
+            design is the practical middle ground.
+          </p>
+          <p>
+            In real processors, mapping choice is tied to target workload,
+            latency goals, and silicon budget. That is why many designs use
+            direct or low-way set-associative structures in L1 and higher
+            associativity in lower levels.
+          </p>
 
           <table>
             <thead>
@@ -942,6 +992,17 @@
             Topic 4: Address Split Problems (Tag, Line/Set, Word/Offset Bits)
           </h2>
 
+          <p>
+            Address-split problems are bit-allocation problems. Once memory,
+            cache, and block sizes are expressed as powers of two, field widths
+            become straightforward logarithmic counts.
+          </p>
+          <p>
+            Most errors happen when unit conversion is skipped. Always convert
+            MB/KB to bytes first, then compute total-address bits, line/set
+            bits, and finally tag bits.
+          </p>
+
           <h3>General formulas</h3>
           <div class="formula">
             Given: Main memory size = 2^N bytes Cache size = 2^C bytes Block
@@ -981,6 +1042,11 @@
             are included, add those bits per line and mention assumption.
           </div>
 
+          <p>
+            Mentioning assumptions explicitly (tag-only vs tag+status bits)
+            improves answer quality and prevents ambiguity in numerical marking.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -999,6 +1065,15 @@
 
         <section id="t5" class="card reveal">
           <h2>Topic 5: Performance Terms and Core Formulas</h2>
+
+          <p>
+            Cache performance is probabilistic. Average access time combines
+            fast hit path and slower miss path weighted by their probabilities.
+          </p>
+          <p>
+            This is why improving hit ratio by even a few percent can
+            significantly reduce average latency when miss penalty is large.
+          </p>
 
           <table>
             <thead>
@@ -1037,6 +1112,12 @@
             Expected time Ta = H(Tc) + (1-H)(Tc + Tm) = HTc + (1-H)Tc + (1-H)Tm
             = Tc + (1-H)Tm
           </div>
+
+          <p>
+            Interpretation: Tc is paid for every access, while Tm is paid only
+            on misses. Therefore miss ratio directly scales the expensive part
+            of delay.
+          </p>
 
           <h3>Two-level cache relation</h3>
           <div class="formula">
@@ -1092,6 +1173,24 @@
         <section id="t6" class="card reveal">
           <h2>Topic 6: Numerical Problem Workshop</h2>
 
+          <p>
+            Numerical questions in this module generally fall into repeatable
+            templates. If you identify the template first (bit split, hit/miss
+            timing, or stall impact), solving becomes systematic and fast.
+          </p>
+
+          <h3>Fast solving checklist</h3>
+          <ol>
+            <li>Normalize all sizes to powers of two in bytes.</li>
+            <li>
+              Compute intermediate counts (lines/blocks/sets) before tag bits.
+            </li>
+            <li>Write formula symbolically once before substitution.</li>
+            <li>
+              State assumptions clearly when workload details are missing.
+            </li>
+          </ol>
+
           <h3>Problem type A: Tag bits and directory size</h3>
           <div class="formula">
             Example (PYQ 2022): Cache = 128KB = 2^17 bytes Block = 4KB = 2^12
@@ -1127,6 +1226,12 @@
 
         <section id="t7" class="card reveal">
           <h2>Topic 7: Replacement Policies and Write Policies</h2>
+
+          <p>
+            Replacement and write policies determine cache behavior under
+            pressure. Mapping tells where blocks can go, policy tells which
+            block leaves and how memory consistency is maintained on writes.
+          </p>
 
           <h3>Replacement policies</h3>
           <table>
@@ -1186,6 +1291,12 @@
             </div>
           </div>
 
+          <p>
+            Practical systems may combine write policies with allocation
+            strategies (write-allocate or no-write-allocate), so exam answers
+            become stronger when this interaction is mentioned briefly.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -1202,6 +1313,13 @@
           <h2>
             Topic 8: Multi-level Cache, Unified vs Split, Coherency Basics
           </h2>
+
+          <p>
+            Multi-level cache architecture balances speed and capacity across
+            levels: very small and very fast L1 near core, larger but slower
+            lower levels. Effective design focuses on minimizing average access
+            time rather than optimizing only one level.
+          </p>
 
           <h3>Why multi-level cache</h3>
           <ul>
@@ -1243,6 +1361,13 @@
             <b>Cache coherency</b> ensures all processor caches see consistent
             values for shared memory locations.
           </div>
+
+          <p>
+            In multicore systems, coherence is mandatory for correctness: a
+            write by one core must become visible to other cores according to
+            the memory consistency model. Coherence protocols enforce this
+            through invalidation/update and state tracking.
+          </p>
 
           <ul>
             <li>

@@ -620,6 +620,21 @@
             like an assembly line.
           </div>
 
+          <p>
+            Pipelining is a throughput optimization strategy. Instead of waiting
+            for one instruction to finish all work before starting the next,
+            hardware overlaps different stages of multiple instructions.
+          </p>
+          <p>
+            Important distinction: pipelining improves instruction completion
+            rate (throughput), but single-instruction latency may remain similar
+            to non-pipelined stage sum.
+          </p>
+          <p>
+            This concept is foundational for later hazard and stall analysis,
+            because ideal speedup assumes smooth overlap without conflicts.
+          </p>
+
           <h3>Classic 5-stage instruction pipeline</h3>
           <div class="stage-grid">
             <div class="stage-box" id="s1">IF<br />Instruction Fetch</div>
@@ -666,6 +681,17 @@
 
         <section id="p2" class="card reveal">
           <h2>Topic 2: Pipeline Timing and Numerical Comparison</h2>
+
+          <p>
+            Pipeline timing numericals are built on fill and drain behavior.
+            First few cycles fill stages, middle cycles sustain high throughput,
+            and final cycles drain remaining instructions.
+          </p>
+          <p>
+            Real performance deviates from ideal when bubbles are inserted due
+            to hazards, so comparing ideal and stall-adjusted timing is key for
+            realistic analysis.
+          </p>
 
           <h3>Non-pipeline vs pipeline timeline (example)</h3>
           <div class="diagram">
@@ -913,10 +939,27 @@
             CPI can be modeled as: CPIeffective = CPIideal + stall cycles per
             instruction.
           </div>
+
+          <p>
+            Therefore exam answers are strongest when they include both ideal
+            derivation and a short note on why practical speedup is lower.
+          </p>
         </section>
 
         <section id="p3" class="card reveal">
           <h2>Topic 3: Pipeline Hazards and Stalls</h2>
+
+          <p>
+            Hazards are correctness constraints on overlap. They identify where
+            naive parallel stage execution would produce wrong output or
+            resource conflict.
+          </p>
+          <p>
+            Stall insertion is a conservative solution, but high-performance
+            designs reduce stalls using forwarding, prediction, and scheduling.
+            This trade-off between hardware complexity and CPI is central in
+            architecture design.
+          </p>
 
           <h3>Main hazard categories</h3>
           <table>
@@ -964,6 +1007,12 @@
             sw t3, 12(t0) sw t5, 16(t0)
           </div>
 
+          <p>
+            Reordering works by inserting independent instructions between
+            producer and consumer operations, allowing data to become available
+            before use and reducing explicit bubble cycles.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -983,6 +1032,17 @@
           <h2>
             Topic 4: Pipeline Configuration and Register-Content Numerical Style
           </h2>
+
+          <p>
+            Stream-computation pipeline questions test your ability to map
+            expression decomposition into balanced hardware stages and then
+            track stage occupancy cycle by cycle.
+          </p>
+          <p>
+            Register-content tables should reflect dataflow timing, not only
+            index progression. Mentioning what each register stores at each
+            stage improves conceptual marks.
+          </p>
 
           <h3>Pipeline configuration for (Ai + Bi)(Ci + Di)</h3>
           <div class="grid-3">
@@ -1033,6 +1093,12 @@
             Ci+Di, one final adder) - pipeline registers between stages
           </div>
 
+          <p>
+            A good hardware sketch must show stage boundaries (pipeline
+            registers), because throughput benefit comes from stage separation,
+            not only from arithmetic unit count.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -1051,6 +1117,18 @@
             Flynn taxonomy classifies computers by number of concurrent
             instruction streams and data streams.
           </div>
+
+          <p>
+            Flynn classes provide conceptual vocabulary for parallel
+            architecture types. They help map workload style to machine model:
+            data-parallel workloads align with SIMD, while task-diverse
+            workloads align with MIMD.
+          </p>
+          <p>
+            In modern systems, these classes can coexist (for example multicore
+            CPU plus SIMD/vector units plus GPU offload), so classification is a
+            perspective tool rather than a strict hardware boundary.
+          </p>
 
           <div class="diagram">
             <svg
@@ -1248,6 +1326,12 @@
             </li>
           </ul>
 
+          <p>
+            Therefore, effective parallel speedup requires both computational
+            parallelism and data-movement efficiency; otherwise communication
+            overhead reduces net gain.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -1265,6 +1349,17 @@
 
         <section id="p6" class="card reveal">
           <h2>Topic 6: Traditional vs High-Speed Bus Architecture</h2>
+
+          <p>
+            Bus architecture determines how quickly components exchange data.
+            Even a fast CPU underperforms if interconnect bandwidth and latency
+            cannot sustain memory and I/O demand.
+          </p>
+          <p>
+            Architectural evolution from single shared bus to hierarchical or
+            point-to-point links is mainly a response to contention and
+            scalability limitations.
+          </p>
 
           <h3>Traditional bus model</h3>
           <ul>
@@ -1285,6 +1380,11 @@
               Modern examples use point-to-point links (for example PCIe style).
             </li>
           </ul>
+
+          <p>
+            Keywords that strengthen answers: arbitration efficiency, burst
+            transfer, split transaction, dedicated path, and reduced contention.
+          </p>
 
           <h3>Diagrammatic difference</h3>
           <div class="diagram">
@@ -1483,6 +1583,17 @@
             disks for performance, reliability, or both.
           </div>
 
+          <p>
+            RAID level selection is a workload trade-off decision. Some levels
+            prioritize speed, some prioritize fault tolerance, and some balance
+            both with storage overhead.
+          </p>
+          <p>
+            For exam answers, include three aspects for each level: data layout,
+            failure behavior, and performance tendency. This produces clearer
+            and more complete comparison.
+          </p>
+
           <table>
             <thead>
               <tr>
@@ -1669,6 +1780,11 @@
               </li>
             </ul>
           </div>
+
+          <p>
+            Practical note: RAID improves availability and performance behavior,
+            but it is not a replacement for backup strategy.
+          </p>
         </section>
 
         <section id="p8" class="card reveal">
@@ -1679,6 +1795,18 @@
             A 1-bit ALU is a building block that performs arithmetic/logic on
             one bit pair and can be cascaded to make n-bit ALU.
           </div>
+
+          <p>
+            1-bit ALU design illustrates modular datapath construction. Complex
+            arithmetic units are built by cascading identical bit-slices with
+            carry propagation and control selection.
+          </p>
+          <p>
+            Single-bus organization demonstrates control-path discipline: one
+            source drives the bus at a time, destinations latch at defined clock
+            phases, and multi-step instruction execution is sequenced by control
+            signals.
+          </p>
 
           <h3>Common operations</h3>
           <table>
@@ -1992,6 +2120,12 @@
               </li>
             </ul>
           </div>
+
+          <p>
+            High-scoring answers also mention limitation: single internal bus
+            simplifies design but restricts parallel data movement, so complex
+            operations require more cycles.
+          </p>
         </section>
 
         <section id="pyq" class="card reveal">

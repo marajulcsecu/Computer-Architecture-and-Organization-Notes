@@ -745,11 +745,41 @@
 
           <h3>Simple Intuition</h3>
           <p>
-            Architecture is <b>what the machine offers</b>. Organization is
-            <b>how the machine is built</b> to offer that behavior. You can
-            change organization (implementation) while keeping architecture
-            (interface) same.
+            Architecture is the formal contract between software and hardware.
+            When a compiler emits an instruction (such as load, add, or branch),
+            it assumes that instruction behavior is stable and predictable on
+            any processor implementing that ISA.
           </p>
+          <p>
+            Organization is the engineering strategy used to deliver that
+            contract: pipeline depth, branch prediction method, cache hierarchy,
+            bus widths, execution units, and control sequencing. Two processors
+            can keep exactly the same architecture but still differ
+            significantly in speed, power usage, and hardware cost.
+          </p>
+          <p>
+            This distinction is critical in real systems because software
+            compatibility must be preserved over many years. Architecture is
+            kept relatively stable so old binaries continue running, while
+            organization evolves generation by generation for better performance
+            and efficiency.
+          </p>
+
+          <h3>Why This Distinction Matters In Practice</h3>
+          <ul>
+            <li>
+              It explains how one software ecosystem can run on many processor
+              generations.
+            </li>
+            <li>
+              It helps answer exam statements like "same architecture, different
+              performance" with technical clarity.
+            </li>
+            <li>
+              It clarifies roles: programmers target architecture, chip
+              designers optimize organization.
+            </li>
+          </ul>
 
           <div class="layer-stack">
             <div class="layer arch">User-visible behavior (Architecture)</div>
@@ -799,9 +829,12 @@
 
           <h3>Real Example</h3>
           <p>
-            Many processors in Intel x86 family execute the same software (same
-            architecture/ISA), but they have different internal organization
-            (cache size, core count, branch predictor, pipeline).
+            Many processors in Intel x86 family execute the same software
+            because the ISA contract is preserved. However, internally they may
+            differ in core count, cache levels, out-of-order capability,
+            branch-predictor quality, and pipeline organization. This is why a
+            newer generation often runs the same old program faster without
+            requiring program rewrite.
           </p>
 
           <div class="exam-focus">
@@ -826,31 +859,54 @@
             and System Interconnection (bus).
           </div>
 
+          <p>
+            At top level, a computer is best viewed as a coordinated information
+            processing system. CPU performs operations, memory holds program and
+            data state, I/O modules connect the external world, and the system
+            interconnection moves information among all blocks.
+          </p>
+          <p>
+            "Structure" answers which blocks exist and how they are connected.
+            "Function" answers what each block does over time during program
+            execution. Full-mark answers usually include both views together.
+          </p>
+
           <h3>Core Functions of a Computer System</h3>
           <div class="grid-two">
             <div class="compare-card">
               <h4>1) Data Processing</h4>
               <p>
-                ALU performs arithmetic and logic operations (add, compare,
-                shift, bit operations).
+                ALU and execution units transform input data into output data
+                through arithmetic and logical operations. In modern CPUs this
+                extends beyond simple add/compare to multiplication,
+                floating-point, and vector-style parallel operations.
               </p>
             </div>
             <div class="compare-card">
               <h4>2) Data Storage</h4>
-              <p>Memory stores programs and data temporarily or permanently.</p>
+              <p>
+                Storage is layered: registers hold immediate operands, main
+                memory stores active program state, and secondary storage keeps
+                data persistently. Reliable storage lets computation continue
+                correctly across many instruction cycles.
+              </p>
             </div>
             <div class="compare-card">
               <h4>3) Data Movement</h4>
               <p>
-                Data moves between CPU, memory, and I/O devices through buses
-                and controllers.
+                Useful computing requires continuous data transfer among CPU,
+                memory, and I/O. Address bus selects locations, data bus carries
+                values, and control bus coordinates read/write timing and
+                synchronization.
               </p>
             </div>
             <div class="compare-card">
               <h4>4) Control</h4>
               <p>
-                Control unit coordinates all operations by generating
-                timing/control signals.
+                The control unit sequences fetch, decode, and execute by issuing
+                time-ordered control signals. Without control logic, hardware
+                blocks exist physically but cannot cooperate to complete
+                instructions correctly.
               </p>
             </div>
           </div>
@@ -1029,6 +1085,33 @@
             </svg>
           </div>
 
+          <h3>How Program Execution Flows Through Top-Level Blocks</h3>
+          <ol>
+            <li>
+              CPU fetches instruction from memory using address and control
+              buses.
+            </li>
+            <li>
+              CPU decodes instruction and determines required
+              operands/resources.
+            </li>
+            <li>
+              Operands are read from registers, memory, or I/O mapped space.
+            </li>
+            <li>ALU or other execution unit performs the operation.</li>
+            <li>
+              Result is written back to register/memory and status is updated.
+            </li>
+            <li>
+              For input/output operations, data is exchanged through I/O
+              modules.
+            </li>
+          </ol>
+          <p>
+            This repeated flow is the practical meaning of "structure and
+            function" working together.
+          </p>
+
           <h3>Structure vs Function</h3>
           <table>
             <thead>
@@ -1077,11 +1160,22 @@
 
           <h3>Stored Program Concept</h3>
           <p>
-            Before stored-program systems, reprogramming often required manual
-            rewiring. In the stored-program model, both instruction and data are
-            placed in memory, so the CPU can fetch instructions, decode, and
-            execute automatically. This made computers far more flexible and
-            general purpose.
+            Before stored-program systems, many machines were configured by
+            manual wiring or fixed control setup, so changing a task was slow
+            and expensive. The stored-program idea changed this completely by
+            representing instructions as memory-resident binary patterns.
+          </p>
+          <p>
+            Once instructions and data live in memory, CPU can repeatedly do
+            fetch -> decode -> execute under control of the program counter.
+            This gave computers programmability, reuse, and automation: the same
+            hardware could run many different algorithms by simply loading a new
+            program.
+          </p>
+          <p>
+            The major trade-off in classic Von Neumann design is the shared path
+            for instruction and data transfer. That shared path can become a
+            throughput bottleneck when both compete heavily.
           </p>
 
           <div class="compare-grid">
@@ -1104,6 +1198,23 @@
               </ul>
             </div>
           </div>
+
+          <h3>Where These Models Appear In Modern Systems</h3>
+          <ul>
+            <li>
+              General-purpose CPUs are mostly Von Neumann at system level, but
+              often use split instruction/data caches internally (modified
+              Harvard behavior) for higher throughput.
+            </li>
+            <li>
+              Many microcontrollers and DSP systems use Harvard-like separation
+              to fetch instruction and data in parallel.
+            </li>
+            <li>
+              In exams, mention that modern processors often combine ideas from
+              both for practical performance.
+            </li>
+          </ul>
 
           <h3>Visual Diagram: Von Neumann vs Harvard</h3>
           <div class="diagram-shell">
@@ -1346,6 +1457,18 @@
             interaction with memory and I/O.
           </div>
 
+          <p>
+            Calculation is a subset of computing. It focuses on deriving a
+            numeric result from known inputs. Computing includes calculation,
+            but additionally manages state, branching decisions, data movement,
+            storage, user interaction, and communication with external systems.
+          </p>
+          <p>
+            Architecture design is therefore driven by full computing behavior,
+            not arithmetic alone. That is why processors need control units,
+            memory hierarchy, interrupts, and I/O interfaces in addition to ALU.
+          </p>
+
           <table>
             <thead>
               <tr>
@@ -1384,9 +1507,11 @@
 
           <h3>Example</h3>
           <p>
-            A calculator app can compute "15 + 27". A ride-sharing app does
-            computing: maps location, finds nearest driver, estimates fare,
-            processes payment, and sends notifications.
+            A calculator app mainly performs calculation such as "15 + 27" and
+            displays a result. A ride-sharing app performs full computing:
+            location tracking, nearest-driver search, route optimization,
+            dynamic fare logic, payment verification, state updates in database,
+            and notification delivery. Arithmetic is only one small component.
           </p>
 
           <div class="exam-focus">
@@ -1408,9 +1533,21 @@
           </h2>
 
           <p>
-            Evolution matters in exam because it explains why architecture
-            changed: speed demand, reliability demand, programmability demand,
-            and miniaturization demand.
+            Evolution is not just a history list; it is a sequence of
+            engineering responses to bottlenecks. Each era exposed a key
+            limitation (speed, size, power, reliability, programmability, cost)
+            and the next era introduced a technology that reduced that
+            limitation.
+          </p>
+          <p>
+            Mechanical aids improved human calculation, electromechanical and
+            early electronic systems improved automation, transistor technology
+            improved reliability and power, ICs improved density and cost, and
+            microprocessors enabled mass computing ecosystems.
+          </p>
+          <p>
+            In exam answers, showing this cause-effect chain makes your writing
+            analytical rather than memorized.
           </p>
 
           <div class="timeline">
@@ -1463,6 +1600,26 @@
               CPU on chip; personal computing revolution.
             </div>
           </div>
+
+          <h3>Cause-Effect View Of Key Transitions</h3>
+          <ul>
+            <li>
+              Vacuum tube era to transistor era: reduced heat and failure rate,
+              increased reliability.
+            </li>
+            <li>
+              Transistor to IC era: higher integration, lower cost per function,
+              shorter signal paths.
+            </li>
+            <li>
+              IC to microprocessor era: whole CPU on chip, enabling affordable
+              personal and embedded computing.
+            </li>
+            <li>
+              Microprocessor era to modern SoC era: multicore, accelerators, and
+              memory hierarchy optimization for workload diversity.
+            </li>
+          </ul>
 
           <h3>Computer Generation Summary</h3>
           <table>
@@ -1530,6 +1687,20 @@
             trend, not strict physical law).
           </div>
 
+          <p>
+            Moore law is best treated as a long-term empirical scaling trend. It
+            enabled steady growth in functional complexity and performance over
+            decades. Designers used extra transistors for larger caches, wider
+            datapaths, smarter control, and later for multicore and
+            accelerators.
+          </p>
+          <p>
+            In modern nodes, frequency scaling alone no longer gives easy gains
+            because of power and thermal limits. So performance growth now comes
+            more from parallelism, microarchitectural improvements, and
+            specialized units rather than only higher clock rate.
+          </p>
+
           <h3>Formula View (Trend Approximation)</h3>
           <div class="formula-box">
             N(t) = N0 * 2 ^ ((t - t0) / T) where: N0 = transistor count at
@@ -1541,6 +1712,11 @@
             Suppose a chip has 50 million transistors in year 2000 and doubling
             period is 2 years. In 2006, number of doublings = (2006 - 2000)/2 =
             3. Estimated count = 50 * 2^3 = 400 million transistors.
+          </p>
+          <p>
+            This model gives trend-level estimation, not exact manufactured
+            values. Real products differ due to design targets, process yield,
+            power budget, and market segment.
           </p>
 
           <h3>Historical Growth Snapshot (Approximate)</h3>
@@ -1721,6 +1897,13 @@
             </div>
           </div>
 
+          <p>
+            Therefore, modern architecture strategy is "smart transistor use":
+            spend area where workload benefit is highest (cache, parallel cores,
+            vector units, AI accelerators), instead of only pushing clock
+            frequency.
+          </p>
+
           <div class="exam-focus">
             <b>Exam Focus:</b>
             <ul>
@@ -1745,19 +1928,31 @@
             less overall system improvement.
           </div>
 
+          <p>
+            This law is closely connected to system-level speedup analysis. Even
+            a very large improvement in one component cannot remove the time
+            spent in all other components.
+          </p>
+          <div class="formula-box">
+            Overall speedup viewpoint (Amdahl form): S_overall = 1 / ((1 - f) +
+            f / s) where f = fraction improved, s = speedup of improved part. As
+            s becomes very large, maximum possible overall speedup tends to 1 /
+            (1 - f). So improvement has a hard upper bound.
+          </div>
+
           <h3>Why This Is Important in Computer Architecture</h3>
           <ul>
             <li>
-              If CPU core becomes extremely fast but memory is slow, total
-              system still waits.
+              If CPU core becomes extremely fast but memory remains slow,
+              execution still stalls on memory access.
             </li>
             <li>
-              If cache is enlarged too much, extra hit-rate gain becomes very
-              small beyond a point.
+              If cache keeps growing, each additional size increase eventually
+              gives only a tiny hit-rate improvement.
             </li>
             <li>
-              If you only optimize one stage, unoptimized stages dominate
-              remaining execution time.
+              If one pipeline stage is optimized repeatedly, unoptimized stages
+              dominate total delay after some point.
             </li>
           </ul>
 
@@ -1781,6 +1976,11 @@
             Notice: first improvement gave +0.25x speedup (from 1.00 to 1.25),
             but second gave only +0.18x (from 1.25 to 1.43). This shrinking gain
             is diminishing returns.
+          </p>
+          <p>
+            The design lesson is to balance improvements across major
+            bottlenecks instead of over-investing in one already-optimized
+            block.
           </p>
 
           <div class="warn-box">

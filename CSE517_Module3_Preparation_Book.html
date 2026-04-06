@@ -615,6 +615,24 @@
             next instruction.
           </div>
 
+          <p>
+            Instruction cycle is the bridge between program code and hardware
+            action. A program looks like a static sequence of instructions in
+            memory, but CPU turns that sequence into real behavior only by
+            repeatedly running this cycle.
+          </p>
+          <p>
+            Correctness depends on strict ordering of micro-operations:
+            instruction address must be formed before memory read, instruction
+            must be decoded before control signals are issued, and destination
+            state must be updated only after execution result is ready.
+          </p>
+          <p>
+            Performance analysis in later modules also depends on this model,
+            because pipelining, hazards, and CPI are all extensions of how this
+            basic cycle is organized and overlapped.
+          </p>
+
           <h3>Main stages</h3>
           <div class="grid-3">
             <div class="mini">
@@ -630,6 +648,25 @@
               <p>ALU, memory, or control action runs and result is stored.</p>
             </div>
           </div>
+
+          <h3>Why each stage exists</h3>
+          <ul>
+            <li>
+              Fetch isolates memory access and keeps program order under PC
+              control.
+            </li>
+            <li>
+              Decode translates opcode bits into concrete control actions.
+            </li>
+            <li>
+              Execute/write-back stage applies computation or memory transfer
+              and commits updated architectural state.
+            </li>
+            <li>
+              Separation into stages makes control design cleaner and enables
+              future pipeline optimization.
+            </li>
+          </ul>
 
           <h3>Typical register transfer micro-operations</h3>
           <div class="formula">
@@ -819,6 +856,30 @@
             manipulation.
           </div>
 
+          <p>
+            Registers are the immediate working memory of CPU. Main memory is
+            large but slower, so instruction execution is organized around fast
+            register-level state transitions.
+          </p>
+          <p>
+            Control registers (PC, IR, MAR, MDR) coordinate instruction flow and
+            memory transactions, while data registers (AC, GPRs) carry operands
+            and results. Understanding this division is essential for solving
+            register-trace PYQs accurately.
+          </p>
+
+          <h3>How registers cooperate during one instruction</h3>
+          <ol>
+            <li>PC supplies next instruction address.</li>
+            <li>MAR carries that address to memory interface.</li>
+            <li>MDR receives fetched instruction word from memory.</li>
+            <li>IR holds current instruction for decode/control logic.</li>
+            <li>
+              AC or GPRs provide operands and receive result depending on CPU
+              organization.
+            </li>
+          </ol>
+
           <table>
             <thead>
               <tr>
@@ -898,6 +959,34 @@
             <b>Execution trace</b> means tracking register and memory state
             step-by-step for each instruction cycle.
           </div>
+
+          <p>
+            Trace problems test whether you understand dynamic execution, not
+            only definitions. You must show how register values evolve from one
+            cycle to the next under fetch and execute effects.
+          </p>
+          <p>
+            The best trace answers are deterministic and table-driven: start
+            from initial state, apply fetch updates first, then execute updates,
+            and carry forward the new state to the next row.
+          </p>
+
+          <h3>Trace-solving strategy</h3>
+          <ul>
+            <li>
+              Keep one row per cycle and separate fetch result from execute
+              result.
+            </li>
+            <li>
+              Update PC in every fetch unless control-flow instruction changes
+              it.
+            </li>
+            <li>Maintain hex formatting throughout if input is in hex.</li>
+            <li>
+              When opcode semantics are assumed from course pattern, state that
+              assumption once to avoid ambiguity.
+            </li>
+          </ul>
 
           <h3>
             Example A (PYQ 2022 style): three instruction cycles to add M[940]
@@ -1007,6 +1096,34 @@
             <b>General Register</b>, and <b>Stack</b> organization.
           </div>
 
+          <p>
+            CPU organization decides operand placement model and instruction
+            style. So instruction format, decoding complexity, and execution
+            flexibility are directly influenced by organization choice.
+          </p>
+          <p>
+            Accumulator designs are compact but less flexible, general-register
+            designs support high performance through explicit operand control,
+            and stack designs reduce explicit addressing but rely on stack
+            discipline.
+          </p>
+
+          <h3>Design trade-off intuition</h3>
+          <ul>
+            <li>
+              Accumulator: smaller instruction width, but frequent memory
+              traffic because AC is implicit center.
+            </li>
+            <li>
+              General register: more explicit fields, better compiler
+              optimization opportunities.
+            </li>
+            <li>
+              Stack: compact zero-address operations, useful in expression
+              evaluation models.
+            </li>
+          </ul>
+
           <div class="grid-3">
             <div class="mini">
               <h4>Accumulator organization</h4>
@@ -1090,6 +1207,35 @@
             <b>Addressing mode</b> defines how CPU obtains operand address or
             immediate data from an instruction.
           </div>
+
+          <p>
+            Addressing modes are the language that connects instructions with
+            data location patterns. Different programs need constants, direct
+            variables, pointers, arrays, and register operands, and one fixed
+            addressing rule cannot handle all efficiently.
+          </p>
+          <p>
+            Effective address (EA) is the computed memory location actually used
+            for operand access in memory-based modes. Clear distinction between
+            instruction field and final EA is the key to scoring full marks in
+            numericals.
+          </p>
+
+          <h3>Why multiple modes are necessary</h3>
+          <ul>
+            <li>Immediate mode supports constants without memory access.</li>
+            <li>
+              Register modes support fastest operand access for arithmetic
+              loops.
+            </li>
+            <li>
+              Indexed and register-indirect modes support arrays and pointers
+              naturally.
+            </li>
+            <li>
+              Indirect mode provides flexibility for dynamic address references.
+            </li>
+          </ul>
 
           <h3>Core formulas</h3>
           <div class="formula">
@@ -1256,6 +1402,32 @@
             instruction set with richer instruction semantics.
           </div>
 
+          <p>
+            RISC and CISC represent different design philosophies. RISC shifts
+            complexity toward compiler and regular hardware pipeline, while CISC
+            attempts to pack richer behavior into individual instructions to
+            reduce instruction count and improve code density.
+          </p>
+          <p>
+            In practical systems, modern processors often mix ideas: many CISC
+            processors internally break complex instructions into simpler
+            micro-operations, and many RISC designs add extensions for workload
+            efficiency. So comparison should be written as trade-off, not
+            absolute winner/loser.
+          </p>
+
+          <h3>How to write a strong comparison answer</h3>
+          <ol>
+            <li>Define RISC and CISC in one line each.</li>
+            <li>
+              Use a feature table (format, memory model, pipeline, control).
+            </li>
+            <li>
+              Add one balanced conclusion: suitability depends on design goals
+              such as performance, power, and code density.
+            </li>
+          </ol>
+
           <table>
             <thead>
               <tr>
@@ -1336,6 +1508,34 @@
             <b>MIPS ISA basics:</b> R-type for register arithmetic, I-type for
             immediate/memory/branch, J-type for jump.
           </div>
+
+          <p>
+            MIPS translation questions connect ISA theory to binary encoding.
+            You must map symbolic assembly fields to bit positions precisely,
+            then present binary and hex forms.
+          </p>
+          <p>
+            Accuracy depends on systematic workflow: identify instruction type,
+            fill fields in correct order, convert decimal immediates/register
+            numbers to fixed-width binary, then combine and convert to hex.
+          </p>
+
+          <h3>Encoding workflow for machine translation</h3>
+          <ol>
+            <li>Identify format (R, I, or J).</li>
+            <li>Write field sequence from format template.</li>
+            <li>Substitute opcode, registers, immediate/funct values.</li>
+            <li>Ensure field bit-widths are correct.</li>
+            <li>Join into 32-bit binary and convert to hexadecimal.</li>
+          </ol>
+
+          <h3>Assembly-conversion reasoning</h3>
+          <p>
+            For high-level constructs (loops/conditions), first model control
+            flow using labels and branch condition direction. Then map array
+            indexing into byte address arithmetic (index x word-size + base),
+            and finally place load/compare/update instructions in correct order.
+          </p>
 
           <h3>MIPS instruction formats</h3>
           <div class="diagram">
